@@ -1,0 +1,296 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+    <!--weather panel-->
+    <div class="col-12 col-lg-7" id="mainColLeft">
+
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="card text-white bg-primary">
+            <div class="card-body pb-0">
+              <div class="btn-group float-right" dropdown>
+                <fa-icon [icon]="faWalking" style="margin-right: 5px;"></fa-icon>
+              </div>
+              <div class="text-value">{{stepSummary}}</div>
+              <div>Steps Taken</div>
+              <div class="row">
+                <div class="col-6 col-md-8">
+                  <div class="progress progress-xs mt-2">
+                    <progressbar class="progress progress-warning" [value]="stepSummaryPercentage" [max]="100"
+                                 type="warning">
+                    </progressbar>
+                  </div>
+                </div>
+                <div class="col-6 col-md-4" style="text-align: right">
+                  {{stepSummaryPercentage}}%
+                </div>
+              </div>
+            </div>
+            <div class="chart-wrapper mt-3" style="height:38px;">
+              <canvas baseChart class="chart"
+                      [datasets]="stepSummaryChartData"
+                      [labels]="stepSummaryChartLabels"
+                      [options]="summaryWidgetChartOptions"
+                      [colors]="summaryWidgetChartColours"
+                      [legend]="summaryWidgetChartLegend"
+                      [chartType]="summaryWidgetChartType"></canvas>
+            </div>
+            <div class="chart-wrapper mt-3" style="height:38px;">
+              <canvas baseChart class="chart"
+                      [datasets]="stepIntraDayChartData"
+                      [labels]="stepIntraDayChartLabels"
+                      [options]="intraDayWidgetChartOptions"
+                      [colors]="intraDayWidgetChartColours"
+                      [legend]="intraDayWidgetChartLegend"
+                      [chartType]="intraDayWidgetChartType"></canvas>
+            </div>
+          </div>
+        </div><!--/.col-->
+
+        <div class="col-12 col-md-4">
+          <div class="card text-white bg-info">
+            <div class="card-body pb-0">
+              <div class="btn-group float-right" dropdown>
+                <fa-icon [icon]="faShoePrints" style="margin-right: 5px;"></fa-icon>
+              </div>
+              <div class="text-value">{{floorsSummary}}</div>
+              <div>Floors Climbed</div>
+              <div class="row">
+                <div class="col-6 col-md-8">
+                  <div class="progress progress-xs mt-2">
+                    <progressbar class="progress progress-warning" [value]="floorsSummaryPercentage" [max]="100"
+                                 type="warning">
+                    </progressbar>
+                  </div>
+                </div>
+                <div class="col-6 col-md-4" style="text-align: right">
+                  {{floorsSummaryPercentage}}%
+                </div>
+              </div>
+            </div>
+            <div class="chart-wrapper mt-3" style="height:90px;">
+              <canvas baseChart class="chart"
+                      [datasets]="floorIntraDayChartData"
+                      [labels]="floorIntraDayChartLabels"
+                      [options]="intraDayWidgetChartOptions"
+                      [colors]="intraDayWidgetChartColours"
+                      [legend]="intraDayWidgetChartLegend"
+                      [chartType]="intraDayWidgetChartType"></canvas>
+            </div>
+          </div>
+        </div><!--/.col-->
+
+        <div class="col-12 col-md-4">
+          <div class="card text-white bg-info">
+            <div class="card-body pb-0">
+              <div class="btn-group float-right" dropdown>
+                <fa-icon [icon]="faHiking" style="margin-right: 5px;"></fa-icon>
+              </div>
+              <div class="text-value">{{distanceSummary}} km</div>
+              <div>Distance Travelled</div>
+              <div class="row">
+                <div class="col-6 col-md-8">
+                  <div class="progress progress-xs mt-2">
+                    <progressbar class="progress progress-warning" [value]="distanceSummaryPercentage" [max]="100"
+                                 type="warning">
+                    </progressbar>
+                  </div>
+                </div>
+                <div class="col-6 col-md-4" style="text-align: right">
+                  {{distanceSummaryPercentage}}%
+                </div>
+              </div>
+            </div>
+            <div class="chart-wrapper mt-3" style="height:90px;">
+              <canvas baseChart class="chart"
+                      [datasets]="distanceSummaryChartData"
+                      [labels]="distanceSummaryChartLabels"
+                      [options]="summaryWidgetChartOptions"
+                      [colors]="summaryWidgetChartColours"
+                      [legend]="summaryWidgetChartLegend"
+                      [chartType]="summaryWidgetChartType"></canvas>
+            </div>
+          </div>
+        </div><!--/.col-->
+      </div>
+
+      <div [hidden]="!showPush" class="row">
+        <div class="col-md-12">
+          <div class="card card-inverse card-primary">
+            <div class="card-header" id="PushName">PushName</div>
+            <div class="card-block" id="PushBlock">
+              <div class="card-body">PushBlock</div>
+            </div>
+            <div class="card-footer" id="PushFooter">
+              <div class="progress-group-bars">
+                <progressbar class="progress progress-danger" [value]="25" [max]="100" type="danger"></progressbar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-12 col-lg-5" id="mainColRight">
+      <div [hidden]="!showBestDay" class="row">
+        <div class="col-12">
+          <div class="card text-white bg-success">
+            <div class="card-header">
+              Your Best Day
+            </div>
+            <div class="card-body">
+              <ul>
+                <li *ngFor="let point of theBest">{{ point }}</li>
+              </ul>
+            </div>
+          </div>
+        </div><!--/.col-->
+      </div>
+
+      <div [hidden]="!showJourney" class="row" id="Journey">
+        <div class="col-md-12">
+          <div class="card card-inverse card-success">
+            <div class="card-header" id="JourneyName">JourneyName</div>
+            <div class="card-block" id="JourneyBlock">
+              <div class="card-body">JourneyBlock</div>
+            </div>
+            <div class="card-footer" id="JourneyFooter">
+              <div class="progress-group-bars">
+                <progressbar class="progress progress-danger" [value]="66" [max]="100" type="danger"></progressbar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" [hidden]="!theMilestonesMore">
+    <div class="col-12 col-lg-6">
+      <div class="card text-white bg-success">
+        <div class="card-header">
+          Your Best Day
+        </div>
+        <div class="card-body">
+          <ul>
+            <li *ngFor="let point of theMilestonesMore" [innerHTML]="point"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="card text-white bg-danger">
+        <div class="card-header">
+          Your Best Day
+        </div>
+        <div class="card-body">
+          <ul>
+            <li *ngFor="let point of theMilestonesLess" [innerHTML]="point"></li>
+          </ul>
+        </div>
+      </div>
+    </div><!--/.col-->
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 class="card-title mb-0">Exercise</h4>
+          <div class="small text-muted">Charted over the last month</div>
+        </div><!--/.col-->
+      </div><!--/.row-->
+      <div class="row">
+        <div class="col-12 col-lg-9">
+          <div class="weightchart chart-wrapper" style="height:300px;margin-top:40px;">
+            <canvas baseChart class="chart"
+                    [datasets]="exerciseWidgetChartData"
+                    [labels]="exerciseWidgetChartLabels"
+                    [options]="exerciseWidgetChartOptions"
+                    [colors]="exerciseWidgetChartColours"
+                    [legend]="exerciseWidgetChartLegend"
+                    [chartType]="exerciseWidgetChartType"></canvas>
+          </div>
+        </div><!--/.col-->
+        <div class="col-12 col-lg-3">
+          <div style="height:300px;margin-top:40px;">
+            <ul>
+              <li *ngFor="let point of exerciseHistory" [innerHTML]="point"></li>
+            </ul>
+          </div>
+        </div><!--/.col-->
+      </div><!--/.row-->
+    </div>
+  </div>
+
+  <div [hidden]="!showStreak" class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <span id="CurrentDays">Streak</span>
+        </div>
+        <div class="card-body" id="StreakGoals">
+          <div class="progress-group-bars">
+            <progressbar class="progress" [value]="30" [max]="100"></progressbar>
+          </div>
+          <strong>Your Average Streak</strong>
+          <p class="text-muted" id="AverageDays">X Days</p>
+
+          <div class="progress-group-bars">
+            <progressbar class="progress" [value]="55" [max]="100"></progressbar>
+          </div>
+          <strong>Your Last Streak</strong>
+          <p class="text-muted" id="LastDays">X Days</p>
+
+          <div class="progress-group-bars">
+            <progressbar class="progress" [value]="66" [max]="100"></progressbar>
+          </div>
+          <strong>Your Longest Streak</strong>
+          <p class="text-muted" id="LongestDays">X Days</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 class="card-title mb-0">Weight</h4>
+          <div class="small text-muted">Charted Since {{weightWidgetChartSince}}</div>
+        </div><!--/.col-->
+      </div><!--/.row-->
+      <div class="weightchart chart-wrapper" style="height:300px;margin-top:40px;">
+        <canvas baseChart class="chart"
+                [datasets]="weightWidgetChartData"
+                [labels]="weightWidgetChartLabels"
+                [options]="weightWidgetChartOptions"
+                [colors]="weightWidgetChartColours"
+                [legend]="weightWidgetChartLegend"
+                [chartType]="weightWidgetChartType"></canvas>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="row text-center">
+        <div class="col-sm-12 col-md mb-sm-2 mb-0">
+          <div class="text-muted">Weight</div>
+          <strong>{{weightCurrent}} {{weightCurrentUnit}} {{weightPercentage}}%</strong>
+          <div class="progress progress-xs mt-2">
+            <progressbar class="progress progress-info" [value]="weightPercentage" [max]="100"
+                         type="info"></progressbar>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md mb-sm-2 mb-0">
+          <div class="text-muted">Body Fat</div>
+          <strong>{{fatCurrent}} {{fatCurrentUnit}} {{fatPercentage}}%</strong>
+          <div class="progress progress-xs mt-2">
+            <progressbar class="progress progress-info" [value]="fatPercentage" [max]="100"
+                         type="info"></progressbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

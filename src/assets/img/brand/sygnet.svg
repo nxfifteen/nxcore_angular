@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #25282d;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #fff;
+        stroke-width: 5px;
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #db2633;
+      }
+    </style>
+  </defs>
+  <path id="N_Left" data-name="N Left" class="cls-1" d="M475,467l40-43-32-35-92-99L224.649,112H64.619V912.1h160.03V302.134L244,318,429,515l14-14Z"/>
+  <path id="N_Right" data-name="N Right" class="cls-1" d="M959,112H798.97V721.418l-4.874,1.1L594,509l-26,27-22,23-22,24-16,17L618,718,798.97,912.1H959V112Z"/>
+  <path id="Stroke" class="cls-2" d="M255,695L768,146V329L255,878"/>
+</svg>
