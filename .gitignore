@@ -10,6 +10,7 @@
 /platforms/android
 /plugins/cordova-plugin-whitelist
 /plugins/*json
+/vendor
 
 # dependencies
 /node_modules
