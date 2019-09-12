@@ -204,8 +204,8 @@ export class DashboardComponent implements OnInit {
           ticks: {
             beginAtZero: false,
             maxTicksLimit: 5,
-            // stepSize: Math.ceil(100 / 5),
-            // max: 100
+            max: 1,
+            min: 0
           }
         }]
       },
@@ -303,9 +303,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.updateWeightChart(65, 95);
-
     this.apiService.getFitDashboard().subscribe((data) => {
       // console.log(data);
       this.stepsPopulate(data);
@@ -323,10 +320,55 @@ export class DashboardComponent implements OnInit {
       this.weightPercentage = data['weight']['progress'];
       this.weightWidgetChartSince = data['weight']['since'];
       this.weightWidgetChartData = [];
-      this.weightWidgetChartData.push(data['weight']['widget']['data'][0]);
-      this.weightWidgetChartData.push(data['weight']['widget']['data'][1]);
+      for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
+        this.weightWidgetChartData.push(data['weight']['widget']['data'][i]);
+      }
       this.weightWidgetChartLabels = data['weight']['widget']['labels'];
-      this.updateWeightChart(20, 110);
+      this.weightWidgetChartOptions = {
+        tooltips: {
+          enabled: false,
+          custom: CustomTooltips,
+          intersect: true,
+          mode: 'index',
+          position: 'nearest',
+          callbacks: {
+            labelColor: function (tooltipItem, chart) {
+              return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+            gridLines: {
+              drawOnChartArea: false,
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: false,
+              maxTicksLimit: 5,
+              max: data['weight']['widget']['axis']['max'],
+              min: data['weight']['widget']['axis']['min']
+            }
+          }]
+        },
+        elements: {
+          line: {
+            borderWidth: 2
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3,
+          }
+        },
+        legend: {
+          display: false
+        }
+      };
 
       this.fatCurrent = data['fat']['value'];
       this.fatCurrentUnit = data['fat']['unit'];
@@ -360,16 +402,11 @@ export class DashboardComponent implements OnInit {
       }
       this.exerciseWidgetChartLabels = data['exercise']['labels'];
 
-      this.showStreak = true;
-      this.showPush = true;
-      this.showJourney = true;
+      this.showStreak = false;
+      this.showPush = false;
+      this.showJourney = false;
     });
 
-  }
-
-  private updateWeightChart(min, max): void {
-    this.weightWidgetChartOptions.scales.yAxes[0].ticks.max = max;
-    this.weightWidgetChartOptions.scales.yAxes[0].ticks.min = min;
   }
 
   private markdownString(datumElementElement: string) {

@@ -11,6 +11,7 @@
 /plugins/cordova-plugin-whitelist
 /plugins/*json
 /vendor
+/.vs
 
 # dependencies
 /node_modules
