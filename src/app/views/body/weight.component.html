@@ -1,0 +1,29 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <h4 class="card-title mb-0">Weight</h4>
+              <div class="small text-muted">Charted Since {{weightWidgetWidgetChartSince}}</div>
+            </div><!--/.col-->
+          </div><!--/.row-->
+          <div class="weightchart chart-wrapper" style="height:600px;margin-top:40px;">
+            <canvas baseChart class="chart"
+                    [datasets]="weightWidgetWidgetChartData"
+                    [labels]="weightWidgetWidgetChartLabels"
+                    [options]="weightWidgetWidgetChartOptions"
+                    [colors]="weightWidgetWidgetChartColours"
+                    [legend]="weightWidgetWidgetChartLegend"
+                    [chartType]="weightWidgetWidgetChartType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -39,6 +39,9 @@ export const navItems: NavData[] = [
       text: 'NEW'
     }
   },
+  {
+    divider: true
+  },
   // {
   //   name: 'Inbox',
   //   url: '/inbox',
@@ -92,23 +95,23 @@ export const navItems: NavData[] = [
   //     }
   //   ]
   // },
-  // {
-  //   name: 'Body',
-  //   url: '/body',
-  //   icon: 'icon-cursor',
-  //   children: [
-  //     {
-  //       name: 'Body Weight',
-  //       url: '/body/weight',
-  //       icon: 'icon-cursor'
-  //     },
-  //     {
-  //       name: 'Body Fat',
-  //       url: '/body/fat',
-  //       icon: 'icon-cursor'
-  //     }
-  //   ]
-  // },
+  {
+    name: 'Body',
+    url: '/body',
+    icon: 'icon-graph',
+    children: [
+      {
+        name: 'Weight',
+        url: '/body/weight',
+        icon: 'icon-graph'
+      },
+      // {
+      //   name: 'Body Fat',
+      //   url: '/body/fat',
+      //   icon: 'icon-cursor'
+      // }
+    ]
+  },
   // {
   //   name: 'Upload',
   //   url: '/upload',

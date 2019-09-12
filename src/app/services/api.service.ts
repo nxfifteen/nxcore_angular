@@ -15,4 +15,8 @@ export class ApiService {
   public getFitDashboard() {
     return this.httpClient.get(`https://connect.core.nxfifteen.me.uk/269VLG/ux/feed/dashboard?key=${this.API_KEY}`);
   }
+
+  public getFitBodyWeight() {
+    return this.httpClient.get(`https://connect.core.nxfifteen.me.uk/269VLG/ux/feed/body/weight/186?key=${this.API_KEY}`);
+  }
 }
