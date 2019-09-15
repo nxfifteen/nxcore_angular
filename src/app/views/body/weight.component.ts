@@ -5,8 +5,7 @@ import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
 
 @Component({
-  templateUrl: './weight.component.html',
-  styleUrls: ['./weight.component.scss']
+  templateUrl: './weight.component.html'
 })
 export class WeightComponent implements OnInit {
   weightWidgetWidgetChartSince: string;

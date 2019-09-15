@@ -3,6 +3,9 @@ import {DOCUMENT} from '@angular/common';
 import {navItems} from '../../_nav';
 import {ApiService} from '../../services/api.service';
 import {ConfigService} from '../../services/config.service';
+import {AuthenticationService} from '../../_services';
+import {User} from '../../_models';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,8 +19,15 @@ export class DefaultLayoutComponent implements OnDestroy {
   public profileName: string;
   public profileAvatar: string;
   public configService: ConfigService;
+  public profileXp: number;
+  currentUser: User;
 
-  constructor(private apiService: ApiService, private _configService: ConfigService, @Inject(DOCUMENT) _document?: any) {
+  constructor(private router: Router,
+              private apiService: ApiService,
+              private _configService: ConfigService,
+              private authenticationService: AuthenticationService,
+              @Inject(DOCUMENT) _document?: any) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.configService = _configService;
 
     // noinspection JSUnusedLocalSymbols
@@ -33,11 +43,17 @@ export class DefaultLayoutComponent implements OnDestroy {
     this.apiService.getProfile().subscribe((data) => {
       this.profileName = data['nameFull'];
       this.profileAvatar = data['avatar'];
+      this.profileXp = data['xp'];
     });
 
   }
 
   ngOnDestroy(): void {
     this.changes.disconnect();
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }

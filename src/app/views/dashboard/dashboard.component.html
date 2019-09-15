@@ -1,4 +1,62 @@
 <div class="animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          Your Best Day
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <table class="table table-responsive-sm table-hover table-outline mb-0">
+                <tbody>
+                <tr *ngFor="let profileAward of profileAwards">
+                  <td class="text-center">
+                    <div class="avatar">
+                      <img [alt]="profileAward.name" class="img-avatar"
+                           [src]="'assets/badges/' + profileAward.image + '.png'">
+                    </div>
+                  </td>
+                  <td>
+                    <div>{{ profileAward.name }}</div>
+                    <div class="small text-muted">
+                      {{ profileAward.longtext }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>Awarded {{ profileAward.count }} time(s)</div>
+                    <div class="small text-muted">
+                      Last Awarded: {{ profileAward.awarded }}
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-6">
+              <ul>
+                <li *ngFor="let point of profileXpLog">{{ point.datetime }}:: {{ point.log }}</li>
+              </ul>
+            </div>
+            <div class="col-2" style="text-align: right">
+              <div class="row">
+                <div class="col-12">
+                  <img [src]="profileLevel"/><br />
+                  {{ profileXp }} xp
+                </div>
+                <div class="col-12">
+                  <div class="progress progress-xs mt-2">
+                    <progressbar class="progress" [value]="profileXpProgress" [max]="profileXpTarget"
+                                 type="success"></progressbar>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.col-->
+  </div>
 
   <div class="row">
     <!--weather panel-->

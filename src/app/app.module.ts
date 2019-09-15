@@ -2,12 +2,17 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import {HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {AppComponent} from './app.component';
 // Import containers
 import {DefaultLayoutComponent} from './containers';
 import {AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule} from '@coreui/angular';
+// Authentication
+import { fakeBackendProvider } from './_helper';
+import { JwtInterceptor, ErrorInterceptor } from './_helper';
+import { LoginComponent } from './login';
 // Import routing module
 import {AppRoutingModule} from './app.routing';
 // Import 3rd party components
@@ -18,6 +23,7 @@ import {ConfigService} from './services/config.service';
 import {Observable, ObservableInput, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {MarkdownModule, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
+import {environment} from '../environments/environment';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -49,7 +55,7 @@ export function markedOptions(): MarkedOptions {
 export function loadConfigurationData(http: HttpClient, config: ConfigService): (() => Promise<boolean>) {
   return (): Promise<boolean> => {
     return new Promise<boolean>((resolve: (a: boolean) => void): void => {
-      http.get('https://connect.core.nxfifteen.me.uk/269VLG/ux/config?key=Ze3t6noklu9Vozikrw')
+      http.get(environment.apiUrl + '/269VLG/ux/config?key=Ze3t6noklu9Vozikrw')
         .pipe(
           map((x: ConfigService) => {
             config.uiSettings = x.uiSettings;
@@ -59,7 +65,7 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
             if (x.status !== 404) {
               resolve(false);
             }
-            config.uiSettings = {'showNavBar': true, 'showAsideBar': false};
+            config.uiSettings = {'showNavBar': true, 'showAsideBar': true};
             resolve(true);
             return of({});
           })
@@ -72,6 +78,8 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     AppRoutingModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
@@ -82,7 +90,6 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    HttpClientModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,
@@ -92,9 +99,13 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
   ],
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS
+    ...APP_CONTAINERS,
+    LoginComponent
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    fakeBackendProvider,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

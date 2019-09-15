@@ -1,6 +1,11 @@
 // If you want to override variables do it here
 @import "variables";
 
+// If you want to add something do it here
+@import "fonts/bucket-ico-fonts";
+@import "fonts/simple-line-icons";
+@import "fonts/font-awesome";
+
 // Import styles
 @import "~@coreui/coreui/scss/coreui";
 

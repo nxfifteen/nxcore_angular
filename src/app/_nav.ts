@@ -1,14 +1,17 @@
 interface NavAttributes {
   [propName: string]: any;
 }
+
 interface NavWrapper {
   attributes: NavAttributes;
   element: string;
 }
+
 interface NavBadge {
   text: string;
   variant: string;
 }
+
 interface NavLabel {
   class?: string;
   variant: string;
@@ -33,7 +36,7 @@ export const navItems: NavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'icon-speedometer',
+    icon: 'fa fa-dashboard',
     badge: {
       variant: 'info',
       text: 'NEW'
@@ -98,12 +101,12 @@ export const navItems: NavData[] = [
   {
     name: 'Body',
     url: '/body',
-    icon: 'icon-graph',
+    icon: 'fa fa-balance-scale',
     children: [
       {
         name: 'Weight',
         url: '/body/weight',
-        icon: 'icon-graph'
+        icon: 'medicalIcons-scale-tool-to-control-body-weight-standing-on-it'
       },
       // {
       //   name: 'Body Fat',
@@ -139,4 +142,39 @@ export const navItems: NavData[] = [
   //   variant: 'danger',
   //   attributes: { target: '_blank', rel: 'noopener' }
   // }
+  {
+    divider: true
+  },
+  {
+    name: 'Theme',
+    url: '/icons',
+    icon: 'ico-spell-check',
+    children: [
+      {
+        name: 'Colours',
+        url: '/icons/colors',
+        icon: 'ico-resize'
+      },
+      {
+        name: 'BucketISO',
+        url: '/icons/bucketiso',
+        icon: 'ico-files'
+      },
+      {
+        name: 'Fontawsome',
+        url: '/icons/fontawsome',
+        icon: 'fa fa-font-awesome'
+      },
+      {
+        name: 'Nomie',
+        url: '/icons/nomie',
+        icon: 'birthdayIcons-clown'
+      },
+      {
+        name: 'Simple Line Icons',
+        url: '/icons/simple-line-icons',
+        icon: 'line-icon-check'
+      },
+    ]
+  },
 ];

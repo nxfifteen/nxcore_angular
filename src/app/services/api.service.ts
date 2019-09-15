@@ -1,22 +1,29 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {AuthenticationService} from '../_services';
+import {User} from '../_models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  API_KEY = 'Ze3t6noklu9Vozikrw';
-  constructor(private httpClient: HttpClient) { }
+  currentUser: User;
+
+  constructor(private httpClient: HttpClient,
+              private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
 
   public getProfile() {
-    return this.httpClient.get(`https://connect.core.nxfifteen.me.uk/269VLG/ux/profile?key=${this.API_KEY}`);
+    return this.httpClient.get(`${environment.apiUrl}/${this.currentUser.username}/ux/profile?key=${this.currentUser.token}`);
   }
 
   public getFitDashboard() {
-    return this.httpClient.get(`https://connect.core.nxfifteen.me.uk/269VLG/ux/feed/dashboard?key=${this.API_KEY}`);
+    return this.httpClient.get(`${environment.apiUrl}/${this.currentUser.username}/ux/feed/dashboard?key=${this.currentUser.token}`);
   }
 
   public getFitBodyWeight() {
-    return this.httpClient.get(`https://connect.core.nxfifteen.me.uk/269VLG/ux/feed/body/weight/186?key=${this.API_KEY}`);
+    return this.httpClient.get(`${environment.apiUrl}/${this.currentUser.username}/ux/feed/body/weight/186?key=${this.currentUser.token}`);
   }
 }

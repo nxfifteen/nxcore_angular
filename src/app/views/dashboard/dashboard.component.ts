@@ -4,6 +4,7 @@ import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {ApiService} from '../../services/api.service';
 import {faHiking, faShoePrints, faWalking} from '@fortawesome/free-solid-svg-icons';
 import {MarkdownService} from 'ngx-markdown';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -77,8 +78,18 @@ export class DashboardComponent implements OnInit {
   exerciseWidgetChartColours: any;
   exerciseWidgetChartLegend: boolean;
   exerciseWidgetChartType: string;
+  profileName: string;
+  profileAvatar: string;
+  profileXp: number;
+  profileXpLog: Array<any>;
+  profileXpProgress: number;
+  profileXpTarget: number;
+  profileAwards: Array<any>;
+  profileLevel: string;
 
-  constructor(private markdownService: MarkdownService, private apiService: ApiService) {
+  constructor(private router: Router,
+              private markdownService: MarkdownService,
+              private apiService: ApiService) {
     this.stepSummaryChartData = [
       {
         data: [0],
@@ -303,6 +314,20 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.apiService.getProfile().subscribe((data) => {
+      this.profileName = data['nameFull'];
+      this.profileAvatar = data['avatar'];
+
+      this.profileAwards = Object.keys(data['rewards']).map(it => data['rewards'][it]);
+
+      this.profileXp = data['xp'];
+      this.profileXpLog = Object.keys(data['xp_log']).map(it => data['xp_log'][it]);
+      this.profileXpProgress = data['level_next_in'];
+      this.profileXpTarget = 50;
+
+      this.profileLevel = 'assets/xplevels/' + data['level'] + '.png';
+    });
+
     this.apiService.getFitDashboard().subscribe((data) => {
       // console.log(data);
       this.stepsPopulate(data);

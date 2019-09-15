@@ -13,6 +13,11 @@
 /vendor
 /.vs
 
+src/assets/badges/*.png
+src/assets/xplevels/*.png
+src/assets/fonts/*
+src/scss/fonts/*
+
 # dependencies
 /node_modules
 package-lock.json
