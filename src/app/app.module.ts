@@ -10,9 +10,8 @@ import {AppComponent} from './app.component';
 import {DefaultLayoutComponent} from './containers';
 import {AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule} from '@coreui/angular';
 // Authentication
-import { fakeBackendProvider } from './_helper';
 import { JwtInterceptor, ErrorInterceptor } from './_helper';
-import { LoginComponent } from './login';
+import {LoginComponent, RegisterComponent} from './login';
 // Import routing module
 import {AppRoutingModule} from './app.routing';
 // Import 3rd party components
@@ -100,12 +99,12 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

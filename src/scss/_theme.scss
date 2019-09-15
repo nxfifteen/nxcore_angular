@@ -1,0 +1,614 @@
+body {
+  background-color: #fff;
+}
+.card-header,
+.card-footer {
+  color: #eee;
+  background-color: $navbar;
+}
+ol.breadcrumb {
+  background-color: $sidebar !important;
+  color: #000 !important;
+}
+.breadcrumb-item a {
+  color: $brand_p !important;
+}
+.breadcrumb-item a:hover {
+  color: $brand_s !important;
+}
+.breadcrumb-item.active {
+  color: #000 !important;
+}
+.app-header {
+  background-color: $navbar !important;
+}
+.sidebar,
+.sidebar .sidebar-minimizer {
+  color: #000 !important;
+  background-color: $sidebar !important;
+}
+.sidebar .nav-link,
+.sidebar .nav-dropdown.open .nav-link {
+  color: #000 !important;
+  border-left: 3px solid transparent !important;
+  background-color: $sidebar !important;
+}
+.sidebar .nav-link.active,
+.sidebar .nav-dropdown.open .nav-link.active,
+.sidebar .nav-link:hover,
+.sidebar .nav-dropdown.open .nav-link:hover {
+  color: #000 !important;
+  border-left: 3px solid $brand_p !important;
+  background-color: $sidebar !important;
+}
+.sidebar .nav-link:hover .nav-icon,
+.sidebar .nav-dropdown.open .nav-link:hover .nav-icon {
+  color: $brand_p !important;
+}
+.sidebar .nav-link.active .nav-icon,
+.sidebar .nav-dropdown.open .nav-link.active .nav-icon {
+  color: $brand_p !important;
+}
+
+.bg-brand-p {
+  background-color: $brand_p !important;
+}
+.btn-brand-p {
+  color: #fff !important;
+  background-color: $brand_p !important;
+  border-color: $brand_p !important;
+}
+.btn-brand-p:hover {
+  color: #fff !important;
+  background-color: $brand_p_s3 !important;
+  border-color: $brand_p_s6 !important;
+}
+.btn-outline-brand-p {
+  color: $brand_p !important;
+  border-color: $brand_p !important;
+}
+.btn-ghost-brand-p {
+  color: $brand_p !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p:hover {
+  color: #fff !important;
+  background-color: $brand_p !important;
+  border-color: $brand_p !important;
+}
+.bg-brand-p_s1 {
+  background-color: $brand_p_s1 !important;
+}
+.btn-brand-p_s1 {
+  color: #fff !important;
+  background-color: $brand_p_s1 !important;
+  border-color: $brand_p_s1 !important;
+}
+.btn-brand-p_s1:hover {
+  color: #fff !important;
+  background-color: $brand_p_s1 !important;
+  border-color: $brand_p_s1 !important;
+}
+.btn-outline-brand-p_s1 {
+  color: $brand_p_s1 !important;
+  border-color: $brand_p_s1 !important;
+}
+.btn-ghost-brand-p_s1 {
+  color: $brand_p_s1 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s1:hover {
+  color: #fff !important;
+  background-color: $brand_p_s1 !important;
+  border-color: $brand_p_s1 !important;
+}
+.bg-brand-p_s2 {
+  background-color: $brand_p_s2 !important;
+}
+.btn-brand-p_s2 {
+  color: #fff !important;
+  background-color: $brand_p_s2 !important;
+  border-color: $brand_p_s2 !important;
+}
+.btn-brand-p_s2:hover {
+  color: #fff !important;
+  background-color: $brand_p_s2 !important;
+  border-color: $brand_p_s2 !important;
+}
+.btn-outline-brand-p_s2 {
+  color: $brand_p_s2 !important;
+  border-color: $brand_p_s2 !important;
+}
+.btn-ghost-brand-p_s2 {
+  color: $brand_p_s2 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s2:hover {
+  color: #fff !important;
+  background-color: $brand_p_s2 !important;
+  border-color: $brand_p_s2 !important;
+}
+.bg-brand-p_s3 {
+  background-color: $brand_p_s3 !important;
+}
+.btn-brand-p_s3 {
+  color: #fff !important;
+  background-color: $brand_p_s3 !important;
+  border-color: $brand_p_s3 !important;
+}
+.btn-brand-p_s3:hover {
+  color: #fff !important;
+  background-color: $brand_p_s3 !important;
+  border-color: $brand_p_s3 !important;
+}
+.btn-outline-brand-p_s3 {
+  color: $brand_p_s3 !important;
+  border-color: $brand_p_s3 !important;
+}
+.btn-ghost-brand-p_s3 {
+  color: $brand_p_s3 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s3:hover {
+  color: #fff !important;
+  background-color: $brand_p_s3 !important;
+  border-color: $brand_p_s3 !important;
+}
+.bg-brand-p_s4 {
+  background-color: $brand_p_s4 !important;
+}
+.btn-brand-p_s4 {
+  color: #fff !important;
+  background-color: $brand_p_s4 !important;
+  border-color: $brand_p_s4 !important;
+}
+.btn-brand-p_s4:hover {
+  color: #fff !important;
+  background-color: $brand_p_s4 !important;
+  border-color: $brand_p_s4 !important;
+}
+.btn-outline-brand-p_s4 {
+  color: $brand_p_s4 !important;
+  border-color: $brand_p_s4 !important;
+}
+.btn-ghost-brand-p_s4 {
+  color: $brand_p_s4 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s4:hover {
+  color: #fff !important;
+  background-color: $brand_p_s4 !important;
+  border-color: $brand_p_s4 !important;
+}
+.bg-brand-p_s5 {
+  background-color: $brand_p_s5 !important;
+}
+.btn-brand-p_s5 {
+  color: #fff !important;
+  background-color: $brand_p_s5 !important;
+  border-color: $brand_p_s5 !important;
+}
+.btn-brand-p_s5:hover {
+  color: #fff !important;
+  background-color: $brand_p_s5 !important;
+  border-color: $brand_p_s5 !important;
+}
+.btn-outline-brand-p_s5 {
+  color: $brand_p_s5 !important;
+  border-color: $brand_p_s5 !important;
+}
+.btn-ghost-brand-p_s5 {
+  color: $brand_p_s5 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s5:hover {
+  color: #fff !important;
+  background-color: $brand_p_s5 !important;
+  border-color: $brand_p_s5 !important;
+}
+.bg-brand-p_s6 {
+  background-color: $brand_p_s6 !important;
+}
+.btn-brand-p_s6 {
+  color: #fff !important;
+  background-color: $brand_p_s6 !important;
+  border-color: $brand_p_s6 !important;
+}
+.btn-brand-p_s6:hover {
+  color: #fff !important;
+  background-color: $brand_p_s6 !important;
+  border-color: $brand_p_s6 !important;
+}
+.btn-outline-brand-p_s6 {
+  color: $brand_p_s6 !important;
+  border-color: $brand_p_s6 !important;
+}
+.btn-ghost-brand-p_s6 {
+  color: $brand_p_s6 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s6:hover {
+  color: #fff !important;
+  background-color: $brand_p_s6 !important;
+  border-color: $brand_p_s6 !important;
+}
+.bg-brand-p_s7 {
+  background-color: $brand_p_s7 !important;
+}
+.btn-brand-p_s7 {
+  color: #fff !important;
+  background-color: $brand_p_s7 !important;
+  border-color: $brand_p_s7 !important;
+}
+.btn-brand-p_s7:hover {
+  color: #fff !important;
+  background-color: $brand_p_s7 !important;
+  border-color: $brand_p_s7 !important;
+}
+.btn-outline-brand-p_s7 {
+  color: $brand_p_s7 !important;
+  border-color: $brand_p_s7 !important;
+}
+.btn-ghost-brand-p_s7 {
+  color: $brand_p_s7 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s7:hover {
+  color: #fff !important;
+  background-color: $brand_p_s7 !important;
+  border-color: $brand_p_s7 !important;
+}
+.bg-brand-p_s8 {
+  background-color: $brand_p_s8 !important;
+}
+.btn-brand-p_s8 {
+  color: #fff !important;
+  background-color: $brand_p_s8 !important;
+  border-color: $brand_p_s8 !important;
+}
+.btn-brand-p_s8:hover {
+  color: #fff !important;
+  background-color: $brand_p_s8 !important;
+  border-color: $brand_p_s8 !important;
+}
+.btn-outline-brand-p_s8 {
+  color: $brand_p_s8 !important;
+  border-color: $brand_p_s8 !important;
+}
+.btn-ghost-brand-p_s8 {
+  color: $brand_p_s8 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s8:hover {
+  color: #fff !important;
+  background-color: $brand_p_s8 !important;
+  border-color: $brand_p_s8 !important;
+}
+.bg-brand-p_s9 {
+  background-color: $brand_p_s9 !important;
+}
+.btn-brand-p_s9 {
+  color: #fff !important;
+  background-color: $brand_p_s9 !important;
+  border-color: $brand_p_s9 !important;
+}
+.btn-brand-p_s9:hover {
+  color: #fff !important;
+  background-color: $brand_p_s9 !important;
+  border-color: $brand_p_s9 !important;
+}
+.btn-outline-brand-p_s9 {
+  color: $brand_p_s9 !important;
+  border-color: $brand_p_s9 !important;
+}
+.btn-ghost-brand-p_s9 {
+  color: $brand_p_s9 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_s9:hover {
+  color: #fff !important;
+  background-color: $brand_p_s9 !important;
+  border-color: $brand_p_s9 !important;
+}
+
+.bg-brand-p_t1 {
+  background-color: $brand_p_t1 !important;
+}
+.btn-brand-p_t1 {
+  color: #fff !important;
+  background-color: $brand_p_t1 !important;
+  border-color: $brand_p_t1 !important;
+}
+.btn-brand-p_t1:hover {
+  color: #fff !important;
+  background-color: $brand_p_t1 !important;
+  border-color: $brand_p_t1 !important;
+}
+.btn-outline-brand-p_t1 {
+  color: $brand_p_t1 !important;
+  border-color: $brand_p_t1 !important;
+}
+.btn-ghost-brand-p_t1 {
+  color: $brand_p_t1 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t1:hover {
+  color: #fff !important;
+  background-color: $brand_p_t1 !important;
+  border-color: $brand_p_t1 !important;
+}
+.bg-brand-p_t2 {
+  background-color: $brand_p_t2 !important;
+}
+.btn-brand-p_t2 {
+  color: #fff !important;
+  background-color: $brand_p_t2 !important;
+  border-color: $brand_p_t2 !important;
+}
+.btn-brand-p_t2:hover {
+  color: #fff !important;
+  background-color: $brand_p_t2 !important;
+  border-color: $brand_p_t2 !important;
+}
+.btn-outline-brand-p_t2 {
+  color: $brand_p_t2 !important;
+  border-color: $brand_p_t2 !important;
+}
+.btn-ghost-brand-p_t2 {
+  color: $brand_p_t2 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t2:hover {
+  color: #fff !important;
+  background-color: $brand_p_t2 !important;
+  border-color: $brand_p_t2 !important;
+}
+.bg-brand-p_t3 {
+  background-color: $brand_p_t3 !important;
+}
+.btn-brand-p_t3 {
+  color: #fff !important;
+  background-color: $brand_p_t3 !important;
+  border-color: $brand_p_t3 !important;
+}
+.btn-brand-p_t3:hover {
+  color: #fff !important;
+  background-color: $brand_p_t3 !important;
+  border-color: $brand_p_t3 !important;
+}
+.btn-outline-brand-p_t3 {
+  color: $brand_p_t3 !important;
+  border-color: $brand_p_t3 !important;
+}
+.btn-ghost-brand-p_t3 {
+  color: $brand_p_t3 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t3:hover {
+  color: #fff !important;
+  background-color: $brand_p_t3 !important;
+  border-color: $brand_p_t3 !important;
+}
+.bg-brand-p_t4 {
+  background-color: $brand_p_t4 !important;
+}
+.btn-brand-p_t4 {
+  color: #fff !important;
+  background-color: $brand_p_t4 !important;
+  border-color: $brand_p_t4 !important;
+}
+.btn-brand-p_t4:hover {
+  color: #fff !important;
+  background-color: $brand_p_t4 !important;
+  border-color: $brand_p_t4 !important;
+}
+.btn-outline-brand-p_t4 {
+  color: $brand_p_t4 !important;
+  border-color: $brand_p_t4 !important;
+}
+.btn-ghost-brand-p_t4 {
+  color: $brand_p_t4 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t4:hover {
+  color: #fff !important;
+  background-color: $brand_p_t4 !important;
+  border-color: $brand_p_t4 !important;
+}
+.bg-brand-p_t5 {
+  background-color: $brand_p_t5 !important;
+}
+.btn-brand-p_t5 {
+  color: #fff !important;
+  background-color: $brand_p_t5 !important;
+  border-color: $brand_p_t5 !important;
+}
+.btn-brand-p_t5:hover {
+  color: #fff !important;
+  background-color: $brand_p_t5 !important;
+  border-color: $brand_p_t5 !important;
+}
+.btn-outline-brand-p_t5 {
+  color: $brand_p_t5 !important;
+  border-color: $brand_p_t5 !important;
+}
+.btn-ghost-brand-p_t5 {
+  color: $brand_p_t5 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t5:hover {
+  color: #fff !important;
+  background-color: $brand_p_t5 !important;
+  border-color: $brand_p_t5 !important;
+}
+.bg-brand-p_t6 {
+  background-color: $brand_p_t6 !important;
+}
+.btn-brand-p_t6 {
+  color: #fff !important;
+  background-color: $brand_p_t6 !important;
+  border-color: $brand_p_t6 !important;
+}
+.btn-brand-p_t6:hover {
+  color: #fff !important;
+  background-color: $brand_p_t6 !important;
+  border-color: $brand_p_t6 !important;
+}
+.btn-outline-brand-p_t6 {
+  color: $brand_p_t6 !important;
+  border-color: $brand_p_t6 !important;
+}
+.btn-ghost-brand-p_t6 {
+  color: $brand_p_t6 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t6:hover {
+  color: #fff !important;
+  background-color: $brand_p_t6 !important;
+  border-color: $brand_p_t6 !important;
+}
+.bg-brand-p_t7 {
+  background-color: $brand_p_t7 !important;
+}
+.btn-brand-p_t7 {
+  color: #fff !important;
+  background-color: $brand_p_t7 !important;
+  border-color: $brand_p_t7 !important;
+}
+.btn-brand-p_t7:hover {
+  color: #fff !important;
+  background-color: $brand_p_t7 !important;
+  border-color: $brand_p_t7 !important;
+}
+.btn-outline-brand-p_t7 {
+  color: $brand_p_t7 !important;
+  border-color: $brand_p_t7 !important;
+}
+.btn-ghost-brand-p_t7 {
+  color: $brand_p_t7 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t7:hover {
+  color: #fff !important;
+  background-color: $brand_p_t7 !important;
+  border-color: $brand_p_t7 !important;
+}
+.bg-brand-p_t8 {
+  background-color: $brand_p_t8 !important;
+}
+.btn-brand-p_t8 {
+  color: #fff !important;
+  background-color: $brand_p_t8 !important;
+  border-color: $brand_p_t8 !important;
+}
+.btn-brand-p_t8:hover {
+  color: #fff !important;
+  background-color: $brand_p_t8 !important;
+  border-color: $brand_p_t8 !important;
+}
+.btn-outline-brand-p_t8 {
+  color: $brand_p_t8 !important;
+  border-color: $brand_p_t8 !important;
+}
+.btn-ghost-brand-p_t8 {
+  color: $brand_p_t8 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t8:hover {
+  color: #fff !important;
+  background-color: $brand_p_t8 !important;
+  border-color: $brand_p_t8 !important;
+}
+.bg-brand-p_t9 {
+  background-color: $brand_p_t9 !important;
+}
+.btn-brand-p_t9 {
+  color: #fff !important;
+  background-color: $brand_p_t9 !important;
+  border-color: $brand_p_t9 !important;
+}
+.btn-brand-p_t9:hover {
+  color: #fff !important;
+  background-color: $brand_p_t9 !important;
+  border-color: $brand_p_t9 !important;
+}
+.btn-outline-brand-p_t9 {
+  color: $brand_p_t9 !important;
+  border-color: $brand_p_t9 !important;
+}
+.btn-ghost-brand-p_t9 {
+  color: $brand_p_t9 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-p_t9:hover {
+  color: #fff !important;
+  background-color: $brand_p_t9 !important;
+  border-color: $brand_p_t9 !important;
+}
+
+.bg-brand-s {
+  background-color: $brand_s !important;
+}
+.btn-brand-s {
+  color: #fff !important;
+  background-color: $brand_s !important;
+  border-color: $brand_s !important;
+}
+.btn-brand-s:hover {
+  color: #fff !important;
+  background-color: $brand_s !important;
+  border-color: $brand_s !important;
+}
+.btn-outline-brand-s {
+  color: $brand_s !important;
+  border-color: $brand_s !important;
+}
+.btn-ghost-brand-s {
+  color: $brand_s !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+}
+.btn-ghost-brand-s:hover {
+  color: #fff !important;
+  background-color: $brand_s !important;
+  border-color: $brand_s !important;
+}
