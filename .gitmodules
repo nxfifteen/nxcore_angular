@@ -1,0 +1,3 @@
+[submodule "platforms/android"]
+	path = platforms/android
+	url = git@git.nxfifteen.rocks:nx-health/cordova.git

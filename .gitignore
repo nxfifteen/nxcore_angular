@@ -7,7 +7,6 @@
 /tmp
 /out-tsc
 /platforms/windows
-/platforms/android
 /plugins/cordova-plugin-whitelist
 /plugins/*json
 /vendor
