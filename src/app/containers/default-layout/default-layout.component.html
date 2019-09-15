@@ -4,12 +4,13 @@
   [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'NxFIFTEEN Core Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'NxFIFTEEN Core Logo'}"
   [sidebarToggler]="'lg'">
-  <!--<ul class="nav navbar-nav d-md-down-none">-->
-    <!--<li class="nav-item px-3">-->
-      <!--<a class="nav-link" href="#">Dashboard</a>-->
-      <!--<a class="nav-link" href="#">Weight</a>-->
-    <!--</li>-->
-  <!--</ul>-->
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health" target="_blank">Project Gitlab</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/store" target="_blank">Store (Symfony)</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/angular" target="_blank">Web UI (Angular)</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/cordova" target="_blank">Mobile UI (Cordova/Android)</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/samsung-health-sync" target="_blank">Sync Samsung Health (Android)</a></li>
+  </ul>
   <ul class="nav navbar-nav ml-auto" *ngIf="currentUser">
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
@@ -57,94 +58,13 @@
           <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Today</div>
           <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
             <div class="avatar float-right">
-              <img class="img-avatar" src="assets/img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
+              <img class="img-avatar" src="https://connect.core.nxfifteen.me.uk/Stuart.jpg" alt="admin@bootstrapmaster.com">
             </div>
             <div>Meeting with
               <strong>Lucas</strong>
             </div>
-            <small class="text-muted mr-3">
-              <i class="icon-calendar"></i>  1 - 3pm</small>
-            <small class="text-muted">
-              <i class="icon-location-pin"></i>  Palo Alto, CA</small>
-          </div>
-          <div class="list-group-item list-group-item-accent-info">
-            <div class="avatar float-right">
-              <img class="img-avatar" src="assets/img/avatars/4.jpg" alt="admin@bootstrapmaster.com">
-            </div>
-            <div>Skype with
-              <strong>Megan</strong>
-            </div>
-            <small class="text-muted mr-3">
-              <i class="icon-calendar"></i>  4 - 5pm</small>
-            <small class="text-muted">
-              <i class="icon-social-skype"></i>  On-line</small>
-          </div>
-          <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Tomorrow</div>
-          <div class="list-group-item list-group-item-accent-danger list-group-item-divider">
-            <div>New UI Project -
-              <strong>deadline</strong>
-            </div>
-            <small class="text-muted mr-3">
-              <i class="icon-calendar"></i>  10 - 11pm</small>
-            <small class="text-muted">
-              <i class="icon-home"></i>  creativeLabs HQ</small>
-            <div class="avatars-stack mt-2">
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/2.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/3.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/4.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/5.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-            </div>
-          </div>
-          <div class="list-group-item list-group-item-accent-success list-group-item-divider">
-            <div>
-              <strong>#10 Startups.Garden</strong> Meetup</div>
-            <small class="text-muted mr-3">
-              <i class="icon-calendar"></i>  1 - 3pm</small>
-            <small class="text-muted">
-              <i class="icon-location-pin"></i>  Palo Alto, CA</small>
-          </div>
-          <div class="list-group-item list-group-item-accent-primary list-group-item-divider">
-            <div>
-              <strong>Team meeting</strong>
-            </div>
-            <small class="text-muted mr-3">
-              <i class="icon-calendar"></i>  4 - 6pm</small>
-            <small class="text-muted">
-              <i class="icon-home"></i>  creativeLabs HQ</small>
-            <div class="avatars-stack mt-2">
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/2.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/3.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/4.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/5.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/7.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-              <div class="avatar avatar-xs">
-                <img class="img-avatar" src="assets/img/avatars/8.jpg" alt="admin@bootstrapmaster.com">
-              </div>
-            </div>
+            <small class="text-muted mr-3"><i class="icon-calendar"></i>  1 - 3pm</small>
+            <small class="text-muted"><i class="icon-location-pin"></i>  Palo Alto, CA</small>
           </div>
         </div>
       </tab>
@@ -152,6 +72,6 @@
   </app-aside>
 </div>
 <app-footer>
-  <span><a href="https://nxfifteen.me.uk">Core</a> &copy; 2019 Stuart McCulloch Anderson.</span>
-  <span class="ml-auto">Powered by <a href="https://nxfifteen.me.uk">Core</a></span>
+  <span><a href="https://git.nxfifteen.rocks/nx-health">NxFITNESS Core</a> &copy; 2019 Stuart McCulloch Anderson.</span>
+  <span class="ml-auto">An <a href="https://nxfifteen.me.uk">NxFIFTEEN</a> project, powered by <a href="http://coreui.io">CoreUI</a></span>
 </app-footer>
