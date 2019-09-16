@@ -7,11 +7,11 @@ import {LoginComponent, RegisterComponent} from './login';
 import {AuthGuard} from './_helper';
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
-  },
+    {
+      path: '',
+      redirectTo: 'dashboard',
+      pathMatch: 'full'
+    },
     {
       path: 'login',
       component: LoginComponent,
@@ -26,31 +26,36 @@ export const routes: Routes = [
         title: 'Register'
       },
     },
-  {
-    path: '',
-    component: DefaultLayoutComponent,
-    data: {
-      title: 'Home'
-    },
-    children: [
-      {
-        path: 'dashboard',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
+    {
+      path: '',
+      component: DefaultLayoutComponent,
+      data: {
+        title: 'Home'
       },
-      {
-        path: 'body',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./views/body/body.module').then(m => m.BodyModule)
-      },
-      {
-        path: 'icons',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
-      }
-    ]
-  }
-]
+      children: [
+        {
+          path: 'setup',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/firstrun/firstrun.module').then(m => m.FirstrunModule)
+        },
+        {
+          path: 'dashboard',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
+        },
+        {
+          path: 'body',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/body/body.module').then(m => m.BodyModule)
+        },
+        {
+          path: 'icons',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
+        }
+      ]
+    }
+  ]
 ;
 
 @NgModule({

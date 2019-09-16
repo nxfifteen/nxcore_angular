@@ -23,6 +23,7 @@ import {Observable, ObservableInput, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {MarkdownModule, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
 import {environment} from '../environments/environment';
+import {MyMaterialModule} from './material-module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -77,6 +78,7 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MyMaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,

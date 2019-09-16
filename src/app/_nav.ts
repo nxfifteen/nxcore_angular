@@ -36,24 +36,20 @@ export const navItems: NavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'fa fa-dashboard',
+    icon: 'fa fa-dashboard'
+  },
+  {
+    divider: true
+  },
+  {
+    name: 'Setup',
+    url: '/setup',
+    icon: 'icon-speedometer',
     badge: {
       variant: 'info',
       text: 'NEW'
     }
   },
-  {
-    divider: true
-  },
-  // {
-  //   name: 'Inbox',
-  //   url: '/inbox',
-  //   icon: 'icon-speedometer',
-  //   badge: {
-  //     variant: 'info',
-  //     text: 'NEW'
-  //   }
-  // },
   // {
   //   name: 'Activities',
   //   url: '/activities',

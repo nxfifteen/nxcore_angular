@@ -31,16 +31,6 @@
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-user"></i></span>
-                  </div>
-                  <input type="text" formControlName="name" class="form-control" placeholder="Display Name"
-                         [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                    <div *ngIf="f.name.errors.required">Your name is required</div>
-                  </div>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
                     <span class="input-group-text">@</span>
                   </div>
                   <input type="text" formControlName="email" class="form-control" placeholder="Email Address"

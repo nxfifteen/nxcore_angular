@@ -30,8 +30,8 @@ export class AuthenticationService {
       }));
   }
 
-  register(username, name, password, passwordConfirm, email, invite) {
-    return this.http.post<any>(environment.apiUrl + `/users/register`, {username, name, password, passwordConfirm, email, invite})
+  register(username, password, passwordConfirm, email, invite) {
+    return this.http.post<any>(environment.apiUrl + `/users/register`, {username, password, passwordConfirm, email, invite})
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));

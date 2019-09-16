@@ -5,6 +5,8 @@ import {ApiService} from '../../services/api.service';
 import {faHiking, faShoePrints, faWalking} from '@fortawesome/free-solid-svg-icons';
 import {MarkdownService} from 'ngx-markdown';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../../_services';
+import {User} from '../../_models';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -86,8 +88,10 @@ export class DashboardComponent implements OnInit {
   profileXpTarget: number;
   profileAwards: Array<any>;
   profileLevel: string;
+  currentUser: User;
 
-  constructor(private router: Router,
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService) {
     this.stepSummaryChartData = [
@@ -314,124 +318,128 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.getProfile().subscribe((data) => {
-      this.profileName = data['nameFull'];
-      this.profileAvatar = data['avatar'];
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    if (this.currentUser.firstrun) {
+      this.router.navigate(['/setup']);
+    } else {
+      this.apiService.getProfile().subscribe((data) => {
+        this.profileName = data['nameFull'];
+        this.profileAvatar = data['avatar'];
 
-      this.profileAwards = Object.keys(data['rewards']).map(it => data['rewards'][it]);
+        this.profileAwards = Object.keys(data['rewards']).map(it => data['rewards'][it]);
 
-      this.profileXp = data['xp'];
-      this.profileXpLog = Object.keys(data['xp_log']).map(it => data['xp_log'][it]);
-      this.profileXpProgress = data['level_next_in'];
-      this.profileXpTarget = 50;
+        this.profileXp = data['xp'];
+        this.profileXpLog = Object.keys(data['xp_log']).map(it => data['xp_log'][it]);
+        this.profileXpProgress = data['level_next_in'];
+        this.profileXpTarget = 50;
 
-      this.profileLevel = 'assets/xplevels/' + data['level'] + '.png';
-    });
+        this.profileLevel = 'assets/xplevels/' + data['level'] + '.png';
+      });
 
-    this.apiService.getFitDashboard().subscribe((data) => {
-      // console.log(data);
-      this.stepsPopulate(data);
-      this.floorsPopulate(data);
+      this.apiService.getFitDashboard().subscribe((data) => {
+        // console.log(data);
+        this.stepsPopulate(data);
+        this.floorsPopulate(data);
 
-      this.distanceSummary = data['distance']['value'];
-      this.distanceSummaryGoal = data['distance']['goal'];
-      this.distanceSummaryPercentage = data['distance']['progress'];
-      this.distanceSummaryChartData = [];
-      this.distanceSummaryChartData.push(data['distance']['widget']['data']);
-      this.distanceSummaryChartLabels = data['distance']['widget']['labels'];
+        this.distanceSummary = data['distance']['value'];
+        this.distanceSummaryGoal = data['distance']['goal'];
+        this.distanceSummaryPercentage = data['distance']['progress'];
+        this.distanceSummaryChartData = [];
+        this.distanceSummaryChartData.push(data['distance']['widget']['data']);
+        this.distanceSummaryChartLabels = data['distance']['widget']['labels'];
 
-      this.weightCurrent = data['weight']['value'];
-      this.weightCurrentUnit = data['weight']['unit'];
-      this.weightPercentage = data['weight']['progress'];
-      this.weightWidgetChartSince = data['weight']['since'];
-      this.weightWidgetChartData = [];
-      for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
-        this.weightWidgetChartData.push(data['weight']['widget']['data'][i]);
-      }
-      this.weightWidgetChartLabels = data['weight']['widget']['labels'];
-      this.weightWidgetChartOptions = {
-        tooltips: {
-          enabled: false,
-          custom: CustomTooltips,
-          intersect: true,
-          mode: 'index',
-          position: 'nearest',
-          callbacks: {
-            labelColor: function (tooltipItem, chart) {
-              return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+        this.weightCurrent = data['weight']['value'];
+        this.weightCurrentUnit = data['weight']['unit'];
+        this.weightPercentage = data['weight']['progress'];
+        this.weightWidgetChartSince = data['weight']['since'];
+        this.weightWidgetChartData = [];
+        for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
+          this.weightWidgetChartData.push(data['weight']['widget']['data'][i]);
+        }
+        this.weightWidgetChartLabels = data['weight']['widget']['labels'];
+        this.weightWidgetChartOptions = {
+          tooltips: {
+            enabled: false,
+            custom: CustomTooltips,
+            intersect: true,
+            mode: 'index',
+            position: 'nearest',
+            callbacks: {
+              labelColor: function (tooltipItem, chart) {
+                return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+              }
             }
-          }
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          xAxes: [{
-            gridLines: {
-              drawOnChartArea: false,
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: false,
-              maxTicksLimit: 5,
-              max: data['weight']['widget']['axis']['max'],
-              min: data['weight']['widget']['axis']['min']
-            }
-          }]
-        },
-        elements: {
-          line: {
-            borderWidth: 2
           },
-          point: {
-            radius: 0,
-            hitRadius: 10,
-            hoverRadius: 4,
-            hoverBorderWidth: 3,
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            xAxes: [{
+              gridLines: {
+                drawOnChartArea: false,
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: false,
+                maxTicksLimit: 5,
+                max: data['weight']['widget']['axis']['max'],
+                min: data['weight']['widget']['axis']['min']
+              }
+            }]
+          },
+          elements: {
+            line: {
+              borderWidth: 2
+            },
+            point: {
+              radius: 0,
+              hitRadius: 10,
+              hoverRadius: 4,
+              hoverBorderWidth: 3,
+            }
+          },
+          legend: {
+            display: false
           }
-        },
-        legend: {
-          display: false
-        }
-      };
+        };
 
-      this.fatCurrent = data['fat']['value'];
-      this.fatCurrentUnit = data['fat']['unit'];
-      this.fatPercentage = data['fat']['progress'];
+        this.fatCurrent = data['fat']['value'];
+        this.fatCurrentUnit = data['fat']['unit'];
+        this.fatPercentage = data['fat']['progress'];
 
-      if (data['best'].length > 0) {
-        this.showBestDay = true;
-        this.theBest = data['best'];
-      }
-
-      if (data['milestones']['distance']['more'].length > 0 || data['milestones']['distance']['less'].length > 0) {
-        this.theMilestonesMore = [];
-        for (let i = 0; i < data['milestones']['distance']['more'].length; i++) {
-          this.theMilestonesMore.push(this.markdownString(data['milestones']['distance']['more'][i]));
+        if (data['best'].length > 0) {
+          this.showBestDay = true;
+          this.theBest = data['best'];
         }
 
-        this.theMilestonesLess = [];
-        for (let i = 0; i < data['milestones']['distance']['less'].length; i++) {
-          this.theMilestonesLess.push(this.markdownString(data['milestones']['distance']['less'][i]));
+        if (data['milestones']['distance']['more'].length > 0 || data['milestones']['distance']['less'].length > 0) {
+          this.theMilestonesMore = [];
+          for (let i = 0; i < data['milestones']['distance']['more'].length; i++) {
+            this.theMilestonesMore.push(this.markdownString(data['milestones']['distance']['more'][i]));
+          }
+
+          this.theMilestonesLess = [];
+          for (let i = 0; i < data['milestones']['distance']['less'].length; i++) {
+            this.theMilestonesLess.push(this.markdownString(data['milestones']['distance']['less'][i]));
+          }
         }
-      }
 
-      this.exerciseHistory = [];
-      for (let i = 0; i < data['exercise']['history'].length; i++) {
-        this.exerciseHistory.push(this.markdownString(data['exercise']['history'][i]));
-      }
+        this.exerciseHistory = [];
+        for (let i = 0; i < data['exercise']['history'].length; i++) {
+          this.exerciseHistory.push(this.markdownString(data['exercise']['history'][i]));
+        }
 
-      this.exerciseWidgetChartData = [];
-      for (let i = 0; i < data['exercise']['data'].length; i++) {
-        this.exerciseWidgetChartData.push(data['exercise']['data'][i]);
-      }
-      this.exerciseWidgetChartLabels = data['exercise']['labels'];
+        this.exerciseWidgetChartData = [];
+        for (let i = 0; i < data['exercise']['data'].length; i++) {
+          this.exerciseWidgetChartData.push(data['exercise']['data'][i]);
+        }
+        this.exerciseWidgetChartLabels = data['exercise']['labels'];
 
-      this.showStreak = false;
-      this.showPush = false;
-      this.showJourney = false;
-    });
-
+        this.showStreak = false;
+        this.showPush = false;
+        this.showJourney = false;
+      });
+    }
   }
 
   private markdownString(datumElementElement: string) {

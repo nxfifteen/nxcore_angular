@@ -19,7 +19,7 @@
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
-    <preference name="Fullscreen" value="true" />
+    <preference name="Fullscreen" value="false" />
     <preference name="OverrideUserAgent" value="Mozilla/5.0 My Browser" />
     <preference name="AppendUserAgent" value="My Browser" />
 </widget>
