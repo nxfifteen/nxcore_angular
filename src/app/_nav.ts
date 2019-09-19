@@ -48,7 +48,19 @@ export const navItems: NavData[] = [
     badge: {
       variant: 'info',
       text: 'NEW'
-    }
+    },
+    children: [
+      {
+        name: 'First Run',
+        url: '/setup/profile',
+        icon: 'ico-resize'
+      },
+      {
+        name: 'Auth With Fitbit',
+        url: '/setup/fitbit',
+        icon: 'ico-resize'
+      },
+    ],
   },
   // {
   //   name: 'Activities',

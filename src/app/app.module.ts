@@ -102,7 +102,7 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
     AppComponent,
     ...APP_CONTAINERS,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

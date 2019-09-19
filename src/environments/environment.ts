@@ -5,5 +5,6 @@
 
 export const environment = {
   apiUrl: 'https://connect.core.nxfifteen.me.uk',
+  uiUrl: 'http://localhost:4200',
   production: false
 };

@@ -28,6 +28,10 @@ export class DashboardComponent implements OnInit {
   faShoePrints = faShoePrints;
   showBestDay: boolean;
   showStreak: boolean;
+  showMilestonesMore: boolean;
+  showMilestonesLess: boolean;
+  showExerciseChart: boolean;
+  showWeightChart: boolean;
   summaryWidgetChartOptions: any;
   summaryWidgetChartColours: any;
   summaryWidgetChartLegend: boolean;
@@ -119,6 +123,10 @@ export class DashboardComponent implements OnInit {
     this.showJourney = false;
     this.showBestDay = false;
     this.showStreak = false;
+    this.showMilestonesMore = false;
+    this.showMilestonesLess = false;
+    this.showExerciseChart = false;
+    this.showWeightChart = false;
 
     this.summaryWidgetChartOptions = {
       tooltips: {
@@ -348,92 +356,104 @@ export class DashboardComponent implements OnInit {
         this.distanceSummaryChartData.push(data['distance']['widget']['data']);
         this.distanceSummaryChartLabels = data['distance']['widget']['labels'];
 
-        this.weightCurrent = data['weight']['value'];
-        this.weightCurrentUnit = data['weight']['unit'];
-        this.weightPercentage = data['weight']['progress'];
-        this.weightWidgetChartSince = data['weight']['since'];
-        this.weightWidgetChartData = [];
-        for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
-          this.weightWidgetChartData.push(data['weight']['widget']['data'][i]);
-        }
-        this.weightWidgetChartLabels = data['weight']['widget']['labels'];
-        this.weightWidgetChartOptions = {
-          tooltips: {
-            enabled: false,
-            custom: CustomTooltips,
-            intersect: true,
-            mode: 'index',
-            position: 'nearest',
-            callbacks: {
-              labelColor: function (tooltipItem, chart) {
-                return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-              }
-            }
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              gridLines: {
-                drawOnChartArea: false,
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: false,
-                maxTicksLimit: 5,
-                max: data['weight']['widget']['axis']['max'],
-                min: data['weight']['widget']['axis']['min']
-              }
-            }]
-          },
-          elements: {
-            line: {
-              borderWidth: 2
-            },
-            point: {
-              radius: 0,
-              hitRadius: 10,
-              hoverRadius: 4,
-              hoverBorderWidth: 3,
-            }
-          },
-          legend: {
-            display: false
+        if (data['weight']) {
+          this.weightCurrent = data['weight']['value'];
+          this.weightCurrentUnit = data['weight']['unit'];
+          this.weightPercentage = data['weight']['progress'];
+          this.weightWidgetChartSince = data['weight']['since'];
+          this.weightWidgetChartData = [];
+          for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
+            this.weightWidgetChartData.push(data['weight']['widget']['data'][i]);
           }
-        };
+          this.weightWidgetChartLabels = data['weight']['widget']['labels'];
+          this.weightWidgetChartOptions = {
+            tooltips: {
+              enabled: false,
+              custom: CustomTooltips,
+              intersect: true,
+              mode: 'index',
+              position: 'nearest',
+              callbacks: {
+                labelColor: function (tooltipItem, chart) {
+                  return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+                }
+              }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  drawOnChartArea: false,
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: false,
+                  maxTicksLimit: 5,
+                  max: data['weight']['widget']['axis']['max'],
+                  min: data['weight']['widget']['axis']['min']
+                }
+              }]
+            },
+            elements: {
+              line: {
+                borderWidth: 2
+              },
+              point: {
+                radius: 0,
+                hitRadius: 10,
+                hoverRadius: 4,
+                hoverBorderWidth: 3,
+              }
+            },
+            legend: {
+              display: false
+            }
+          };
 
-        this.fatCurrent = data['fat']['value'];
-        this.fatCurrentUnit = data['fat']['unit'];
-        this.fatPercentage = data['fat']['progress'];
+          this.fatCurrent = data['fat']['value'];
+          this.fatCurrentUnit = data['fat']['unit'];
+          this.fatPercentage = data['fat']['progress'];
+          this.showWeightChart = true;
+        }
 
         if (data['best'].length > 0) {
           this.showBestDay = true;
           this.theBest = data['best'];
         }
 
-        if (data['milestones']['distance']['more'].length > 0 || data['milestones']['distance']['less'].length > 0) {
+        if (data['milestones']['distance']['more'] && data['milestones']['distance']['more'].length > 0) {
           this.theMilestonesMore = [];
           for (let i = 0; i < data['milestones']['distance']['more'].length; i++) {
             this.theMilestonesMore.push(this.markdownString(data['milestones']['distance']['more'][i]));
           }
+          this.showMilestonesMore = true;
+        }
 
+        if (data['milestones']['distance']['less'] && data['milestones']['distance']['less'].length > 0) {
           this.theMilestonesLess = [];
           for (let i = 0; i < data['milestones']['distance']['less'].length; i++) {
             this.theMilestonesLess.push(this.markdownString(data['milestones']['distance']['less'][i]));
           }
+          this.showMilestonesLess = true;
         }
 
-        this.exerciseHistory = [];
-        for (let i = 0; i < data['exercise']['history'].length; i++) {
-          this.exerciseHistory.push(this.markdownString(data['exercise']['history'][i]));
-        }
+        if (data['exercise']['data']) {
+          if (data['exercise']['history'] && data['exercise']['history'].length > 0) {
+            this.exerciseHistory = [];
+            for (let i = 0; i < data['exercise']['history'].length; i++) {
+              this.exerciseHistory.push(this.markdownString(data['exercise']['history'][i]));
+            }
+          }
 
-        this.exerciseWidgetChartData = [];
-        for (let i = 0; i < data['exercise']['data'].length; i++) {
-          this.exerciseWidgetChartData.push(data['exercise']['data'][i]);
+          this.exerciseWidgetChartData = [];
+          for (let i = 0; i < data['exercise']['data'].length; i++) {
+            this.exerciseWidgetChartData.push(data['exercise']['data'][i]);
+          }
+          this.exerciseWidgetChartLabels = data['exercise']['labels'];
+          this.showExerciseChart = true;
         }
-        this.exerciseWidgetChartLabels = data['exercise']['labels'];
 
         this.showStreak = false;
         this.showPush = false;

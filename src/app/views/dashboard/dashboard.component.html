@@ -5,7 +5,7 @@
     <div class="col-12 col-lg-7" id="mainColLeft">
 
       <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4" [hidden]="stepSummary=0">
           <div class="card text-white bg-primary">
             <div class="card-body pb-0">
               <div class="btn-group float-right" dropdown>
@@ -47,7 +47,7 @@
           </div>
         </div><!--/.col-->
 
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4" [hidden]="floorsSummary=0">
           <div class="card text-white bg-info">
             <div class="card-body pb-0">
               <div class="btn-group float-right" dropdown>
@@ -80,7 +80,7 @@
           </div>
         </div><!--/.col-->
 
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4" [hidden]="distanceSummary=0">
           <div class="card text-white bg-info">
             <div class="card-body pb-0">
               <div class="btn-group float-right" dropdown>
@@ -166,8 +166,8 @@
     </div>
   </div>
 
-  <div class="row" [hidden]="!theMilestonesMore">
-    <div class="col-12 col-lg-6">
+  <div class="row" [hidden]="showMilestonesMore || showMilestonesLess">
+    <div class="col-12 col-lg-6" [hidden]="showMilestonesMore">
       <div class="card text-white bg-success">
         <div class="card-header">
           Your Best Day
@@ -180,7 +180,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-6" [hidden]="showMilestonesLess">
       <div class="card text-white bg-danger">
         <div class="card-header">
           Your Best Day
@@ -195,7 +195,7 @@
   </div>
 
   <div class="row">
-    <div class="col-12">
+    <div class="col-12" [hidden]="profileAwards.length=0">
       <div class="card">
         <div class="card-header">
           Your Best Day
@@ -253,7 +253,7 @@
     </div><!--/.col-->
   </div>
 
-  <div class="card">
+  <div class="card" [hidden]="!showExerciseChart">
     <div class="card-body">
       <div class="row">
         <div class="col-sm-12">
@@ -313,7 +313,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" [hidden]="!showWeightChart">
     <div class="card-body">
       <div class="row">
         <div class="col-sm-12">

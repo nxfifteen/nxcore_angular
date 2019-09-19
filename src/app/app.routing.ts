@@ -36,7 +36,7 @@ export const routes: Routes = [
         {
           path: 'setup',
           canActivate: [AuthGuard],
-          loadChildren: () => import('./views/firstrun/firstrun.module').then(m => m.FirstrunModule)
+          loadChildren: () => import('./views/setup/setup.module').then(m => m.SetupModule)
         },
         {
           path: 'dashboard',

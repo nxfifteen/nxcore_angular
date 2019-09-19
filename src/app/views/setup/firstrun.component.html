@@ -1,5 +1,15 @@
-<div class="row">
-  <div class="col-lg-12">
+<div [hidden]="loadingData" class="row">
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-edit"></i>Form Elements
+      </div>
+      <div class="card-body">
+        <a [routerLink]="['/setup/fitbit']"><img src="assets/img/service_fitbit.jpeg"></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9">
     <div class="card">
       <div class="card-header">
         <i class="fa fa-edit"></i>Form Elements
@@ -42,6 +52,17 @@
                   </div>
                 </div>
               </div><!--/.row-->
+              <div class="form-group row">
+                <label class="col-2 col-sm-12 col-form-label" for="avatarCtrl">Avatar URL</label>
+                <div class="col-10 col-sm-12">
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <input formControlName="avatarCtrl" id="avatarCtrl" class="form-control" size="16" type="text"
+                             placeholder="Avatar URL" [ngClass]="{ 'is-invalid': nameGroupControls.avatarCtrl.errors }">
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div>
                 <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
               </div>
@@ -59,17 +80,6 @@
                              type="date"
                              placeholder="date"
                              [ngClass]="{ 'is-invalid': bodyGroupControls.dateOfBirthCtrl.errors }">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-2 col-sm-12 col-form-label" for="heightCtrl">Height</label>
-                <div class="col-10 col-sm-12">
-                  <div class="controls">
-                    <div class="input-prepend input-group">
-                      <input formControlName="heightCtrl" id="heightCtrl" class="form-control" size="16" type="text"
-                             placeholder="Last name" [ngClass]="{ 'is-invalid': bodyGroupControls.heightCtrl.errors }">
                     </div>
                   </div>
                 </div>
