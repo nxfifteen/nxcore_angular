@@ -1,0 +1,246 @@
+<div *ngIf="loading!=loadingExpected">
+  <div class="row">
+    <div class="col-12">
+      LOADING...
+      <div class="progress progress-xs mt-2">
+        <progressbar class="progress progress-brand-p" [value]="loading" [max]="loadingExpected"
+                     type="brand-p"></progressbar>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="animated fadeIn" *ngIf="loading>=loadingExpected">
+  <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
+
+  <div class="row">
+    <div class="col-12 col-sm-6">
+      <div class="brand-card" *ngIf="rpgChallengeSummary">
+        <div class="brand-card-header bg-gold">
+          <i class="fa fa-trophy"></i>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-value">{{rpgChallengeSummary.win}}</div>
+            <div class="text-uppercase text-muted small">Wins</div>
+          </div>
+          <div>
+            <div class="text-value">{{rpgChallengeSummary.lose}}</div>
+            <div class="text-uppercase text-muted small">Loses</div>
+          </div>
+          <div>
+            <div class="text-value">{{rpgChallengeSummary.draw}}</div>
+            <div class="text-uppercase text-muted small">Draws</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h3>Running 1:1 Challenges</h3>
+      <div class="card card-accent-brand-p" *ngFor="let runningChallenge of rpgChallengeRunning">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} Challenge,
+          {{runningChallenge.startDate}}
+          <div class="progress progress-xs mt-2">
+            <progressbar class="progress progress-brand-p" [value]="runningChallenge.progressDate" [max]="100"
+                         type="brand-p"></progressbar>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-lg-5">
+              <div class="progress">
+                <progressbar class="progress progress-info" [value]="runningChallenge.userDetail.completion" [max]="100"
+                             type="info"></progressbar>
+              </div>
+              <div style="text-align: right;">
+                {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
+              </div>
+            </div>
+            <div class="col-2 hidden-md-down" style="text-align: center; font-size: 2rem;vertical-align: middle;">
+              <i class="fa fa-flag-checkered"></i>
+            </div>
+            <div class="col-12 col-lg-5">
+              <div class="progress">
+                <progressbar class="progress progress-info" style="direction: rtl;"
+                             [value]="runningChallenge.opponentDetail.completion" [max]="100"
+                             type="info"></progressbar>
+              </div>
+              <div>
+                {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-5 col-xl-4" style="text-align: center">
+              <div class="text-value">
+                <img src="{{profileAvatar}}" class="img-avatar" alt="You" width="55px" height="55px"/>
+              </div>
+              <div class="text-uppercase text-muted small">You</div>
+              <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
+            </div>
+            <div class="col-1 hidden-lg-down" style="text-align: center">
+              <div class="text-value">{{runningChallenge.target}}</div>
+              <div class="text-uppercase text-muted small">{{runningChallenge.criteria}}</div>
+            </div>
+            <div class="col-2 hidden-lg-down" style="text-align: center">
+              <div class="text-value">IN</div>
+            </div>
+            <div class="col-2 hidden-xl-up" style="text-align: center">
+              <div class="text-value">Vs</div>
+            </div>
+            <div class="col-1 hidden-lg-down" style="text-align: center">
+              <div class="text-value">{{runningChallenge.duration}}</div>
+              <div class="text-uppercase text-muted small">Days</div>
+            </div>
+            <div class="col-5 col-xl-4" style="text-align: center">
+              <div class="text-value">
+                <img src="{{runningChallenge.opponentAvatar}}" class="img-avatar" alt="{{runningChallenge.opponent}}"
+                     width="55px" height="55px"/>
+              </div>
+              <div class="text-uppercase text-muted small">{{runningChallenge.opponent}}</div>
+              <div class="text-uppercase text-muted small">{{runningChallenge.opponentDetail.lastPulled}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h3>Finished 1:1 Challenges</h3>
+      <div class="card card-accent-brand-s" *ngFor="let runningChallenge of rpgChallengeCompleted">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} Challenge,
+          {{runningChallenge.startDate}}
+          <div class="progress progress-xs mt-2">
+            <progressbar class="progress progress-brand-s" [value]="runningChallenge.progressDate" [max]="100"
+                         type="brand-s"></progressbar>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-lg-5">
+              <div class="progress">
+                <progressbar class="progress progress-info" [value]="runningChallenge.userDetail.completion" [max]="100"
+                             type="info"></progressbar>
+              </div>
+              <div style="text-align: right;">
+                {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
+              </div>
+            </div>
+            <div class="col-2 hidden-md-down" style="text-align: center; font-size: 2rem;vertical-align: middle;">
+              <i class="fa fa-flag-checkered"></i>
+            </div>
+            <div class="col-12 col-lg-5">
+              <div class="progress">
+                <progressbar class="progress progress-info" style="direction: rtl;"
+                             [value]="runningChallenge.opponentDetail.completion" [max]="100"
+                             type="info"></progressbar>
+              </div>
+              <div>
+                {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-4" style="text-align: center">
+              <div class="text-value">
+                <img src="{{profileAvatar}}" class="img-avatar" alt="You" width="55px" height="55px"/>
+              </div>
+              <div class="text-uppercase text-muted small">You</div>
+              <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
+            </div>
+            <div class="col-4" style="text-align: center">
+              <div class="text-uppercase text-value">{{runningChallenge.outcome}}</div>
+            </div>
+            <div class="col-4" style="text-align: center">
+              <div class="text-value">
+                <img src="{{runningChallenge.opponentAvatar}}" class="img-avatar" alt="{{runningChallenge.opponent}}"
+                     width="55px" height="55px"/>
+              </div>
+              <div class="text-uppercase text-muted small">{{runningChallenge.opponent}}</div>
+              <div class="text-uppercase text-muted small">{{runningChallenge.opponentDetail.lastPulled}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <h1>Inbox</h1>
+      <div class="card card-accent-info">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Pending Challenges
+        </div>
+        <div class="card-body">
+          <table class="table table-sm">
+            <thead>
+            <tr>
+              <th class="hidden-md-down">&nbsp;</th>
+              <th>Opponent</th>
+              <th>Criteria</th>
+              <th>Target</th>
+              <th>Duration</th>
+              <th class="hidden-md-down">Received</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let toAccept of rpgChallengeToAccept; let i = index" (click)="acceptChallenge(toAccept.id, i)" [class.active]="i == selectedInboxChallenge">
+              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar" alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
+              <td>{{ toAccept.opponent }}</td>
+              <td>{{ toAccept.criteria }}</td>
+              <td>{{ toAccept.target }}</td>
+              <td>{{ toAccept.duration }} days</td>
+              <td class="hidden-md-down">{{ toAccept.invited }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <h1>Outbox</h1>
+      <div class="card card-accent-warning">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Waiting Challenges
+        </div>
+        <div class="card-body">
+          <table class="table table-sm">
+            <thead>
+            <tr>
+              <th class="hidden-md-down">&nbsp;</th>
+              <th>Opponent</th>
+              <th>Criteria</th>
+              <th>Target</th>
+              <th>Duration</th>
+              <th class="hidden-md-down">Sent</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let toAccept of rpgChallengePending; let i = index" (click)="rejectChallenge(toAccept.id, i)" [class.active]="i == selectedOutboxChallenge">
+              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar" alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
+              <td>{{ toAccept.opponent }}</td>
+              <td>{{ toAccept.criteria }}</td>
+              <td>{{ toAccept.target }}</td>
+              <td>{{ toAccept.duration }} days</td>
+              <td class="hidden-md-down">{{ toAccept.invited }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

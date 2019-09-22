@@ -1,0 +1,32 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+    <!--weather panel-->
+    <div [hidden]="completed" class="col-12">
+      <div class="card">
+        <div class="card-header">
+          Connecting to Fitbit
+        </div>
+        <div class="card-body">
+          <p>
+            You'll now be taken to Fitbit.com to sign in
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!--weather panel-->
+    <div [hidden]="!completed" class="col-12">
+      <div class="card">
+        <div class="card-header">
+          Connection to Fitbit completed
+        </div>
+        <div class="card-body">
+          <p>That's it. You've now connected to Fitbit.</p>
+          <p>It might take a while for your records to fully sync, but the process has been started so please just wait a little longer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

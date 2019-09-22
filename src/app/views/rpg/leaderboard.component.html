@@ -1,0 +1,54 @@
+<div *ngIf="loading!=loadingExpected">
+  <div class="row">
+    <div class="col-12">
+      LOADING...
+      <div class="progress progress-xs mt-2">
+        <progressbar class="progress progress-brand-p" [value]="loading" [max]="loadingExpected"
+                     type="brand-p"></progressbar>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="animated fadeIn" *ngIf="loading>=loadingExpected">
+  <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
+
+  <div class="row">
+    <div class="col-12">
+      <h1>Inbox</h1>
+      <div class="card card-accent-info">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Pending Challenges
+        </div>
+        <div class="card-body">
+          <table class="table table-sm">
+            <thead>
+            <tr>
+              <th class="hidden-md-down">&nbsp;</th>
+              <th>Opponent</th>
+              <th>Opponent</th>
+              <th>Opponent</th>
+              <th>Opponent</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let rpgFriend of rpgFriends; let i = index" class="friends-{{ rpgFriend.you }}">
+              <td class="hidden-md-down"><img src="{{rpgFriend.avatar}}" class="img-avatar" alt="{{rpgFriend.name}}"
+                                              width="35px" height="35px"/></td>
+              <td>{{ rpgFriend.name }}</td>
+              <td>{{ rpgFriend.you }}</td>
+              <td>{{ rpgFriend.steps }}</td>
+              <td>
+                <div class="progress progress-xs mt-2">
+                  <progressbar class="progress progress-brand-p" [value]="rpgFriend.steps" [max]="ragFriendsHighestSteps"
+                               type="brand-p"></progressbar>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
