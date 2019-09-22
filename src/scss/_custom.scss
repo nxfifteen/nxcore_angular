@@ -49,3 +49,25 @@
 .hidden-xl-down {
   display: none !important;
 }
+
+.bg-gold {
+  background-color: gold !important;
+}
+
+.table tr.active td {
+  background-color:$brand_p_t6 !important;
+  color: white;
+}
+
+tr.friends-you {
+  background-color:$brand_s !important;
+  color: white;
+}
+
+.nav-title {
+  color: black !important;
+}
+
+.sidebar .nav-link.nav-link-success {
+  background: #4dbd74 !important;
+}

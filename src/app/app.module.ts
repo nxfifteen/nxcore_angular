@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, Injectable, NgModule} from '@angular/core';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -24,6 +24,7 @@ import {catchError, map} from 'rxjs/operators';
 import {MarkdownModule, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
 import {environment} from '../environments/environment';
 import {MyMaterialModule} from './material-module';
+import * as Sentry from '@sentry/browser';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -72,6 +73,19 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
         ).subscribe();
     });
   };
+}
+
+Sentry.init({
+  dsn: `${environment.sentryDns}`
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  constructor() {}
+  handleError(error) {
+    const eventId = Sentry.captureException(error.originalError || error);
+    Sentry.showReportDialog({ eventId });
+  }
 }
 
 @NgModule({

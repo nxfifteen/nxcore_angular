@@ -50,6 +50,16 @@ ol.breadcrumb {
   color: $brand_p !important;
 }
 
+.card-accent-brand-p {
+  border-top-color: $brand_p;
+  border-top-width: 2px;
+}
+
+.card-accent-brand-s {
+  border-top-color: $brand_s;
+  border-top-width: 2px;
+}
+
 .bg-brand-p {
   background-color: $brand_p !important;
 }

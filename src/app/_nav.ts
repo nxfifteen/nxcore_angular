@@ -42,70 +42,41 @@ export const navItems: NavData[] = [
     divider: true
   },
   {
-    name: 'Setup',
-    url: '/setup',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    },
+    title: true,
+    name: 'Fun',
+  },
+  {
+    name: 'Games',
+    url: '/rpg',
+    icon: 'fa fa-gamepad',
     children: [
       {
-        name: 'First Run',
-        url: '/setup/profile',
-        icon: 'ico-resize'
+        name: 'Leaderboard',
+        url: '/rpg/leaderboard',
+        icon: 'fa fa-users',
+        badge: {
+          variant: 'info',
+          text: 'NEW'
+        },
       },
       {
-        name: 'Auth With Fitbit',
-        url: '/setup/fitbit',
-        icon: 'ico-resize'
+        name: '1:1 Challenges',
+        url: '/rpg/challenges',
+        icon: 'icon-cursor',
+        badge: {
+          variant: 'info',
+          text: 'NEW'
+        },
       },
-    ],
+    ]
   },
-  // {
-  //   name: 'Activities',
-  //   url: '/activities',
-  //   icon: 'icon-cursor',
-  //   children: [
-  //     {
-  //       name: 'Tracker',
-  //       url: '/activities/activity',
-  //       icon: 'icon-cursor'
-  //     },
-  //     {
-  //       name: 'Activity Log',
-  //       url: '/activities/log',
-  //       icon: 'icon-cursor'
-  //     }
-  //   ]
-  // },
-  // {
-  //   name: 'Games',
-  //   url: '/games',
-  //   icon: 'icon-cursor',
-  //   children: [
-  //     {
-  //       name: 'Push',
-  //       url: '/games/push',
-  //       icon: 'icon-cursor'
-  //     },
-  //     {
-  //       name: 'Journey',
-  //       url: '/games/journey',
-  //       icon: 'icon-cursor'
-  //     },
-  //     {
-  //       name: 'Badges',
-  //       url: '/games/badges',
-  //       icon: 'icon-cursor'
-  //     },
-  //     {
-  //       name: 'Leaderboard',
-  //       url: '/games/leaderboard',
-  //       icon: 'icon-cursor'
-  //     }
-  //   ]
-  // },
+  {
+    divider: true
+  },
+  {
+    title: true,
+    name: 'Stats',
+  },
   {
     name: 'Body',
     url: '/body',
@@ -116,73 +87,76 @@ export const navItems: NavData[] = [
         url: '/body/weight',
         icon: 'medicalIcons-scale-tool-to-control-body-weight-standing-on-it'
       },
-      // {
-      //   name: 'Body Fat',
-      //   url: '/body/fat',
-      //   icon: 'icon-cursor'
-      // }
     ]
   },
-  // {
-  //   name: 'Upload',
-  //   url: '/upload',
-  //   icon: 'icon-cursor',
-  //   children: [
-  //     {
-  //       name: 'Upload Ski Track',
-  //       url: '/upload/skitracks',
-  //       icon: 'icon-cursor'
-  //     }
-  //   ]
-  // },
-  // {
-  //   name: 'Download Core',
-  //   url: 'https://git.nxfifteen.rocks/nx-health/store',
-  //   icon: 'icon-cloud-download',
-  //   class: 'mt-auto',
-  //   variant: 'success',
-  //   attributes: { target: '_blank', rel: 'noopener' }
-  // },
-  // {
-  //   name: 'NxFIFTEEN',
-  //   url: 'https://nxfifteen.me.uk',
-  //   icon: 'icon-layers',
-  //   variant: 'danger',
-  //   attributes: { target: '_blank', rel: 'noopener' }
-  // }
   {
     divider: true
   },
   {
+    title: true,
+    name: 'Profile',
+  },
+  {
+    name: 'Setup',
+    url: '/setup',
+    icon: 'fa fa-cogs',
+    children: [
+      {
+        name: 'Profile',
+        url: '/setup/profile',
+        icon: 'fa fa-user'
+      },
+    ],
+  },
+  {
+    divider: true
+  },
+  {
+    title: true,
+    name: 'Dev Panel',
+  },
+  {
     name: 'Theme',
     url: '/icons',
-    icon: 'ico-spell-check',
+    icon: 'fa fa-code',
+    badge: {
+      variant: 'warning',
+      text: 'DEV'
+    },
     children: [
       {
         name: 'Colours',
         url: '/icons/colors',
-        icon: 'ico-resize'
+        icon: 'fa fa-eyedropper'
       },
       {
         name: 'BucketISO',
         url: '/icons/bucketiso',
-        icon: 'ico-files'
+        icon: 'fa fa-file-image-o'
       },
       {
         name: 'Fontawsome',
         url: '/icons/fontawsome',
-        icon: 'fa fa-font-awesome'
+        icon: 'fa fa-file-image-o'
       },
       {
         name: 'Nomie',
         url: '/icons/nomie',
-        icon: 'birthdayIcons-clown'
+        icon: 'fa fa-file-image-o'
       },
       {
         name: 'Simple Line Icons',
         url: '/icons/simple-line-icons',
-        icon: 'line-icon-check'
+        icon: 'fa fa-file-image-o'
       },
     ]
   },
+  {
+    name: 'NxFIFTEEN',
+    url: 'https://nxfifteen.me.uk',
+    icon: 'fa fa-wifi',
+    class: 'mt-auto',
+    variant: 'success',
+    attributes: { target: '_blank', rel: 'noopener' }
+  }
 ];

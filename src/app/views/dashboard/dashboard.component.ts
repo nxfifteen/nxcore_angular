@@ -2,169 +2,256 @@ import {Component, OnInit} from '@angular/core';
 import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {ApiService} from '../../services/api.service';
-import {faHiking, faShoePrints, faWalking} from '@fortawesome/free-solid-svg-icons';
 import {MarkdownService} from 'ngx-markdown';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
+import {ChallengeActive} from '../../_models/challengeActive';
 
 @Component({
   templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
-  stepSummary: number;
-  stepSummaryGoal: number;
-  stepSummaryPercentage: number;
-  floorsSummary: number;
-  floorsSummaryGoal: number;
-  floorsSummaryPercentage: number;
-  distanceSummary: number;
-  distanceSummaryGoal: number;
-  distanceSummaryPercentage: number;
-  showPush: boolean;
-  showJourney: boolean;
-  faWalking = faWalking;
-  faHiking = faHiking;
-  faShoePrints = faShoePrints;
-  showBestDay: boolean;
-  showStreak: boolean;
-  showMilestonesMore: boolean;
-  showMilestonesLess: boolean;
-  showExerciseChart: boolean;
-  showWeightChart: boolean;
-  summaryWidgetChartOptions: any;
-  summaryWidgetChartColours: any;
-  summaryWidgetChartLegend: boolean;
-  summaryWidgetChartType: string;
+  currentUser: User;
+  profileAvatar: string;
+  loading: number;
+  loadingExpected: number;
+
   intraDayWidgetChartOptions: any;
   intraDayWidgetChartColours: any;
   intraDayWidgetChartLegend: boolean;
   intraDayWidgetChartType: string;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  stepSummaryChartData: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  stepSummaryChartLabels: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  distanceSummaryChartData: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  distanceSummaryChartLabels: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  floorIntraDayChartData: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  floorIntraDayChartLabels: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
+
+  widgetsOnFirstRow: number;
+  widgetGridOnFirstRow: string;
+
+  widgetGridMilestonesRow: string;
+  milestonesMoreWidgetEnable: boolean;
+  theMilestonesMore: Array<string>;
+  milestonesLessWidgetEnable: boolean;
+  theMilestonesLess: Array<string>;
+
+  awardsWidgetEnable: boolean;
+  awardsSummaries: Array<any>;
+
+  stepWidgetEnable: boolean;
+  stepIntraDayWidgetEnable: boolean;
+  stepSummary: number;
+  stepSummaryGoal: number;
+  stepSummaryPercentage: number;
+  stepSummaryPercentageBar: number;
   stepIntraDayChartData: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
   stepIntraDayChartLabels: Array<any>;
 
+  floorWidgetEnable: boolean;
+  floorIntraDayWidgetEnable: boolean;
+  floorSummary: number;
+  floorSummaryGoal: number;
+  floorSummaryPercentage: number;
+  floorSummaryPercentageBar: number;
+  floorIntraDayChartData: Array<any>;
+  floorIntraDayChartLabels: Array<any>;
+
+  distanceWidgetEnable: boolean;
+  distanceIntraDayWidgetEnable: boolean;
+  distanceSummary: number;
+  distanceSummaryGoal: number;
+  distanceSummaryPercentage: number;
+  distanceSummaryPercentageBar: number;
+  distanceUnits: string;
+  distanceIntraDayChartData: Array<any>;
+  distanceIntraDayChartLabels: Array<any>;
+
+  weightWidgetEnable: boolean;
+  weightIntraDayWidgetEnable: boolean;
+  weightCurrent: number;
+  weightCurrentUnit: string;
+  weightPercentage: number;
   weightWidgetChartOptions: any;
   weightWidgetChartColours: any;
   weightWidgetChartLegend: boolean;
   weightWidgetChartType: string;
-  // noinspection JSMismatchedCollectionQueryUpdate
   weightWidgetChartData: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
   weightWidgetChartLabels: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  exerciseWidgetChartData: Array<any>;
-  // noinspection JSMismatchedCollectionQueryUpdate
-  exerciseWidgetChartLabels: Array<any>;
-  weightCurrent: number;
-  weightCurrentUnit: string;
-  weightPercentage: number;
-  fatCurrent: number;
-  fatCurrentUnit: string;
-  fatPercentage: number;
-  theBest: string[] = [];
-  theMilestonesMore: string[] = [];
-  theMilestonesLess: string[] = [];
   weightWidgetChartSince: string;
-  exerciseWidgetChartOptions: any;
-  exerciseHistory: string[] = [];
-  exerciseWidgetChartColours: any;
-  exerciseWidgetChartLegend: boolean;
-  exerciseWidgetChartType: string;
-  profileName: string;
-  profileAvatar: string;
-  profileXp: number;
-  profileXpLog: Array<any>;
-  profileXpProgress: number;
-  profileXpTarget: number;
-  profileAwards: Array<any>;
-  profileLevel: string;
-  currentUser: User;
+
+  rpgChallengeEnable: boolean;
+  rpgChallengeSummary: { win: number; lose: number; draw: number };
+  rpgChallengeRunning: Array<ChallengeActive>;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService) {
-    this.stepSummaryChartData = [
-      {
-        data: [0],
-        label: 'Loading'
+    this.setDefaultChartOptions();
+  }
+
+  ngOnInit(): void {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    if (this.currentUser.firstrun) {
+      this.router.navigate(['/setup']);
+    } else {
+      this.pullToRefresh();
+    }
+  }
+
+  pullToRefresh(): void {
+    this.loading = 0;
+    this.loadingExpected = 9;
+    this.widgetsOnFirstRow = 0;
+    this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+    this.stepWidgetEnable = false;
+    this.stepIntraDayWidgetEnable = false;
+    this.floorWidgetEnable = false;
+    this.floorIntraDayWidgetEnable = false;
+    this.distanceWidgetEnable = false;
+    this.distanceIntraDayWidgetEnable = false;
+    this.rpgChallengeEnable = false;
+    this.milestonesMoreWidgetEnable = false;
+    this.milestonesLessWidgetEnable = false;
+    this.awardsWidgetEnable = false;
+    this.weightWidgetEnable = false;
+    this.weightIntraDayWidgetEnable = false;
+    this.awardsSummaries = [];
+    this.widgetGridMilestonesRow = 'col-12 col-md-6';
+
+    this.apiService.getProfile().subscribe((data) => {
+      this.profileAvatar = data['avatar'];
+      this.loading++;
+    });
+
+    this.apiService.getDashboard().subscribe((data) => {
+      if (data['steps']) {
+        this.addWidgetToFirstRow();
+
+        this.stepSummary = data['steps']['value'];
+        this.stepSummaryGoal = data['steps']['goal'];
+        this.stepSummaryPercentage = data['steps']['progress'];
+        this.stepSummaryPercentageBar = data['steps']['progressBar'];
+        this.stepWidgetEnable = true;
+
+        if (data['steps']['intraDay']) {
+          this.stepIntraDayChartData = [];
+          this.stepIntraDayChartData.push(data['steps']['intraDay']['widget']['data']);
+          this.stepIntraDayChartLabels = data['steps']['intraDay']['widget']['labels'];
+          this.stepIntraDayWidgetEnable = true;
+        }
       }
-    ];
-    this.stepSummaryChartLabels = ['Loading'];
+      this.loading++;
 
-    // this.floorSummaryChartData = this.stepSummaryChartData;
-    // this.floorSummaryChartLabels = this.stepSummaryChartLabels;
-    this.floorIntraDayChartData = this.stepSummaryChartData;
-    this.floorIntraDayChartLabels = this.stepSummaryChartLabels;
-    this.stepIntraDayChartData = this.stepSummaryChartData;
-    this.stepIntraDayChartLabels = this.stepSummaryChartLabels;
-    this.distanceSummaryChartData = this.stepSummaryChartData;
-    this.distanceSummaryChartLabels = this.stepSummaryChartLabels;
-    this.weightWidgetChartData = this.stepSummaryChartData;
-    this.weightWidgetChartLabels = this.stepSummaryChartLabels;
-    this.exerciseWidgetChartData = this.stepSummaryChartData;
-    this.exerciseWidgetChartLabels = this.stepSummaryChartLabels;
+      if (data['floors']) {
+        this.addWidgetToFirstRow();
 
-    this.showPush = false;
-    this.showJourney = false;
-    this.showBestDay = false;
-    this.showStreak = false;
-    this.showMilestonesMore = false;
-    this.showMilestonesLess = false;
-    this.showExerciseChart = false;
-    this.showWeightChart = false;
+        this.floorSummary = data['floors']['value'];
+        this.floorSummaryGoal = data['floors']['goal'];
+        this.floorSummaryPercentage = data['floors']['progress'];
+        this.floorSummaryPercentageBar = data['floors']['progressBar'];
+        this.floorWidgetEnable = true;
 
-    this.summaryWidgetChartOptions = {
-      tooltips: {
-        enabled: false,
-        custom: CustomTooltips
-      },
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [{
-          display: false
-        }],
-        yAxes: [{
-          display: false
-        }]
-      },
-      elements: {
-        line: {
-          borderWidth: 2
-        },
-        point: {
-          radius: 0,
-          hitRadius: 10,
-          hoverRadius: 4,
-        },
-      },
-      legend: {
-        display: false
+        if (data['floors']['intraDay']) {
+          this.floorIntraDayChartData = [];
+          this.floorIntraDayChartData.push(data['floors']['intraDay']['widget']['data']);
+          this.floorIntraDayChartLabels = data['floors']['intraDay']['widget']['labels'];
+          this.floorIntraDayWidgetEnable = true;
+        }
       }
-    };
-    this.summaryWidgetChartColours = [
-      {
-        backgroundColor: 'transparent',
-        borderColor: 'rgba(255,255,255,.55)',
-      }
-    ];
-    this.summaryWidgetChartLegend = false;
-    this.summaryWidgetChartType = 'line';
+      this.loading++;
 
+      if (data['distance']) {
+        this.addWidgetToFirstRow();
+
+        this.distanceSummary = data['distance']['value'];
+        this.distanceSummaryGoal = data['distance']['goal'];
+        this.distanceSummaryPercentage = data['distance']['progress'];
+        this.distanceSummaryPercentageBar = data['distance']['progressBar'];
+        this.distanceWidgetEnable = true;
+        this.distanceUnits = data['distance']['units'];
+
+        if (data['distance']['intraDay']) {
+          this.distanceIntraDayChartData = [];
+          this.distanceIntraDayChartData.push(data['distance']['intraDay']['widget']['data']);
+          this.distanceIntraDayChartLabels = data['distance']['intraDay']['widget']['labels'];
+          this.distanceIntraDayWidgetEnable = true;
+        }
+      }
+      this.loading++;
+
+      if (data['weight']) {
+        this.addWidgetToFirstRow();
+
+        this.weightCurrent = data['weight']['value'];
+        this.weightCurrentUnit = data['weight']['unit'];
+        this.weightPercentage = data['weight']['progress'];
+
+        this.weightWidgetChartData = [];
+        this.weightWidgetChartData.push(data['weight']['widget']['data'][2]);
+        this.weightWidgetChartLabels = data['weight']['widget']['labels'];
+        if (this.weightWidgetChartData.length > 0) {
+          this.weightIntraDayWidgetEnable = true;
+        }
+
+        this.weightWidgetEnable = true;
+      }
+      this.loading++;
+
+      this.rpgChallengeSummary = {
+        win: data['rpg_challenge_friends']['score']['win'],
+        lose: data['rpg_challenge_friends']['score']['lose'],
+        draw: data['rpg_challenge_friends']['score']['draw'],
+      };
+      this.loading++;
+
+      this.rpgChallengeRunning = [];
+      for (let i = 0; i < data['rpg_challenge_friends']['running'].length; i++) {
+        this.rpgChallengeRunning.push(data['rpg_challenge_friends']['running'][i]);
+      }
+      this.loading++;
+
+      if (data['milestones']) {
+        this.theMilestonesMore = [];
+        if (data['milestones']['distance']['more']) {
+          for (let i = 0; i < data['milestones']['distance']['more'].length; i++) {
+            this.theMilestonesMore.push(this.markdownString(data['milestones']['distance']['more'][i]));
+          }
+          if (this.theMilestonesMore.length > 0) {
+            this.milestonesMoreWidgetEnable = true;
+          }
+        }
+
+        this.theMilestonesLess = [];
+        if (data['milestones']['distance']['less']) {
+          for (let i = 0; i < data['milestones']['distance']['less'].length; i++) {
+            this.theMilestonesLess.push(this.markdownString(data['milestones']['distance']['less'][i]));
+          }
+          if (this.theMilestonesLess.length > 0) {
+            this.milestonesLessWidgetEnable = true;
+          }
+        }
+
+        if (this.milestonesMoreWidgetEnable && this.milestonesLessWidgetEnable) {
+          this.widgetGridMilestonesRow = 'col-12 col-md-6 d-none d-lg-block';
+        } else if (this.milestonesMoreWidgetEnable || this.milestonesLessWidgetEnable) {
+          this.widgetGridMilestonesRow = 'col-12 d-none d-lg-block';
+        }
+      }
+      this.loading++;
+
+      this.awardsSummaries = [];
+      if (data['awards']) {
+        this.awardsSummaries = Object.keys(data['awards']).map(it => data['awards'][it]);
+
+        if (this.awardsSummaries.length > 0) {
+          this.awardsWidgetEnable = true;
+        }
+      }
+
+      this.rpgChallengeEnable = true;
+      this.loading++;
+    });
+
+  }
+
+  private setDefaultChartOptions() {
     this.intraDayWidgetChartOptions = {
       tooltips: {
         enabled: false,
@@ -261,204 +348,23 @@ export class DashboardComponent implements OnInit {
     ];
     this.weightWidgetChartLegend = false;
     this.weightWidgetChartType = 'line';
-
-    this.exerciseWidgetChartOptions = {
-      tooltips: {
-        enabled: false,
-        custom: CustomTooltips,
-        intersect: true,
-        mode: 'index',
-        position: 'nearest',
-        callbacks: {
-          labelColor: function (tooltipItem, chart) {
-            return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-          }
-        }
-      },
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [{
-          gridLines: {
-            drawOnChartArea: false,
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-            maxTicksLimit: 5,
-            stepSize: 1,
-            max: 4,
-            min: 0
-          }
-        }]
-      },
-      elements: {
-        line: {
-          borderWidth: 2
-        },
-        point: {
-          radius: 0,
-          hitRadius: 10,
-          hoverRadius: 4,
-          hoverBorderWidth: 3,
-        }
-      },
-      legend: {
-        display: true
-      }
-    };
-    this.exerciseWidgetChartColours = [
-      { // brandInfo
-        backgroundColor: 'transparent',
-        borderColor: getStyle('--info'),
-        pointHoverBackgroundColor: '#fff'
-      },
-      { // brandSuccess
-        backgroundColor: 'transparent',
-        borderColor: getStyle('--success'),
-        pointHoverBackgroundColor: '#fff'
-      }
-    ];
-    this.exerciseWidgetChartLegend = true;
-    this.exerciseWidgetChartType = 'line';
-
   }
 
-  ngOnInit(): void {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup']);
-    } else {
-      this.apiService.getProfile().subscribe((data) => {
-        this.profileName = data['nameFull'];
-        this.profileAvatar = data['avatar'];
-
-        this.profileAwards = Object.keys(data['rewards']).map(it => data['rewards'][it]);
-
-        this.profileXp = data['xp'];
-        this.profileXpLog = Object.keys(data['xp_log']).map(it => data['xp_log'][it]);
-        this.profileXpProgress = data['level_next_in'];
-        this.profileXpTarget = 50;
-
-        this.profileLevel = 'assets/xplevels/' + data['level'] + '.png';
-      });
-
-      this.apiService.getFitDashboard().subscribe((data) => {
-        // console.log(data);
-        this.stepsPopulate(data);
-        this.floorsPopulate(data);
-
-        this.distanceSummary = data['distance']['value'];
-        this.distanceSummaryGoal = data['distance']['goal'];
-        this.distanceSummaryPercentage = data['distance']['progress'];
-        this.distanceSummaryChartData = [];
-        this.distanceSummaryChartData.push(data['distance']['widget']['data']);
-        this.distanceSummaryChartLabels = data['distance']['widget']['labels'];
-
-        if (data['weight']) {
-          this.weightCurrent = data['weight']['value'];
-          this.weightCurrentUnit = data['weight']['unit'];
-          this.weightPercentage = data['weight']['progress'];
-          this.weightWidgetChartSince = data['weight']['since'];
-          this.weightWidgetChartData = [];
-          for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
-            this.weightWidgetChartData.push(data['weight']['widget']['data'][i]);
-          }
-          this.weightWidgetChartLabels = data['weight']['widget']['labels'];
-          this.weightWidgetChartOptions = {
-            tooltips: {
-              enabled: false,
-              custom: CustomTooltips,
-              intersect: true,
-              mode: 'index',
-              position: 'nearest',
-              callbacks: {
-                labelColor: function (tooltipItem, chart) {
-                  return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-                }
-              }
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              xAxes: [{
-                gridLines: {
-                  drawOnChartArea: false,
-                }
-              }],
-              yAxes: [{
-                ticks: {
-                  beginAtZero: false,
-                  maxTicksLimit: 5,
-                  max: data['weight']['widget']['axis']['max'],
-                  min: data['weight']['widget']['axis']['min']
-                }
-              }]
-            },
-            elements: {
-              line: {
-                borderWidth: 2
-              },
-              point: {
-                radius: 0,
-                hitRadius: 10,
-                hoverRadius: 4,
-                hoverBorderWidth: 3,
-              }
-            },
-            legend: {
-              display: false
-            }
-          };
-
-          this.fatCurrent = data['fat']['value'];
-          this.fatCurrentUnit = data['fat']['unit'];
-          this.fatPercentage = data['fat']['progress'];
-          this.showWeightChart = true;
-        }
-
-        if (data['best'].length > 0) {
-          this.showBestDay = true;
-          this.theBest = data['best'];
-        }
-
-        if (data['milestones']['distance']['more'] && data['milestones']['distance']['more'].length > 0) {
-          this.theMilestonesMore = [];
-          for (let i = 0; i < data['milestones']['distance']['more'].length; i++) {
-            this.theMilestonesMore.push(this.markdownString(data['milestones']['distance']['more'][i]));
-          }
-          this.showMilestonesMore = true;
-        }
-
-        if (data['milestones']['distance']['less'] && data['milestones']['distance']['less'].length > 0) {
-          this.theMilestonesLess = [];
-          for (let i = 0; i < data['milestones']['distance']['less'].length; i++) {
-            this.theMilestonesLess.push(this.markdownString(data['milestones']['distance']['less'][i]));
-          }
-          this.showMilestonesLess = true;
-        }
-
-        if (data['exercise']['data']) {
-          if (data['exercise']['history'] && data['exercise']['history'].length > 0) {
-            this.exerciseHistory = [];
-            for (let i = 0; i < data['exercise']['history'].length; i++) {
-              this.exerciseHistory.push(this.markdownString(data['exercise']['history'][i]));
-            }
-          }
-
-          this.exerciseWidgetChartData = [];
-          for (let i = 0; i < data['exercise']['data'].length; i++) {
-            this.exerciseWidgetChartData.push(data['exercise']['data'][i]);
-          }
-          this.exerciseWidgetChartLabels = data['exercise']['labels'];
-          this.showExerciseChart = true;
-        }
-
-        this.showStreak = false;
-        this.showPush = false;
-        this.showJourney = false;
-      });
+  private addWidgetToFirstRow() {
+    this.widgetsOnFirstRow++;
+    switch (this.widgetsOnFirstRow) {
+      case 1:
+        this.widgetGridOnFirstRow = 'col-12';
+        break;
+      case 2:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6';
+        break;
+      case 3:
+        this.widgetGridOnFirstRow = 'col-12 col-md-4';
+        break;
+      case 4:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
     }
   }
 
@@ -466,28 +372,5 @@ export class DashboardComponent implements OnInit {
     return this.markdownService.compile(datumElementElement).replace('<p>', '').replace('</p>', '');
   }
 
-  private stepsPopulate(data: Object) {
-    this.stepSummary = data['steps']['value'];
-    this.stepSummaryGoal = data['steps']['goal'];
-    this.stepSummaryPercentage = data['steps']['progress'];
-    this.stepSummaryChartData = [];
-    this.stepSummaryChartData.push(data['steps']['widget']['data']);
-    this.stepSummaryChartLabels = data['steps']['widget']['labels'];
-    this.stepIntraDayChartData = [];
-    this.stepIntraDayChartData.push(data['stepsIntraDay']['widget']['data']);
-    this.stepIntraDayChartLabels = data['stepsIntraDay']['widget']['labels'];
-  }
-
-  private floorsPopulate(data: Object) {
-    this.floorsSummary = data['floors']['value'];
-    this.floorsSummaryGoal = data['floors']['goal'];
-    this.floorsSummaryPercentage = data['floors']['progress'];
-    // this.floorSummaryChartData = [];
-    // this.floorSummaryChartData.push(data['floors']['widget']['data']);
-    // this.floorSummaryChartLabels = data['floors']['widget']['labels'];
-    this.floorIntraDayChartData = [];
-    this.floorIntraDayChartData.push(data['floorsIntraDay']['widget']['data']);
-    this.floorIntraDayChartLabels = data['floorsIntraDay']['widget']['labels'];
-  }
 }
 

@@ -144,7 +144,7 @@ export class WeightComponent implements OnInit {
                 beginAtZero: false,
                 maxTicksLimit: 5,
                 max: data['weight']['widget']['axis']['max'],
-                min: (data['weight']['goal'] - 1)
+                min: (data['weight']['widget']['axis']['min'] - 1)
               }
             }]
           },

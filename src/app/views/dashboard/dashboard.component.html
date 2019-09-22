@@ -1,173 +1,188 @@
-<div class="animated fadeIn">
+<div *ngIf="loading!=loadingExpected">
+  <div class="row">
+    <div class="col-12">
+      LOADING...
+      <div class="progress progress-xs mt-2">
+        <progressbar class="progress progress-brand-p" [value]="loading" [max]="loadingExpected"
+                     type="brand-p"></progressbar>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="animated fadeIn" *ngIf="loading>=loadingExpected">
+  <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
 
   <div class="row">
-    <!--weather panel-->
-    <div class="col-12 col-lg-7" id="mainColLeft">
-
-      <div class="row">
-        <div class="col-12 col-md-4" [hidden]="stepSummary=0">
-          <div class="card text-white bg-primary">
-            <div class="card-body pb-0">
-              <div class="btn-group float-right" dropdown>
-                <fa-icon [icon]="faWalking" style="margin-right: 5px;"></fa-icon>
-              </div>
-              <div class="text-value">{{stepSummary}}</div>
-              <div>Steps Taken</div>
-              <div class="row">
-                <div class="col-6 col-md-8">
-                  <div class="progress progress-xs mt-2">
-                    <progressbar class="progress progress-warning" [value]="stepSummaryPercentage" [max]="100"
-                                 type="warning">
-                    </progressbar>
-                  </div>
-                </div>
-                <div class="col-6 col-md-4" style="text-align: right">
-                  {{stepSummaryPercentage}}%
-                </div>
-              </div>
-            </div>
-            <!--<div class="chart-wrapper mt-3" style="height:38px;">
-              <canvas baseChart class="chart"
-                      [datasets]="stepSummaryChartData"
-                      [labels]="stepSummaryChartLabels"
-                      [options]="summaryWidgetChartOptions"
-                      [colors]="summaryWidgetChartColours"
-                      [legend]="summaryWidgetChartLegend"
-                      [chartType]="summaryWidgetChartType"></canvas>
-            </div>-->
-            <div class="chart-wrapper mt-3" style="height:90px;">
-              <canvas baseChart class="chart"
-                      [datasets]="stepIntraDayChartData"
-                      [labels]="stepIntraDayChartLabels"
-                      [options]="intraDayWidgetChartOptions"
-                      [colors]="intraDayWidgetChartColours"
-                      [legend]="intraDayWidgetChartLegend"
-                      [chartType]="intraDayWidgetChartType"></canvas>
-            </div>
-          </div>
-        </div><!--/.col-->
-
-        <div class="col-12 col-md-4" [hidden]="floorsSummary=0">
-          <div class="card text-white bg-info">
-            <div class="card-body pb-0">
-              <div class="btn-group float-right" dropdown>
-                <fa-icon [icon]="faShoePrints" style="margin-right: 5px;"></fa-icon>
-              </div>
-              <div class="text-value">{{floorsSummary}}</div>
-              <div>Floors Climbed</div>
-              <div class="row">
-                <div class="col-6 col-md-8">
-                  <div class="progress progress-xs mt-2">
-                    <progressbar class="progress progress-warning" [value]="floorsSummaryPercentage" [max]="100"
-                                 type="warning">
-                    </progressbar>
-                  </div>
-                </div>
-                <div class="col-6 col-md-4" style="text-align: right">
-                  {{floorsSummaryPercentage}}%
-                </div>
-              </div>
-            </div>
-            <div class="chart-wrapper mt-3" style="height:90px;">
-              <canvas baseChart class="chart"
-                      [datasets]="floorIntraDayChartData"
-                      [labels]="floorIntraDayChartLabels"
-                      [options]="intraDayWidgetChartOptions"
-                      [colors]="intraDayWidgetChartColours"
-                      [legend]="intraDayWidgetChartLegend"
-                      [chartType]="intraDayWidgetChartType"></canvas>
-            </div>
-          </div>
-        </div><!--/.col-->
-
-        <div class="col-12 col-md-4" [hidden]="distanceSummary=0">
-          <div class="card text-white bg-info">
-            <div class="card-body pb-0">
-              <div class="btn-group float-right" dropdown>
-                <fa-icon [icon]="faHiking" style="margin-right: 5px;"></fa-icon>
-              </div>
-              <div class="text-value">{{distanceSummary}} km</div>
-              <div>Distance Travelled</div>
-              <div class="row">
-                <div class="col-6 col-md-8">
-                  <div class="progress progress-xs mt-2">
-                    <progressbar class="progress progress-warning" [value]="distanceSummaryPercentage" [max]="100"
-                                 type="warning">
-                    </progressbar>
-                  </div>
-                </div>
-                <div class="col-6 col-md-4" style="text-align: right">
-                  {{distanceSummaryPercentage}}%
-                </div>
-              </div>
-            </div>
-            <div class="chart-wrapper mt-3" style="height:90px;">
-              <canvas baseChart class="chart"
-                      [datasets]="distanceSummaryChartData"
-                      [labels]="distanceSummaryChartLabels"
-                      [options]="summaryWidgetChartOptions"
-                      [colors]="summaryWidgetChartColours"
-                      [legend]="summaryWidgetChartLegend"
-                      [chartType]="summaryWidgetChartType"></canvas>
-            </div>
-          </div>
-        </div><!--/.col-->
-      </div>
-
-      <div [hidden]="!showPush" class="row">
-        <div class="col-md-12">
-          <div class="card card-inverse card-primary">
-            <div class="card-header" id="PushName">PushName</div>
-            <div class="card-block" id="PushBlock">
-              <div class="card-body">PushBlock</div>
-            </div>
-            <div class="card-footer" id="PushFooter">
-              <div class="progress-group-bars">
-                <progressbar class="progress progress-danger" [value]="25" [max]="100" type="danger"></progressbar>
-              </div>
-            </div>
-          </div>
+    <div class="col-3 d-none d-sm-block">
+      <div class="card">
+        <div class="card-body p-3 clearfix">
+          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 text-info mb-0 mt-2">d-sm-block</div>
+          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>
         </div>
       </div>
-
     </div>
-
-    <div class="col-12 col-lg-5" id="mainColRight">
-      <div [hidden]="!showBestDay" class="row">
-        <div class="col-12">
-          <div class="card text-white bg-success">
-            <div class="card-header">
-              Your Best Day
-            </div>
-            <div class="card-body">
-              <ul>
-                <li *ngFor="let point of theBest">{{ point }}</li>
-              </ul>
-            </div>
-          </div>
-        </div><!--/.col-->
+    <div class="col-3 d-none d-md-block">
+      <div class="card">
+        <div class="card-body p-3 clearfix">
+          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 text-info mb-0 mt-2">d-md-block</div>
+          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>
+        </div>
       </div>
-
-      <div [hidden]="!showJourney" class="row" id="Journey">
-        <div class="col-md-12">
-          <div class="card card-inverse card-success">
-            <div class="card-header" id="JourneyName">JourneyName</div>
-            <div class="card-block" id="JourneyBlock">
-              <div class="card-body">JourneyBlock</div>
-            </div>
-            <div class="card-footer" id="JourneyFooter">
-              <div class="progress-group-bars">
-                <progressbar class="progress progress-danger" [value]="66" [max]="100" type="danger"></progressbar>
-              </div>
-            </div>
-          </div>
+    </div>
+    <div class="col-3 d-none d-lg-block">
+      <div class="card">
+        <div class="card-body p-3 clearfix">
+          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 text-info mb-0 mt-2">d-lg-block</div>
+          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 d-none d-xl-block">
+      <div class="card">
+        <div class="card-body p-3 clearfix">
+          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 text-info mb-0 mt-2">d-xl-block</div>
+          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row" [hidden]="showMilestonesMore || showMilestonesLess">
-    <div class="col-12 col-lg-6" [hidden]="showMilestonesMore">
+  <div class="row">
+    <div [class]="widgetGridOnFirstRow" *ngIf="stepWidgetEnable">
+      <div class="card text-white bg-primary">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-paw"></i>
+          </div>
+          <div class="text-value">{{stepSummary}}</div>
+          <div>Steps Taken</div>
+          <div class="row">
+            <div class="col-6 col-md-8">
+              <div class="progress progress-xs mt-2">
+                <progressbar class="progress progress-brand-p" [value]="stepSummaryPercentageBar" [max]="100"
+                             type="brand-p"></progressbar>
+              </div>
+            </div>
+            <div class="col-6 col-md-4" style="text-align: right">
+              {{stepSummaryPercentage}}%
+            </div>
+          </div>
+          <div *ngIf="stepIntraDayWidgetEnable" class="chart-wrapper mt-3 hidden-sm-down" style="height:65px;">
+            <canvas baseChart class="chart"
+                    [datasets]="stepIntraDayChartData"
+                    [labels]="stepIntraDayChartLabels"
+                    [options]="intraDayWidgetChartOptions"
+                    [colors]="intraDayWidgetChartColours"
+                    [legend]="intraDayWidgetChartLegend"
+                    [chartType]="intraDayWidgetChartType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div><!-- /stepSummary -->
+
+    <div [class]="widgetGridOnFirstRow" *ngIf="floorWidgetEnable">
+      <div class="card text-white bg-info">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-odnoklassniki"></i>
+          </div>
+          <div class="text-value">{{floorSummary}}</div>
+          <div>Floors Taken</div>
+          <div class="row">
+            <div class="col-6 col-md-8">
+              <div class="progress progress-xs mt-2">
+                <progressbar class="progress progress-brand-p" [value]="floorSummaryPercentageBar" [max]="100"
+                             type="brand-p"></progressbar>
+              </div>
+            </div>
+            <div class="col-6 col-md-4" style="text-align: right">
+              {{floorSummaryPercentage}}%
+            </div>
+          </div>
+          <div *ngIf="floorIntraDayWidgetEnable" class="chart-wrapper mt-3 hidden-sm-down" style="height:65px;">
+            <canvas baseChart class="chart"
+                    [datasets]="floorIntraDayChartData"
+                    [labels]="floorIntraDayChartLabels"
+                    [options]="intraDayWidgetChartOptions"
+                    [colors]="intraDayWidgetChartColours"
+                    [legend]="intraDayWidgetChartLegend"
+                    [chartType]="intraDayWidgetChartType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div><!-- /floorSummary -->
+
+    <div [class]="widgetGridOnFirstRow" *ngIf="distanceWidgetEnable">
+      <div class="card text-white bg-warning">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-map-signs"></i>
+          </div>
+          <div class="text-value">{{distanceSummary}} {{distanceUnits}}</div>
+          <div>Distances Taken</div>
+          <div class="row">
+            <div class="col-6 col-md-8">
+              <div class="progress progress-xs mt-2">
+                <progressbar class="progress progress-brand-p" [value]="distanceSummaryPercentageBar" [max]="100"
+                             type="brand-p"></progressbar>
+              </div>
+            </div>
+            <div class="col-6 col-md-4" style="text-align: right">
+              {{distanceSummaryPercentage}}%
+            </div>
+          </div>
+          <div *ngIf="distanceIntraDayWidgetEnable" class="chart-wrapper mt-3 hidden-sm-down" style="height:65px;">
+            <canvas baseChart class="chart"
+                    [datasets]="distanceIntraDayChartData"
+                    [labels]="distanceIntraDayChartLabels"
+                    [options]="intraDayWidgetChartOptions"
+                    [colors]="intraDayWidgetChartColours"
+                    [legend]="intraDayWidgetChartLegend"
+                    [chartType]="intraDayWidgetChartType"></canvas>
+          </div>
+        </div>
+      </div>
+    </div><!-- /distanceSummary -->
+
+    <div [class]="widgetGridOnFirstRow" *ngIf="weightWidgetEnable">
+      <div class="card text-white bg-danger">
+        <div class="card-body pb-0">
+          <div class="btn-group float-right" dropdown>
+            <i class="medicalIcons-scale-tool-to-control-body-weight-standing-on-it"></i>
+          </div>
+          <div class="text-value">{{weightCurrent}} {{weightCurrentUnit}}</div>
+          <div>Current Weight</div>
+          <div class="row">
+            <div class="col-6 col-md-8">
+              <div class="progress progress-xs mt-2">
+                <progressbar class="progress progress-brand-s" [value]="weightPercentage" [max]="100"
+                             type="brand-s"></progressbar>
+              </div>
+            </div>
+            <div class="col-6 col-md-4" style="text-align: right">
+              {{weightPercentage}}%
+            </div>
+          </div>
+          <div *ngIf="weightIntraDayWidgetEnable" class="chart-wrapper mt-3" style="height:65px;">
+            <canvas baseChart class="chart"
+                    [datasets]="weightWidgetChartData"
+                    [labels]="weightWidgetChartLabels"
+                    [options]="intraDayWidgetChartOptions"
+                    [colors]="intraDayWidgetChartColours"
+                    [legend]="intraDayWidgetChartLegend"
+                    [chartType]="'line'"></canvas>
+          </div>
+        </div>
+      </div>
+    </div><!-- /distanceSummary -->
+  </div>
+
+  <div class="row" *ngIf="milestonesMoreWidgetEnable||milestonesLessWidgetEnable">
+    <div [class]="widgetGridMilestonesRow" *ngIf="milestonesMoreWidgetEnable">
       <div class="card text-white bg-success">
         <div class="card-header">
           Your Best Day
@@ -180,7 +195,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-lg-6" [hidden]="showMilestonesLess">
+    <div [class]="widgetGridMilestonesRow" *ngIf="milestonesLessWidgetEnable">
       <div class="card text-white bg-danger">
         <div class="card-header">
           Your Best Day
@@ -194,162 +209,153 @@
     </div><!--/.col-->
   </div>
 
-  <div class="row">
-    <div class="col-12" [hidden]="profileAwards.length=0">
-      <div class="card">
-        <div class="card-header">
-          Your Best Day
+  <div *ngIf="rpgChallengeEnable">
+    <div class="row">
+      <div class="col-12">
+        <h3>Running 1:1 Challenges</h3>
+      </div>
+    </div><!-- /Running 1:1 Challenges -->
+
+    <div class="row">
+      <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+        <div class="brand-card" *ngIf="rpgChallengeSummary">
+          <div class="brand-card-header bg-gold">
+            <i class="fa fa-trophy"></i>
+          </div>
+          <div class="brand-card-body">
+            <div>
+              <div class="text-value">{{rpgChallengeSummary.win}}</div>
+              <div class="text-uppercase text-muted small">Wins</div>
+            </div>
+            <div>
+              <div class="text-value">{{rpgChallengeSummary.lose}}</div>
+              <div class="text-uppercase text-muted small">Loses</div>
+            </div>
+            <div>
+              <div class="text-value">{{rpgChallengeSummary.draw}}</div>
+              <div class="text-uppercase text-muted small">Draws</div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 col-xl-4">
-              <table class="table table-responsive-sm table-hover table-outline mb-0">
-                <tbody>
-                <tr *ngFor="let profileAward of profileAwards">
-                  <td class="text-center">
-                    <div class="avatar">
-                      <img [alt]="profileAward.name" class="img-avatar"
-                           [src]="'assets/badges/' + profileAward.image + '.png'">
-                    </div>
-                  </td>
-                  <td>
-                    <div>{{ profileAward.name }}</div>
-                    <div class="small text-muted">
-                      {{ profileAward.longtext }}
-                    </div>
-                  </td>
-                  <td>
-                    <div>Awarded {{ profileAward.count }} time(s)</div>
-                    <div class="small text-muted">
-                      Last Awarded: {{ profileAward.awarded }}
-                    </div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
+      </div><!-- /rpgChallengeTrophy -->
+
+      <div class="col-12 col-md-8 col-lg-8 col-xl-9" *ngIf="rpgChallengeRunning.length>0">
+        <div class="card card-accent-brand-p" *ngFor="let runningChallenge of rpgChallengeRunning">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
+            {{runningChallenge.duration}} Days, Challenge
+            <div class="progress progress-xs mt-2">
+              <progressbar class="progress progress-brand-p" [value]="runningChallenge.progressDate" [max]="100"
+                           type="brand-p"></progressbar>
             </div>
-            <div class="col-12 col-xl-6 hidden-md-down">
-              <ul>
-                <li *ngFor="let point of profileXpLog">{{ point.datetime }}:: {{ point.log }}</li>
-              </ul>
-            </div>
-            <div class="col-2 hidden-md-down" style="text-align: right">
-              <div class="row">
-                <div class="col-12">
-                  <img [src]="profileLevel"/><br />
-                  {{ profileXp }} xp
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-5">
+                <div class="progress">
+                  <progressbar class="progress progress-info" [value]="runningChallenge.userDetail.completion"
+                               [max]="100"
+                               type="info"></progressbar>
                 </div>
-                <div class="col-12">
-                  <div class="progress progress-xs mt-2">
-                    <progressbar class="progress" [value]="profileXpProgress" [max]="profileXpTarget"
-                                 type="success"></progressbar>
-                  </div>
+                <div style="text-align: right;">
+                  {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
+                </div>
+              </div>
+              <div class="col-2 hidden-md-down" style="text-align: center; font-size: 2rem;vertical-align: middle;">
+                <i class="fa fa-flag-checkered"></i>
+              </div>
+              <div class="col-12 col-md-6 col-lg-5">
+                <div class="progress">
+                  <progressbar class="progress progress-info" style="direction: rtl;"
+                               [value]="runningChallenge.opponentDetail.completion" [max]="100"
+                               type="info"></progressbar>
+                </div>
+                <div>
+                  {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far
                 </div>
               </div>
             </div>
           </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-5 col-xl-4" style="text-align: center">
+                <div class="text-value">
+                  <img src="{{profileAvatar}}" class="img-avatar" alt="You" width="55px" height="55px"/>
+                </div>
+                <div class="text-uppercase text-muted small">You</div>
+                <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
+              </div>
+              <div class="col-1 hidden-lg-down" style="text-align: center">
+                <div class="text-value">{{runningChallenge.target}}</div>
+                <div class="text-uppercase text-muted small">{{runningChallenge.criteria}}</div>
+              </div>
+              <div class="col-2 hidden-lg-down" style="text-align: center">
+                <div class="text-value">IN</div>
+              </div>
+              <div class="col-2 hidden-xl-up" style="text-align: center">
+                <div class="text-value">Vs</div>
+              </div>
+              <div class="col-1 hidden-lg-down" style="text-align: center">
+                <div class="text-value">{{runningChallenge.duration}}</div>
+                <div class="text-uppercase text-muted small">Days</div>
+              </div>
+              <div class="col-5 col-xl-4" style="text-align: center">
+                <div class="text-value">
+                  <img src="{{runningChallenge.opponentAvatar}}" class="img-avatar" alt="{{runningChallenge.opponent}}"
+                       width="55px" height="55px"/>
+                </div>
+                <div class="text-uppercase text-muted small">{{runningChallenge.opponent}}</div>
+                <div class="text-uppercase text-muted small">{{runningChallenge.opponentDetail.lastPulled}}</div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div><!--/.col-->
+      </div><!-- /rpgChallengeSummary -->
+    </div><!-- /rpgChallengeRunning -->
   </div>
 
-  <div class="card" [hidden]="!showExerciseChart">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-sm-12">
-          <h4 class="card-title mb-0">Exercise</h4>
-          <div class="small text-muted">Charted over the last month</div>
-        </div><!--/.col-->
-      </div><!--/.row-->
-      <div class="row">
-        <div class="col-12 col-lg-9">
-          <div class="weightchart chart-wrapper" style="height:300px;margin-top:40px;">
-            <canvas baseChart class="chart"
-                    [datasets]="exerciseWidgetChartData"
-                    [labels]="exerciseWidgetChartLabels"
-                    [options]="exerciseWidgetChartOptions"
-                    [colors]="exerciseWidgetChartColours"
-                    [legend]="exerciseWidgetChartLegend"
-                    [chartType]="exerciseWidgetChartType"></canvas>
-          </div>
-        </div><!--/.col-->
-        <div class="col-12 col-lg-3 hidden-md-down">
-          <div style="height:300px;margin-top:40px;">
-            <ul>
-              <li *ngFor="let point of exerciseHistory" [innerHTML]="point"></li>
-            </ul>
-          </div>
-        </div><!--/.col-->
-      </div><!--/.row-->
-    </div>
-  </div>
-
-  <div [hidden]="!showStreak" class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <span id="CurrentDays">Streak</span>
-        </div>
-        <div class="card-body" id="StreakGoals">
-          <div class="progress-group-bars">
-            <progressbar class="progress" [value]="30" [max]="100"></progressbar>
-          </div>
-          <strong>Your Average Streak</strong>
-          <p class="text-muted" id="AverageDays">X Days</p>
-
-          <div class="progress-group-bars">
-            <progressbar class="progress" [value]="55" [max]="100"></progressbar>
-          </div>
-          <strong>Your Last Streak</strong>
-          <p class="text-muted" id="LastDays">X Days</p>
-
-          <div class="progress-group-bars">
-            <progressbar class="progress" [value]="66" [max]="100"></progressbar>
-          </div>
-          <strong>Your Longest Streak</strong>
-          <p class="text-muted" id="LongestDays">X Days</p>
-        </div>
+  <div *ngIf="awardsWidgetEnable">
+    <div class="row">
+      <div class="col-12">
+        <h3>Badges</h3>
       </div>
-    </div>
-  </div>
+    </div><!-- /Running 1:1 Challenges -->
 
-  <div class="card" [hidden]="!showWeightChart">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-sm-12">
-          <h4 class="card-title mb-0">Weight</h4>
-          <div class="small text-muted">Charted Since {{weightWidgetChartSince}}</div>
-        </div><!--/.col-->
-      </div><!--/.row-->
-      <div class="weightchart chart-wrapper" style="height:300px;margin-top:40px;">
-        <canvas baseChart class="chart"
-                [datasets]="weightWidgetChartData"
-                [labels]="weightWidgetChartLabels"
-                [options]="weightWidgetChartOptions"
-                [colors]="weightWidgetChartColours"
-                [legend]="weightWidgetChartLegend"
-                [chartType]="weightWidgetChartType"></canvas>
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="row text-center">
-        <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Weight</div>
-          <strong>{{weightCurrent}} {{weightCurrentUnit}} {{weightPercentage}}%</strong>
-          <div class="progress progress-xs mt-2">
-            <progressbar class="progress progress-info" [value]="weightPercentage" [max]="100"
-                         type="info"></progressbar>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            Awards
           </div>
-        </div>
-        <div class="col-sm-12 col-md mb-sm-2 mb-0">
-          <div class="text-muted">Body Fat</div>
-          <strong>{{fatCurrent}} {{fatCurrentUnit}} {{fatPercentage}}%</strong>
-          <div class="progress progress-xs mt-2">
-            <progressbar class="progress progress-info" [value]="fatPercentage" [max]="100"
-                         type="info"></progressbar>
+          <div class="card-body">
+            <table class="table table-responsive-sm table-hover table-outline mb-0">
+              <tbody>
+              <tr *ngFor="let awardsSummary of awardsSummaries">
+                <td class="text-center">
+                  <div class="avatar">
+                    <img [alt]="awardsSummary.name" class="img-avatar"
+                         [src]="'assets/badges/' + awardsSummary.image + '.png'">
+                  </div>
+                </td>
+                <td>
+                  <div>{{ awardsSummary.name }}</div>
+                  <div class="small text-muted d-none d-md-block">
+                    {{ awardsSummary.longtext }}
+                  </div>
+                </td>
+                <td>
+                  <div>Awarded {{ awardsSummary.count }} time(s)</div>
+                  <div class="small text-muted d-none d-md-block">
+                    Last Awarded: {{ awardsSummary.awarded }}
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </div>

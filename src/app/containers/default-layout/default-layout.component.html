@@ -6,10 +6,10 @@
   [sidebarToggler]="'lg'">
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health" target="_blank">Project Gitlab</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/store" target="_blank">Store (Symfony)</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/angular" target="_blank">Web UI (Angular)</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/cordova" target="_blank">Mobile UI (Cordova/Android)</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/samsung-health-sync" target="_blank">Sync Samsung Health (Android)</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/store" target="_blank">Store</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/angular" target="_blank">Web UI</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/cordova" target="_blank">Mobile UI</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/samsung-health-sync" target="_blank">Sync Samsung Health</a></li>
   </ul>
   <ul class="nav navbar-nav ml-auto" *ngIf="currentUser">
     <li class="nav-item dropdown" dropdown placement="bottom right">
@@ -43,6 +43,7 @@
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <a class="btn" [routerLink]="['/dashboard']"><i class="fa fa-dashboard"></i> &nbsp;Dashboard</a>
           <a class="btn" [routerLink]="['/body/weight']"><i class="fa fa-balance-scale"></i> &nbsp;Weight</a>
+          <!--<a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>-->
         </div>
       </li>
     </cui-breadcrumb>

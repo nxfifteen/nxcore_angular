@@ -34,11 +34,6 @@ export const routes: Routes = [
       },
       children: [
         {
-          path: 'setup',
-          canActivate: [AuthGuard],
-          loadChildren: () => import('./views/setup/setup.module').then(m => m.SetupModule)
-        },
-        {
           path: 'dashboard',
           canActivate: [AuthGuard],
           loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
@@ -49,10 +44,20 @@ export const routes: Routes = [
           loadChildren: () => import('./views/body/body.module').then(m => m.BodyModule)
         },
         {
+          path: 'rpg',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/rpg/rpg.module').then(m => m.RpgModule)
+        },
+        {
           path: 'icons',
           canActivate: [AuthGuard],
           loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
-        }
+        },
+        {
+          path: 'setup',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/setup/setup.module').then(m => m.SetupModule)
+        },
       ]
     }
   ]
