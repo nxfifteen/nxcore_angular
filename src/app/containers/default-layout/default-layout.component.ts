@@ -49,12 +49,10 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
 
     this.apiService.getSiteNews().subscribe((data) => {
-      console.log(data);
       this.siteNews = [];
       for (let i = 0; i < data['hydra:totalItems']; i++) {
         this.siteNews.push(data['hydra:member'][i]);
       }
-      console.log(this.siteNews);
     });
 
   }
