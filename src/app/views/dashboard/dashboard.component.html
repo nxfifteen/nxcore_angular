@@ -259,13 +259,13 @@
                   <table class="table table-responsive-sm table-hover table-outline mb-0">
                     <tbody>
                     <tr *ngFor="let awardsSummary of awardsSummaries">
-                      <td class="text-center">
+                      <td class="text-center col-2">
                         <div class="avatar">
                           <img [alt]="awardsSummary.name" class="img-avatar"
                                [src]="'assets/badges/' + awardsSummary.image + '.png'">
                         </div>
                       </td>
-                      <td>
+                      <td class="col-10">
                         <div>{{ awardsSummary.name }}</div>
                         <div class="small text-muted d-none d-md-block">
                           {{ awardsSummary.longtext }}
