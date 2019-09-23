@@ -61,6 +61,13 @@ export class ApiService {
     return this.httpClient.get(`${environment.apiUrl}/feed/pvp/leaderboard?key=${this.currentUser.token}`);
   }
 
+  public getRpgNewChallenge() {
+    if (!environment.production) {
+      console.log(`${environment.apiUrl}/forms/challenges/new?key=${this.currentUser.token}`);
+    }
+    return this.httpClient.get(`${environment.apiUrl}/forms/challenges/new?key=${this.currentUser.token}`);
+  }
+
   public getDashboard() {
     if (!environment.production) {
       console.log(`${environment.apiUrl}/feed/dashboard?key=${this.currentUser.token}`);

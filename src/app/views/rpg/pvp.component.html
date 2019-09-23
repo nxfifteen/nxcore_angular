@@ -13,7 +13,7 @@
   <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
 
   <div class="row">
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-3 col-md-2">
       <div class="brand-card" *ngIf="rpgChallengeSummary">
         <div class="brand-card-header bg-gold">
           <i class="fa fa-trophy"></i>
@@ -33,6 +33,82 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-12 col-sm-9 col-md-10">
+      <form [formGroup]="newChallengeForm" (ngSubmit)="onSubmitForm()">
+        <div class="card card-accent-brand-p">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> Heading
+          </div>
+          <div class="card-body">
+            <div class="row">
+              I challenge&nbsp;
+              <input
+                id="challenge-friend"
+                type="text"
+                class="form-control col-3 col-md-2"
+                formControlName="friend"
+                name="friend"
+                [(ngModel)]="selectedChallengeFriends"
+                [ngbTypeahead]="searchChallengeFriends"
+                (focus)="challengeFriendsFocus$.next($event.target.value)"
+                (click)="challengeFriendsClick$.next($event.target.value)"
+                #challengeFriendsInstance="ngbTypeahead"
+                title="Friends"
+                placeholder="Friends"/>
+              &nbsp;to complete&nbsp;
+              <input
+                id="challenge-target"
+                type="text"
+                class="form-control col-3 col-md-2"
+                formControlName="target"
+                name="target"
+                [(ngModel)]="selectedChallengeTargets"
+                [ngbTypeahead]="searchChallengeTargets"
+                (focus)="challengeTargetsFocus$.next($event.target.value)"
+                (click)="challengeTargetsClick$.next($event.target.value)"
+                #challengeTargetsInstance="ngbTypeahead"
+                title="Target"
+                placeholder="Target"/>
+              <input
+                id="challenge-criteria"
+                type="text"
+                class="form-control col-2"
+                formControlName="criteria"
+                name="criteria"
+                [(ngModel)]="selectedChallengeCriteria"
+                [ngbTypeahead]="searchChallengeCriteria"
+                (focus)="challengeCriteriaFocus$.next($event.target.value)"
+                (click)="challengeCriteriaClick$.next($event.target.value)"
+                #challengeCriteriaInstance="ngbTypeahead"
+                title="Criteria"
+                placeholder="Criteria"/>
+              &nbsp;in&nbsp;
+              <input
+                id="challenge-duration"
+                type="text"
+                class="form-control col-1"
+                formControlName="duration"
+                name="duration"
+                [(ngModel)]="selectedChallengeDurations"
+                [ngbTypeahead]="searchChallengeDurations"
+                (focus)="challengeDurationsFocus$.next($event.target.value)"
+                (click)="challengeDurationsClick$.next($event.target.value)"
+                #challengeDurationsInstance="ngbTypeahead"
+                title="Duration"
+                placeholder="Duration"/>
+              &nbsp;days.
+            </div>
+          </div>
+          <div class="card-footer">
+            You've challenged {{ selectedChallengeFriends }} to take {{ selectedChallengeTargets }} {{ selectedChallengeCriteria }} in {{ selectedChallengeDurations }} days.
+            <button [disabled]="submittingForm" class="btn btn-brand-p px-4 pull-right">
+              <span *ngIf="submittingForm" class="spinner-border spinner-border-sm mr-1"></span>
+              Create Account
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -195,8 +271,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let toAccept of rpgChallengeToAccept; let i = index" (click)="acceptChallenge(toAccept.id, i)" [class.active]="i == selectedInboxChallenge">
-              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar" alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
+            <tr *ngFor="let toAccept of rpgChallengeToAccept; let i = index" (click)="acceptChallenge(toAccept.id, i)"
+                [class.active]="i == selectedInboxChallenge">
+              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar"
+                                              alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
               <td>{{ toAccept.opponent }}</td>
               <td>{{ toAccept.criteria }}</td>
               <td>{{ toAccept.target }}</td>
@@ -228,8 +306,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let toAccept of rpgChallengePending; let i = index" (click)="rejectChallenge(toAccept.id, i)" [class.active]="i == selectedOutboxChallenge">
-              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar" alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
+            <tr *ngFor="let toAccept of rpgChallengePending; let i = index" (click)="rejectChallenge(toAccept.id, i)"
+                [class.active]="i == selectedOutboxChallenge">
+              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar"
+                                              alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
               <td>{{ toAccept.opponent }}</td>
               <td>{{ toAccept.criteria }}</td>
               <td>{{ toAccept.target }}</td>
