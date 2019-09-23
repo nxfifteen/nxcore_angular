@@ -14,38 +14,29 @@
 
   <div class="row">
     <div class="col-12">
-      <h1>Inbox</h1>
       <div class="card card-accent-info">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i> Pending Challenges
+          <i class="fa fa-paw"></i> Leaderboard
         </div>
         <div class="card-body">
-          <table class="table table-sm">
-            <thead>
-            <tr>
-              <th class="hidden-md-down">&nbsp;</th>
-              <th>Opponent</th>
-              <th>Opponent</th>
-              <th>Opponent</th>
-              <th>Opponent</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let rpgFriend of rpgFriends; let i = index" class="friends-{{ rpgFriend.you }}">
-              <td class="hidden-md-down"><img src="{{rpgFriend.avatar}}" class="img-avatar" alt="{{rpgFriend.name}}"
-                                              width="35px" height="35px"/></td>
-              <td>{{ rpgFriend.name }}</td>
-              <td>{{ rpgFriend.you }}</td>
-              <td>{{ rpgFriend.steps }}</td>
-              <td>
-                <div class="progress progress-xs mt-2">
-                  <progressbar class="progress progress-brand-p" [value]="rpgFriend.steps" [max]="ragFriendsHighestSteps"
-                               type="brand-p"></progressbar>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+          <div class="row d-md-down-none">
+            <div class="col-12 col-md-4 col-lg-3"><h5>Friend</h5></div>
+            <div class="col-2"><h5>7-Day Steps</h5></div>
+            <div class="col-10 col-md-6 col-lg-7">&nbsp;</div>
+          </div>
+          <div *ngFor="let rpgFriend of rpgFriends; let i = index" class="row friends-{{ rpgFriend.you }}">
+            <div class="col-9 col-md-4 col-lg-3"><img src="{{rpgFriend.avatar}}" class="img-avatar"
+                                                       alt="{{rpgFriend.name}}"
+                                                       width="35px" height="35px"/>&nbsp;{{ rpgFriend.name }}</div>
+            <div class="col-3 col-md-8 col-lg-2">{{ rpgFriend.steps }}</div>
+            <div class="col-12 col-md-12 col-lg-7">
+              <div class="progress progress-xs mt-2">
+                <progressbar class="progress progress-success" [value]="rpgFriend.steps"
+                             [max]="ragFriendsHighestSteps"
+                             type="success"></progressbar>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

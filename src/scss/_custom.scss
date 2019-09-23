@@ -59,9 +59,20 @@
   color: white;
 }
 
-tr.friends-you {
-  background-color:$brand_s !important;
-  color: white;
+div.friends-you {
+  background-color:$gray-200 !important;
+  margin: 10px -15px 0 -15px;
+  border-bottom: $gray-600 1px solid !important;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+div.friends-friend {
+  background-color:white !important;
+  margin: 10px -15px 0 -15px;
+  border-bottom: $gray-200 1px solid !important;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .nav-title {
