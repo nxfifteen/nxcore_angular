@@ -286,7 +286,7 @@
         <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeRunning">
           <div class="card-header">
             <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
-            {{runningChallenge.duration}} Days, Challenge
+            {{runningChallenge.duration}} Days
             <div class="progress progress-xs mt-2">
               <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.progressDate" [max]="100"
                            type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>

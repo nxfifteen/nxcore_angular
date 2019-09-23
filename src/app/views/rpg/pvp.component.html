@@ -117,8 +117,8 @@
       <h3>Running 1:1 Challenges</h3>
       <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeRunning">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} Challenge,
-          {{runningChallenge.startDate}}
+          <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
+          {{runningChallenge.duration}} Days
           <div class="progress progress-xs mt-2">
             <progressbar class="progress progress-brand-p" [value]="runningChallenge.progressDate" [max]="100"
                          type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
@@ -192,8 +192,8 @@
       <h3>Finished 1:1 Challenges</h3>
       <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeCompleted">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} Challenge,
-          {{runningChallenge.startDate}}
+          <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
+          {{runningChallenge.duration}} Days
           <div class="progress progress-xs mt-2">
             <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.progressDate" [max]="100"
                          type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
