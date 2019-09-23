@@ -71,6 +71,22 @@ export const navItems: NavData[] = [
     ]
   },
   {
+    name: 'Achivements',
+    url: '/achivements',
+    icon: 'fa fa-trophy',
+    children: [
+      {
+        name: 'Awards',
+        url: '/achivements/awards',
+        icon: 'fa fa-diamond',
+        badge: {
+          variant: 'info',
+          text: 'NEW'
+        },
+      },
+    ]
+  },
+  {
     divider: true
   },
   {
@@ -163,7 +179,6 @@ export const navItems: NavData[] = [
     name: 'NxFIFTEEN',
     url: 'https://nxfifteen.me.uk',
     icon: 'fa fa-wifi',
-    class: 'mt-auto',
     variant: 'success',
     attributes: { target: '_blank', rel: 'noopener' }
   }

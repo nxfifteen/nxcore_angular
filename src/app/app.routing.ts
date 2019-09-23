@@ -58,6 +58,11 @@ export const routes: Routes = [
           canActivate: [AuthGuard],
           loadChildren: () => import('./views/setup/setup.module').then(m => m.SetupModule)
         },
+        {
+          path: 'achivements',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/achivements/achivements.module').then(m => m.AchivementsModule)
+        },
       ]
     }
   ]
