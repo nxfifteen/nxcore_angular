@@ -115,21 +115,21 @@
   <div class="row">
     <div class="col-12">
       <h3>Running 1:1 Challenges</h3>
-      <div class="card card-accent-brand-p" *ngFor="let runningChallenge of rpgChallengeRunning">
+      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeRunning">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} Challenge,
           {{runningChallenge.startDate}}
           <div class="progress progress-xs mt-2">
             <progressbar class="progress progress-brand-p" [value]="runningChallenge.progressDate" [max]="100"
-                         type="brand-p"></progressbar>
+                         type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
           </div>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-12 col-lg-5">
               <div class="progress">
-                <progressbar class="progress progress-info" [value]="runningChallenge.userDetail.completion" [max]="100"
-                             type="info"></progressbar>
+                <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.userDetail.completion" [max]="100"
+                             type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
               </div>
               <div style="text-align: right;">
                 {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
@@ -140,9 +140,9 @@
             </div>
             <div class="col-12 col-lg-5">
               <div class="progress">
-                <progressbar class="progress progress-info" style="direction: rtl;"
+                <progressbar class="progress progress-{{runningChallenge.opponentDetail.outcomeType}}" style="direction: rtl;"
                              [value]="runningChallenge.opponentDetail.completion" [max]="100"
-                             type="info"></progressbar>
+                             type="{{runningChallenge.opponentDetail.outcomeType}}"></progressbar>
               </div>
               <div>
                 {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far
@@ -190,21 +190,21 @@
   <div class="row">
     <div class="col-12">
       <h3>Finished 1:1 Challenges</h3>
-      <div class="card card-accent-brand-s" *ngFor="let runningChallenge of rpgChallengeCompleted">
+      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeCompleted">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} Challenge,
           {{runningChallenge.startDate}}
           <div class="progress progress-xs mt-2">
-            <progressbar class="progress progress-brand-s" [value]="runningChallenge.progressDate" [max]="100"
-                         type="brand-s"></progressbar>
+            <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.progressDate" [max]="100"
+                         type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
           </div>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-12 col-lg-5">
               <div class="progress">
-                <progressbar class="progress progress-info" [value]="runningChallenge.userDetail.completion" [max]="100"
-                             type="info"></progressbar>
+                <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.userDetail.completion" [max]="100"
+                             type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
               </div>
               <div style="text-align: right;">
                 {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
@@ -215,9 +215,9 @@
             </div>
             <div class="col-12 col-lg-5">
               <div class="progress">
-                <progressbar class="progress progress-info" style="direction: rtl;"
+                <progressbar class="progress progress-{{runningChallenge.opponentDetail.outcomeType}}" style="direction: rtl;"
                              [value]="runningChallenge.opponentDetail.completion" [max]="100"
-                             type="info"></progressbar>
+                             type="{{runningChallenge.opponentDetail.outcomeType}}"></progressbar>
               </div>
               <div>
                 {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far
