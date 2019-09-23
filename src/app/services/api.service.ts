@@ -54,6 +54,13 @@ export class ApiService {
 
 
 
+  public getSiteNews() {
+    if (!environment.production) {
+      console.log(`${environment.apiUrl}/api/site_news?key=${this.currentUser.token}`);
+    }
+    return this.httpClient.get(`${environment.apiUrl}/api/site_news?key=${this.currentUser.token}`);
+  }
+
   public getRpgFriends() {
     if (!environment.production) {
       console.log(`${environment.apiUrl}/feed/pvp/leaderboard?key=${this.currentUser.token}`);

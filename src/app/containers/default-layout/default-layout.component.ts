@@ -6,6 +6,7 @@ import {ConfigService} from '../../services/config.service';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {Router} from '@angular/router';
+import {SiteNews} from '../../_models/siteNews';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   public configService: ConfigService;
   public profileXp: number;
   currentUser: User;
+  siteNews: Array<SiteNews>;
 
   constructor(private router: Router,
               private apiService: ApiService,
@@ -44,6 +46,15 @@ export class DefaultLayoutComponent implements OnDestroy {
       this.profileName = data['nameFull'];
       this.profileAvatar = data['avatar'];
       this.profileXp = data['xp'];
+    });
+
+    this.apiService.getSiteNews().subscribe((data) => {
+      console.log(data);
+      this.siteNews = [];
+      for (let i = 0; i < data['hydra:totalItems']; i++) {
+        this.siteNews.push(data['hydra:member'][i]);
+      }
+      console.log(this.siteNews);
     });
 
   }
