@@ -80,5 +80,9 @@ div.friends-friend {
 }
 
 .sidebar .nav-link.nav-link-success {
-  background: #4dbd74 !important;
+  background: $success !important;
+}
+
+.sidebar .nav-link.nav-link-info {
+  background: $info !important;
 }

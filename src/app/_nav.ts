@@ -152,6 +152,14 @@ export const navItems: NavData[] = [
     ]
   },
   {
+    name: 'Download',
+    url: 'https://core.nxfifteen.me.uk/app.apk',
+    icon: 'fa fa-android',
+    class: 'mt-auto',
+    variant: 'info',
+    attributes: { target: '_blank', rel: 'noopener' }
+  },
+  {
     name: 'NxFIFTEEN',
     url: 'https://nxfifteen.me.uk',
     icon: 'fa fa-wifi',
