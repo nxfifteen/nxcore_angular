@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup']);
+      this.router.navigate(['/setup/fitbit']);
     } else {
       this.pullToRefresh();
     }

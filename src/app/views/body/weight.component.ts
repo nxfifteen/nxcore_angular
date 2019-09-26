@@ -103,7 +103,7 @@ export class WeightComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup']);
+      this.router.navigate(['/setup/fitbit']);
     } else {
       this.apiService.getFitBodyWeight().subscribe((data) => {
         // console.log(data);
