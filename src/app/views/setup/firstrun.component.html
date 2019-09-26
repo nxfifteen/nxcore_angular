@@ -1,18 +1,8 @@
 <div [hidden]="loadingData" class="row">
-  <div class="col-lg-3">
-    <div class="card">
-      <div class="card-header">
-        <i class="fa fa-edit"></i>Form Elements
-      </div>
-      <div class="card-body">
-        <a [routerLink]="['/setup/fitbit']"><img src="assets/img/service_fitbit.jpeg"></a>
-      </div>
-    </div>
-  </div>
   <div class="col-lg-9">
     <div class="card">
       <div class="card-header">
-        <i class="fa fa-edit"></i>Form Elements
+        <i class="fa fa-edit"></i>User Profile
       </div>
       <div class="card-body">
         <mat-vertical-stepper [linear]="true" #stepper>
@@ -20,7 +10,7 @@
             <form [formGroup]="nameFormGroup">
               <ng-template matStepLabel>Fill out your name</ng-template>
               <div class="row">
-                <div class="form-group col-sm-6">
+                <div class="form-group col-12 col-sm-6">
                   <div class="controls">
                     <div class="input-prepend input-group">
                       <div class="input-group-prepend">
@@ -36,7 +26,7 @@
                     <!--</div>-->
                   </div>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group col-12 col-sm-6">
                   <div class="controls">
                     <div class="input-prepend input-group">
                       <div class="input-group-prepend">
@@ -53,8 +43,8 @@
                 </div>
               </div><!--/.row-->
               <div class="form-group row">
-                <label class="col-2 col-sm-12 col-form-label" for="avatarCtrl">Avatar URL</label>
-                <div class="col-10 col-sm-12">
+                <label class="col-12 col-lg-2 col-form-label" for="avatarCtrl">Avatar URL</label>
+                <div class="col-12 col-lg-10">
                   <div class="controls">
                     <div class="input-prepend input-group">
                       <input formControlName="avatarCtrl" id="avatarCtrl" class="form-control" size="16" type="text"
@@ -72,8 +62,8 @@
             <form [formGroup]="bodyFormGroup">
               <ng-template matStepLabel>Fill out your details</ng-template>
               <div class="form-group row">
-                <label class="col-2 col-sm-12 col-form-label" for="dateOfBirthCtrl">Date of Birth</label>
-                <div class="col-10 col-sm-12">
+                <label class="col-12 col-lg-2 col-form-label" for="dateOfBirthCtrl">Date of Birth</label>
+                <div class="col-12 col-lg-10">
                   <div class="controls">
                     <div class="input-prepend input-group">
                       <input formControlName="dateOfBirthCtrl" id="dateOfBirthCtrl" class="form-control" size="16"
@@ -128,6 +118,17 @@
       </div>
     </div>
   </div> <!--/.col-->
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-edit"></i>Fitbit Connection
+      </div>
+      <div class="card-body">
+        <a [routerLink]="['/setup/fitbit']"><img src="assets/img/service_fitbit.jpeg"></a><br />
+        To start syncing your Fitbit information <a [routerLink]="['/setup/fitbit']">click here</a>, and you'll be taken to Fitbit.com to link your account.
+      </div>
+    </div>
+  </div>
 </div><!--/.row-->
 
 
