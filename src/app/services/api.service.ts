@@ -94,4 +94,12 @@ export class ApiService {
     }
     return this.httpClient.get(`${environment.apiUrl}/feed/pvp/challenges?key=${this.currentUser.token}`);
   }
+
+  public submitNewPVPChallenge(friend, target, criteria, duration) {
+    return this.httpClient.post<any>(
+      `${environment.apiUrl}/submit/pvp/challenge?key=${this.currentUser.token}`, {friend, target, criteria, duration}
+    ).pipe(map(user => {
+      console.log(user);
+    }));
+  }
 }

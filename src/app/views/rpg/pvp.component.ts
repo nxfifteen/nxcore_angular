@@ -12,6 +12,7 @@ import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subject} from 'rxjs';
 import {FormService} from '../../_services/form.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
 @Component({
   templateUrl: 'pvp.component.html'
@@ -191,13 +192,32 @@ export class PvpComponent implements OnInit {
       return;
     }
 
+    const myregexp = /^([\w ]+)\(([\w]+)\)/img;
+    const friendUuid = this.f.friend.value.replace(myregexp, '$2');
+
     this.submittingForm = true;
+    this.apiService.submitNewPVPChallenge(
+      friendUuid,
+      this.f.target.value,
+      this.f.criteria.value,
+      this.f.duration.value
+    ).pipe(first())
+      .subscribe(
+        data => {
+          console.log('Saved');
+          this.submittingForm = false;
 
-    console.log(this.f.friend.value);
-    console.log(this.f.target.value);
-    console.log(this.f.criteria.value);
-    console.log(this.f.duration.value);
+          this.f.target.setValue('');
+          this.f.criteria.setValue('');
+          this.f.duration.setValue('');
+          this.f.friend.setValue('');
 
+          this.pullToRefresh();
+        },
+        error => {
+          // this.alertService.error(error);
+          this.submittingForm = false;
+        });
     return;
   }
 }
