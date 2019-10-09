@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {ChallengeActive} from '../../_models/challengeActive';
+import {Title} from '@angular/platform-browser';
+import {MatomoService} from '../../services/matomo.service';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -14,6 +16,7 @@ import {ChallengeActive} from '../../_models/challengeActive';
 export class DashboardComponent implements OnInit {
   currentUser: User;
   profileAvatar: string;
+  isLoading: boolean;
   loading: number;
   loadingExpected: number;
 
@@ -81,15 +84,22 @@ export class DashboardComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
+              private titleService: Title,
               private markdownService: MarkdownService,
-              private apiService: ApiService) {
+              private apiService: ApiService,
+              private _matomoService: MatomoService) {
     this.setDefaultChartOptions();
+    this.loadingExpected = 9;
   }
 
   ngOnInit(): void {
+    this.loading = 0;
+    this.isLoading = true;
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this._matomoService.setupTracking('Core | Dashboard');
+    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/fitbit']);
+      this.router.navigate(['/setup/profile']);
     } else {
       this.pullToRefresh();
     }
@@ -97,7 +107,6 @@ export class DashboardComponent implements OnInit {
 
   pullToRefresh(): void {
     this.loading = 0;
-    this.loadingExpected = 9;
     this.widgetsOnFirstRow = 0;
     this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
     this.stepWidgetEnable = false;
@@ -117,11 +126,13 @@ export class DashboardComponent implements OnInit {
 
     this.apiService.getProfile().subscribe((data) => {
       this.profileAvatar = data['avatar'];
-      this.loading++;
+      this.emitApiLoaded();
     });
 
     this.apiService.getDashboard().subscribe((data) => {
       if (data['steps']) {
+        this._matomoService.setCustomVariable('apiAvailabilitySteps', 'true', 'page');
+
         this.addWidgetToFirstRow();
 
         this.stepSummary = data['steps']['value'];
@@ -131,15 +142,20 @@ export class DashboardComponent implements OnInit {
         this.stepWidgetEnable = true;
 
         if (data['steps']['intraDay']) {
+          this._matomoService.setCustomVariable('apiAvailabilitySteps', 'intraDay', 'page');
+
           this.stepIntraDayChartData = [];
           this.stepIntraDayChartData.push(data['steps']['intraDay']['widget']['data']);
           this.stepIntraDayChartLabels = data['steps']['intraDay']['widget']['labels'];
           this.stepIntraDayWidgetEnable = true;
         }
+
       }
-      this.loading++;
+      this.emitApiLoaded();
 
       if (data['floors']) {
+        this._matomoService.setCustomVariable('apiAvailabilityFloors', 'true', 'page');
+
         this.addWidgetToFirstRow();
 
         this.floorSummary = data['floors']['value'];
@@ -149,15 +165,19 @@ export class DashboardComponent implements OnInit {
         this.floorWidgetEnable = true;
 
         if (data['floors']['intraDay']) {
+          this._matomoService.setCustomVariable('apiAvailabilityFloors', 'intraDay', 'page');
+
           this.floorIntraDayChartData = [];
           this.floorIntraDayChartData.push(data['floors']['intraDay']['widget']['data']);
           this.floorIntraDayChartLabels = data['floors']['intraDay']['widget']['labels'];
           this.floorIntraDayWidgetEnable = true;
         }
       }
-      this.loading++;
+      this.emitApiLoaded();
 
       if (data['distance']) {
+        this._matomoService.setCustomVariable('apiAvailabilityDistance', 'true', 'page');
+
         this.addWidgetToFirstRow();
 
         this.distanceSummary = data['distance']['value'];
@@ -168,15 +188,19 @@ export class DashboardComponent implements OnInit {
         this.distanceUnits = data['distance']['units'];
 
         if (data['distance']['intraDay']) {
+          this._matomoService.setCustomVariable('apiAvailabilityDistance', 'intraDay', 'page');
+
           this.distanceIntraDayChartData = [];
           this.distanceIntraDayChartData.push(data['distance']['intraDay']['widget']['data']);
           this.distanceIntraDayChartLabels = data['distance']['intraDay']['widget']['labels'];
           this.distanceIntraDayWidgetEnable = true;
         }
       }
-      this.loading++;
+      this.emitApiLoaded();
 
       if (data['weight']) {
+        this._matomoService.setCustomVariable('apiAvailabilityWeight', 'true', 'page');
+
         this.addWidgetToFirstRow();
 
         this.weightCurrent = data['weight']['value'];
@@ -192,20 +216,28 @@ export class DashboardComponent implements OnInit {
 
         this.weightWidgetEnable = true;
       }
-      this.loading++;
+      this.emitApiLoaded();
 
       this.rpgChallengeSummary = {
         win: data['rpg_challenge_friends']['score']['win'],
         lose: data['rpg_challenge_friends']['score']['lose'],
         draw: data['rpg_challenge_friends']['score']['draw'],
       };
-      this.loading++;
+      this.emitApiLoaded();
 
       this.rpgChallengeRunning = [];
       for (let i = 0; i < data['rpg_challenge_friends']['running'].length; i++) {
         this.rpgChallengeRunning.push(data['rpg_challenge_friends']['running'][i]);
       }
-      this.loading++;
+      if (
+        this.rpgChallengeSummary.win > 0 ||
+        this.rpgChallengeSummary.lose > 0 ||
+        this.rpgChallengeSummary.draw > 0 ||
+        this.rpgChallengeRunning.length > 0
+      ) {
+        this.rpgChallengeEnable = true;
+      }
+      this.emitApiLoaded();
 
       if (data['milestones']) {
         this.theMilestonesMore = [];
@@ -220,6 +252,7 @@ export class DashboardComponent implements OnInit {
 
         this.theMilestonesLess = [];
         if (data['milestones']['distance']['less']) {
+
           for (let i = 0; i < data['milestones']['distance']['less'].length; i++) {
             this.theMilestonesLess.push(this.markdownString(data['milestones']['distance']['less'][i]));
           }
@@ -234,19 +267,17 @@ export class DashboardComponent implements OnInit {
           this.widgetGridMilestonesRow = 'col-12 d-none d-lg-block';
         }
       }
-      this.loading++;
+      this.emitApiLoaded();
 
       this.awardsSummaries = [];
       if (data['awards']) {
         this.awardsSummaries = Object.keys(data['awards']).map(it => data['awards'][it]);
-
         if (this.awardsSummaries.length > 0) {
           this.awardsWidgetEnable = true;
         }
       }
 
-      this.rpgChallengeEnable = true;
-      this.loading++;
+      this.emitApiLoaded();
     });
 
   }
@@ -372,5 +403,23 @@ export class DashboardComponent implements OnInit {
     return this.markdownService.compile(datumElementElement).replace('<p>', '').replace('</p>', '');
   }
 
+  awardClicked(id: number) {
+    this._matomoService.trackEvent('detail', 'click', 'award', id);
+    this.router.navigate(['/achivements/awards/info', id]);
+  }
+
+  viewChallenge(id: any) {
+    this._matomoService.trackEvent('detail', 'click', 'challenge', id);
+    this.router.navigate(['/rpg/challenges/info', id]);
+  }
+
+  private emitApiLoaded() {
+    this.loading++;
+    console.log('Loading... ' + this.loading + '/' + this.loadingExpected);
+    if (this.loading >= this.loadingExpected) {
+      console.log('Loaded all components');
+      this._matomoService.doTracking();
+    }
+  }
 }
 

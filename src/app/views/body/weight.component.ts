@@ -1,16 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
+import {getStyle} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
+import {Title} from '@angular/platform-browser';
+import {MatomoService} from '../../services/matomo.service';
 
 @Component({
   templateUrl: './weight.component.html'
 })
 export class WeightComponent implements OnInit {
+  loading: number;
+  loadingExpected: number;
   weightWidgetWidgetChartSince: string;
   weightWidgetWidgetChartOptions: any;
   weightWidgetWidgetChartColours: any;
@@ -25,8 +29,13 @@ export class WeightComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private markdownService: MarkdownService,
-              private apiService: ApiService
+              private apiService: ApiService,
+              private _matomoService: MatomoService,
+              private titleService: Title
   ) {
+    this.loading = 0;
+    this.loadingExpected = 1;
+
     this.weightWidgetWidgetChartData = [
       {
         data: [0],
@@ -102,8 +111,10 @@ export class WeightComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this._matomoService.setupTracking('Core | Body | Weight');
+    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/fitbit']);
+      this.router.navigate(['/setup/profile']);
     } else {
       this.apiService.getFitBodyWeight().subscribe((data) => {
         // console.log(data);
@@ -164,6 +175,17 @@ export class WeightComponent implements OnInit {
           }
         };
       });
+
+      this.emitApiLoaded();
+    }
+  }
+
+  private emitApiLoaded() {
+    this.loading++;
+    console.log('Loading... ' + this.loading + '/' + this.loadingExpected);
+    if (this.loading >= this.loadingExpected) {
+      console.log('Loaded all components');
+      this._matomoService.doTracking();
     }
   }
 

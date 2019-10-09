@@ -1,0 +1,57 @@
+<div *ngIf="loading!=loadingExpected">
+  <div class="row">
+    <div class="col-12">
+      LOADING...
+      <div class="progress progress-xs mt-2">
+        <progressbar class="progress progress-brand-p" [value]="loading" [max]="loadingExpected"
+                     type="brand-p"></progressbar>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="animated fadeIn" *ngIf="loading>=loadingExpected">
+  <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-12"><h3>{{ awardBadge.name }}</h3></div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6 text-center">
+              <div class="row">
+                <div class="col-12">
+                  <img [alt]="awardBadge.name" class="img-avatar"
+                       [src]="awardBadge.image">
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 text-center">
+              {{ awardBadge.textLong }}
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <div class="col-12 weeklyAwardReport">
+            <ul>
+              <li *ngFor="let awardLog of awardBadge.awards">
+                <i class="fa fa-star-o text-black-50" *ngIf="awardLog.awarded==0"></i>
+                <i class="fa fa-star-o text-danger" *ngIf="awardLog.awarded==1"></i>
+                <i class="fa fa-star-half-o text-black-50" *ngIf="awardLog.awarded==2"></i>
+                <i class="fa fa-star text-success" *ngIf="awardLog.awarded==3"></i>
+                <br />
+                {{awardLog.date}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

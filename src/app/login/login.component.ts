@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
         data => {
           console.log(data);
           if (data.firstrun) {
-            this.router.navigate(['/setup/fitbit']);
+            this.router.navigate(['/setup/profile']);
           } else {
             this.router.navigate([this.returnUrl]);
           }

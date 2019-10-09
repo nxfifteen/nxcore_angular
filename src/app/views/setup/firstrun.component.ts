@@ -1,21 +1,29 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../../_services';
+import {AlertService, AuthenticationService} from '../../_services';
 import {ApiService} from '../../services/api.service';
 import {environment} from '../../../environments/environment';
 import {first, map} from 'rxjs/operators';
+import {MatomoTracker} from 'ngx-matomo';
+import {Title} from '@angular/platform-browser';
+import {User} from '../../_models';
+import {Router} from '@angular/router';
+import {MatomoService} from '../../services/matomo.service';
 
 @Component({
   templateUrl: './firstrun.component.html',
   styleUrls: ['./firstrun.component.scss']
 })
 export class FirstrunComponent implements OnInit {
+  currentUser: User;
   nameFormGroup: FormGroup;
   bodyFormGroup: FormGroup;
   emailFormGroup: FormGroup;
 
-  loading = false;
+  loadingFormResponce = false;
   loadingData = true;
+  loading: number;
+  loadingExpected: number;
   submitted = false;
   returnUrl: string;
 
@@ -32,11 +40,21 @@ export class FirstrunComponent implements OnInit {
   }
 
   constructor(private _formBuilder: FormBuilder,
+              private router: Router,
+              private authenticationService: AuthenticationService,
               private alertService: AlertService,
-              private apiService: ApiService) {
+              private apiService: ApiService,
+              private _matomoService: MatomoService,
+              private titleService: Title) {
+    this.loadingExpected = 1;
   }
 
   ngOnInit() {
+    this.loading = 0;
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this._matomoService.setupTracking('Core | Settings | First Run');
+    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
+
     this.nameFormGroup = this._formBuilder.group({
       firstNameCtrl: ['', Validators.required],
       lastNameCtrl: ['', Validators.required],
@@ -63,6 +81,7 @@ export class FirstrunComponent implements OnInit {
       });
 
       this.loadingData = false;
+      this.emitApiLoaded();
     });
   }
 
@@ -78,7 +97,7 @@ export class FirstrunComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.loadingFormResponce = true;
     this.apiService.saveProfileValues(
       this.nameGroupControls.firstNameCtrl.value,
       this.nameGroupControls.lastNameCtrl.value,
@@ -89,12 +108,21 @@ export class FirstrunComponent implements OnInit {
       .subscribe(
         data => {
           console.log('Saved');
-          this.loading = false;
+          this.loadingFormResponce = false;
         },
         error => {
           this.alertService.error(error);
-          this.loading = false;
+          this.loadingFormResponce = false;
         });
+  }
+
+  private emitApiLoaded() {
+    this.loading++;
+    console.log('Loading... ' + this.loading + '/' + this.loadingExpected);
+    if (this.loading >= this.loadingExpected) {
+      console.log('Loaded all components');
+      this._matomoService.doTracking();
+    }
   }
 
 }

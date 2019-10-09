@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
-import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {Friends} from '../../_models/friends';
+import {MatomoTracker} from 'ngx-matomo';
+import {Title} from '@angular/platform-browser';
+import {MatomoService} from '../../services/matomo.service';
 
 @Component({
   templateUrl: 'leaderboard.component.html'
@@ -23,13 +24,19 @@ export class LeaderboardComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private markdownService: MarkdownService,
-              private apiService: ApiService) {
+              private apiService: ApiService,
+              private _matomoService: MatomoService,
+              private titleService: Title) {
+    this.loading = 0;
+    this.loadingExpected = 2;
   }
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this._matomoService.setupTracking('Core | RPG | Leaderboard');
+    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/fitbit']);
+      this.router.navigate(['/setup/profile']);
     } else {
       this.pullToRefresh();
     }
@@ -37,18 +44,28 @@ export class LeaderboardComponent implements OnInit {
 
   pullToRefresh(): void {
     this.loading = 0;
-    this.loadingExpected = 2;
 
     this.apiService.getProfile().subscribe((data) => {
       this.profileAvatar = data['avatar'];
-      this.loading++;
+
+      this.emitApiLoaded();
     });
 
     this.apiService.getRpgFriends().subscribe((data) => {
       this.rpgFriends = data['friends'];
       this.ragFriendsHighestSteps = data['maxSteps'];
-      this.loading++;
+
+      this.emitApiLoaded();
     });
+  }
+
+  private emitApiLoaded() {
+    this.loading++;
+    console.log('Loading... ' + this.loading + '/' + this.loadingExpected);
+    if (this.loading >= this.loadingExpected) {
+      console.log('Loaded all components');
+      this._matomoService.doTracking();
+    }
   }
 }
 

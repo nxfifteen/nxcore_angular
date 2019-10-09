@@ -2,12 +2,13 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {AwardsComponent} from './awards.component';
+import {AwardsDetailComponent} from './awards_detail.component';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Achivements'
+      title: 'Achievements'
     },
     children: [
       {
@@ -19,6 +20,13 @@ const routes: Routes = [
         component: AwardsComponent,
         data: {
           title: 'Awards'
+        }
+      },
+      {
+        path: 'awards/info/:id',
+        component: AwardsDetailComponent,
+        data: {
+          title: 'Awards Details'
         }
       }
     ]

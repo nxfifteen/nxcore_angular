@@ -1,53 +1,7 @@
+@import "variables";
+
 body {
-  background-color: #fff;
-}
-.card-header,
-.card-footer {
-  color: #eee;
-  background-color: $navbar;
-}
-ol.breadcrumb {
-  background-color: $sidebar !important;
-  color: #000 !important;
-}
-.breadcrumb-item a {
-  color: $brand_p !important;
-}
-.breadcrumb-item a:hover {
-  color: $brand_s !important;
-}
-.breadcrumb-item.active {
-  color: #000 !important;
-}
-.app-header {
-  background-color: $navbar !important;
-}
-.sidebar,
-.sidebar .sidebar-minimizer {
-  color: #000 !important;
-  background-color: $sidebar !important;
-}
-.sidebar .nav-link,
-.sidebar .nav-dropdown.open .nav-link {
-  color: #000 !important;
-  border-left: 3px solid transparent !important;
-  background-color: $sidebar !important;
-}
-.sidebar .nav-link.active,
-.sidebar .nav-dropdown.open .nav-link.active,
-.sidebar .nav-link:hover,
-.sidebar .nav-dropdown.open .nav-link:hover {
-  color: #000 !important;
-  border-left: 3px solid $brand_p !important;
-  background-color: $sidebar !important;
-}
-.sidebar .nav-link:hover .nav-icon,
-.sidebar .nav-dropdown.open .nav-link:hover .nav-icon {
-  color: $brand_p !important;
-}
-.sidebar .nav-link.active .nav-icon,
-.sidebar .nav-dropdown.open .nav-link.active .nav-icon {
-  color: $brand_p !important;
+  background-color: #f3f4f5;
 }
 
 .card-accent-brand-p {

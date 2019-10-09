@@ -64,6 +64,7 @@
     "ng2-charts": "^2.3.0",
     "ngx-bootstrap": "^5.1.2",
     "ngx-markdown": "^8.1.0",
+    "ngx-matomo": "^0.1.4",
     "ngx-perfect-scrollbar": "^8.0.0",
     "rxjs": "^6.5.3",
     "simple-line-icons": "^2.4.1",

@@ -1,6 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
-import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
 import {Router} from '@angular/router';
@@ -13,6 +11,8 @@ import {Observable, Subject} from 'rxjs';
 import {FormService} from '../../_services/form.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
+import {Title} from '@angular/platform-browser';
+import {MatomoService} from '../../services/matomo.service';
 
 @Component({
   templateUrl: 'pvp.component.html'
@@ -65,7 +65,12 @@ export class PvpComponent implements OnInit {
               private markdownService: MarkdownService,
               private apiService: ApiService,
               private formService: FormService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private _matomoService: MatomoService,
+              private titleService: Title) {
+    this.loading = 0;
+    this.loadingExpected = 3;
+
     this.rpgChallengeToAccept = [];
 
     this.newChallengeForm = this.formBuilder.group({
@@ -97,8 +102,10 @@ export class PvpComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this._matomoService.setupTracking('Core | RPG | PVP');
+    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/fitbit']);
+      this.router.navigate(['/setup/profile']);
     } else {
       this.pullToRefresh();
     }
@@ -106,14 +113,14 @@ export class PvpComponent implements OnInit {
 
   pullToRefresh(): void {
     this.loading = 0;
-    this.loadingExpected = 3;
 
     this.submitted = false;
     this.submittingForm = false;
 
     this.apiService.getProfile().subscribe((data) => {
       this.profileAvatar = data['avatar'];
-      this.loading++;
+
+      this.emitApiLoaded();
     });
 
     this.apiService.getRpgPvp().subscribe((data) => {
@@ -143,7 +150,7 @@ export class PvpComponent implements OnInit {
         this.rpgChallengeCompleted.push(data['rpg_challenge_friends']['completed'][i]);
       }
 
-      this.loading++;
+      this.emitApiLoaded();
     });
 
     this.apiService.getRpgNewChallenge().subscribe((data) => {
@@ -178,7 +185,7 @@ export class PvpComponent implements OnInit {
         this.challengeTargetsClick$
       );
 
-      this.loading++;
+      this.emitApiLoaded();
     });
   }
 
@@ -219,6 +226,19 @@ export class PvpComponent implements OnInit {
           this.submittingForm = false;
         });
     return;
+  }
+
+  viewChallenge(id: number) {
+    this.router.navigate(['/rpg/challenges/info', id]);
+  }
+
+  private emitApiLoaded() {
+    this.loading++;
+    console.log('Loading... ' + this.loading + '/' + this.loadingExpected);
+    if (this.loading >= this.loadingExpected) {
+      console.log('Loaded all components');
+      this._matomoService.doTracking();
+    }
   }
 }
 

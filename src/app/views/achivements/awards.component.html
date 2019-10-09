@@ -13,55 +13,83 @@
   <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
 
   <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          Awards
+
+    <div class="col-12 col-md-5">
+      <div class="row">
+        <div class="col-12">
+          <div class="card" tooltip="You need {{levelNext}} more XP to reach the next level"
+               placement="top"
+               triggers="mouseenter:click">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-5 col-lg-2 text-right d-none d-md-block d-lg-block d-xl-block">
+                  <img src="{{currentUser.avatar}}" class="img-avatar"
+                       width="81px" height="81px"/>
+                </div>
+                <div class="col-12 col-md-7 col-lg-5 text-center">
+                  <div class="row">
+                    <div class="col-12 text-right">
+                      {{xp}} XP
+                      /
+                      {{xpNext}} XP
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 text-center">
+                      <div class="progress mt-2">
+                        <progressbar class="progress progress-success"
+                                     [value]="levelPercentage" [max]="100"
+                                     type="success"></progressbar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-5 d-none d-lg-block d-xl-block text-right">
+                  <img src="assets/xplevels/{{level}}.png" width="220px" height="81px"/>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <table class="table table-responsive-sm table-hover table-outline mb-0">
-            <tbody>
-            <tr *ngFor="let awardsSummary of awardsSummaries">
-              <td class="text-center col-2">
-                <div class="avatar">
-                  <img [alt]="awardsSummary.name" class="img-avatar"
-                       [src]="'assets/badges/' + awardsSummary.image + '.png'">
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              XP Log
+            </div>
+            <div class="card-body">
+              <div class="row" *ngFor="let logXp of xpLog">
+                <div class="col-12 col-lg-2">
+                  {{logXp.datetime}}
                 </div>
-              </td>
-              <td class="col-6">
-                <div>{{ awardsSummary.name }}</div>
-                <div class="small text-muted d-none d-md-block">
-                  {{ awardsSummary.longtext }}
+                <div class="col-12 col-lg-10">
+                  {{logXp.log}}
                 </div>
-              </td>
-              <td class="col-4">
-                <div>Last Won: {{ awardsSummary.awarded }}</div>
-                <div class="small text-muted d-none d-md-block">
-                  Awarded {{ awardsSummary.count }} time(s)
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          Level {{level}}, with {{xp}} (Difficulty factor is {{factor}})
-        </div>
-        <div class="card-body">
-          <ul>
-          <li *ngFor="let logXp of xpLog">
-            {{logXp.datetime}} - {{logXp.log}} - {{logXp.value}}
-          </li>
-          </ul>
-        </div>
-      </div>
+    <div class="col-12 col-md-7">
+      <div class="row">
+        <div *ngFor="let awardsSummary of awardsSummaries; let i = index" class="col-12 col-md-6 col-lg-3"
+             (click)="awardClicked(awardsSummary.id)">
+          <div class="card">
+            <div class="card-body">
+              <div class="h1 text-muted text-right mb-4" style="font-size: 100%;">
+                {{awardsSummary.count}} WINS
+                <img src="{{awardsSummary.image}}" class="img-avatar"
+                     alt="{{awardsSummary.name}}"
+                     width="35px" height="35px"/>
+              </div>
+              <small class="text-muted text-uppercase font-weight-bold">{{ awardsSummary.name }}</small>
+            </div>
+          </div>
+        </div><!--/.col-->
+      </div><!--/.row-->
     </div>
   </div>
 

@@ -25,6 +25,7 @@ import {MarkdownModule, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
 import {environment} from '../environments/environment';
 import {MyMaterialModule} from './material-module';
 import * as Sentry from '@sentry/browser';
+import {MatomoModule} from 'ngx-matomo';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -105,6 +106,7 @@ export class SentryErrorHandler implements ErrorHandler {
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+    MatomoModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,

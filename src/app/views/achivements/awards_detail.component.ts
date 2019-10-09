@@ -1,17 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
+import {AwardBadge} from '../../_models/awardBadge';
 import {MatomoTracker} from 'ngx-matomo';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 
 @Component({
-  templateUrl: 'awards.component.html'
+  templateUrl: 'awards_detail.component.html',
+  styleUrls: ['awards_detail.component.scss']
 })
-export class AwardsComponent implements OnInit {
+export class AwardsDetailComponent implements OnInit {
   loading: number;
   loadingExpected: number;
   currentUser: User;
@@ -19,15 +21,15 @@ export class AwardsComponent implements OnInit {
   factor: number;
   level: number;
   xp: number;
-  xpNext: number;
-  levelNext: number;
-  levelPercentage: number;
   xpLog = [];
+  awardId: number;
+  awardBadge: AwardBadge;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService,
+              private _ActivatedRoute: ActivatedRoute,
               private _matomoService: MatomoService,
               private titleService: Title) {
     this.loading = 0;
@@ -36,43 +38,30 @@ export class AwardsComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | Awards');
+    this._matomoService.setupTracking('Core | Award | Details');
     this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
     } else {
+      this._ActivatedRoute.paramMap.subscribe(params => {
+        // tslint:disable-next-line:radix
+        this.awardId = parseInt(params.get('id'));
+      });
+
       this.pullToRefresh();
     }
   }
 
   pullToRefresh(): void {
     this.loading = 0;
-    this.loadingExpected = 1;
 
-    this.apiService.getAchievementsAwards().subscribe((data) => {
-
-      this.awardsSummaries = [];
-      if (data['awards']) {
-        this.awardsSummaries = Object.keys(data['awards']).map(it => data['awards'][it]);
-      }
-      this.xpLog = [];
-      if (data['xp_log']) {
-        this.xpLog = Object.keys(data['xp_log']).map(it => data['xp_log'][it]);
-      }
-
-      this.factor = data['factor'];
-      this.level = data['level'];
-      this.xp = data['xp'];
-      this.xpNext = data['xp_next'];
-      this.levelNext = data['level_next'];
-      this.levelPercentage = data['level_percentage'];
+    this.apiService.getAchievementsAwardDetails(this.awardId).subscribe((data) => {
+      // @ts-ignore
+      this.awardBadge = data;
+      this.titleService.setTitle('Core | Awards | ' + this.awardBadge.name);
 
       this.emitApiLoaded();
     });
-  }
-
-  awardClicked(id: number) {
-    this.router.navigate(['/achivements/awards/info', id]);
   }
 
   private emitApiLoaded() {

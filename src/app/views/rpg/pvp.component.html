@@ -13,7 +13,7 @@
   <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
 
   <div class="row">
-    <div class="col-12 col-sm-3 col-md-2">
+    <div class="col-12 col-lg-2">
       <div class="brand-card" *ngIf="rpgChallengeSummary">
         <div class="brand-card-header bg-gold">
           <i class="fa fa-trophy"></i>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-9 col-md-10">
+    <div class="col-12 col-lg-10">
       <form [formGroup]="newChallengeForm" (ngSubmit)="onSubmitForm()">
         <div class="card card-accent-brand-p">
           <div class="card-header">
@@ -42,11 +42,11 @@
           </div>
           <div class="card-body">
             <div class="row">
-              I challenge&nbsp;
+              <span class="form-control col-4 col-md-4 col-lg-1 text-center" style="border: none;">I challenge</span>
               <input
                 id="challenge-friend"
                 type="text"
-                class="form-control col-3 col-md-2"
+                class="form-control col-8 col-md-8 col-lg-2"
                 formControlName="friend"
                 name="friend"
                 [(ngModel)]="selectedChallengeFriends"
@@ -56,11 +56,11 @@
                 #challengeFriendsInstance="ngbTypeahead"
                 title="Friends"
                 placeholder="Friends"/>
-              &nbsp;to complete&nbsp;
+              <span class="form-control col-4 col-md-4 col-lg-1 text-center" style="border: none;">to complete</span>
               <input
                 id="challenge-target"
                 type="text"
-                class="form-control col-3 col-md-2"
+                class="form-control col-4 col-md-4 col-lg-2"
                 formControlName="target"
                 name="target"
                 [(ngModel)]="selectedChallengeTargets"
@@ -73,7 +73,7 @@
               <input
                 id="challenge-criteria"
                 type="text"
-                class="form-control col-2"
+                class="form-control col-4 col-md-4 col-lg-2"
                 formControlName="criteria"
                 name="criteria"
                 [(ngModel)]="selectedChallengeCriteria"
@@ -83,11 +83,11 @@
                 #challengeCriteriaInstance="ngbTypeahead"
                 title="Criteria"
                 placeholder="Criteria"/>
-              &nbsp;in&nbsp;
+              <span class="form-control col-2 col-md-2 col-lg-1 text-center" style="border: none;">in</span>
               <input
                 id="challenge-duration"
                 type="text"
-                class="form-control col-1"
+                class="form-control col-8 col-md-8 col-lg-2"
                 formControlName="duration"
                 name="duration"
                 [(ngModel)]="selectedChallengeDurations"
@@ -97,7 +97,7 @@
                 #challengeDurationsInstance="ngbTypeahead"
                 title="Duration"
                 placeholder="Duration"/>
-              &nbsp;days.
+              <span class="form-control col-2 col-md-2 col-lg-1 text-center" style="border: none;">days.</span>
             </div>
           </div>
           <div class="card-footer">
@@ -112,13 +112,13 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="rpgChallengeRunning.length>0">
     <div class="col-12">
       <h3>Running 1:1 Challenges</h3>
-      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeRunning">
+      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeRunning" (click)="viewChallenge(runningChallenge.id)">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
-          {{runningChallenge.duration}} Days
+          {{runningChallenge.duration}} Days, ends: {{runningChallenge.endDate}}
           <div class="progress progress-xs mt-2">
             <progressbar class="progress progress-brand-p" [value]="runningChallenge.progressDate" [max]="100"
                          type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
@@ -159,17 +159,17 @@
               <div class="text-uppercase text-muted small">You</div>
               <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
             </div>
-            <div class="col-1 hidden-lg-down" style="text-align: center">
+            <div class="col-1 d-none d-lg-block" style="text-align: center">
               <div class="text-value">{{runningChallenge.target}}</div>
               <div class="text-uppercase text-muted small">{{runningChallenge.criteria}}</div>
             </div>
-            <div class="col-2 hidden-lg-down" style="text-align: center">
+            <div class="col-2 d-none d-lg-block" style="text-align: center">
               <div class="text-value">IN</div>
             </div>
-            <div class="col-2 hidden-xl-up" style="text-align: center">
+            <div class="col-2 d-xl-none" style="text-align: center">
               <div class="text-value">Vs</div>
             </div>
-            <div class="col-1 hidden-lg-down" style="text-align: center">
+            <div class="col-1 d-none d-lg-block" style="text-align: center">
               <div class="text-value">{{runningChallenge.duration}}</div>
               <div class="text-uppercase text-muted small">Days</div>
             </div>
@@ -187,13 +187,13 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="rpgChallengeCompleted.length>0">
     <div class="col-12">
       <h3>Finished 1:1 Challenges</h3>
-      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeCompleted">
+      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeCompleted" (click)="viewChallenge(runningChallenge.id)">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
-          {{runningChallenge.duration}} Days
+          {{runningChallenge.duration}} Days, ends: {{runningChallenge.endDate}}
           <div class="progress progress-xs mt-2">
             <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.progressDate" [max]="100"
                          type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>

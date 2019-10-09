@@ -46,45 +46,27 @@ export const navItems: NavData[] = [
     name: 'Fun',
   },
   {
-    name: 'Games',
-    url: '/rpg',
-    icon: 'fa fa-gamepad',
-    children: [
-      {
-        name: 'Leaderboard',
-        url: '/rpg/leaderboard',
-        icon: 'fa fa-users',
-        badge: {
-          variant: 'info',
-          text: 'NEW'
-        },
-      },
-      {
-        name: '1:1 Challenges',
-        url: '/rpg/challenges',
-        icon: 'icon-cursor',
-        badge: {
-          variant: 'info',
-          text: 'NEW'
-        },
-      },
-    ]
+    name: 'Leaderboard',
+    url: '/rpg/leaderboard',
+    icon: 'fa fa-users'
   },
   {
-    name: 'Achivements',
-    url: '/achivements',
+    name: '1:1 Challenges',
+    url: '/rpg/challenges',
     icon: 'fa fa-trophy',
-    children: [
-      {
-        name: 'Awards',
-        url: '/achivements/awards',
-        icon: 'fa fa-diamond',
-        badge: {
-          variant: 'info',
-          text: 'NEW'
-        },
-      },
-    ]
+    badge: {
+      variant: 'info',
+      text: 'NEW'
+    },
+  },
+  {
+    name: 'Awards',
+    url: '/achivements/awards',
+    icon: 'fa fa-diamond',
+    badge: {
+      variant: 'info',
+      text: 'NEW'
+    },
   },
   {
     divider: true
@@ -173,13 +155,13 @@ export const navItems: NavData[] = [
     icon: 'fa fa-android',
     class: 'mt-auto',
     variant: 'info',
-    attributes: { target: '_blank', rel: 'noopener' }
+    attributes: {target: '_blank', rel: 'noopener'}
   },
   {
     name: 'NxFIFTEEN',
     url: 'https://nxfifteen.me.uk',
     icon: 'fa fa-wifi',
     variant: 'success',
-    attributes: { target: '_blank', rel: 'noopener' }
+    attributes: {target: '_blank', rel: 'noopener'}
   }
 ];

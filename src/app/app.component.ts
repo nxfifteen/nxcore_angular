@@ -3,6 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { AuthenticationService } from './_services';
 import { User } from './_models';
+import {MatomoInjector} from 'ngx-matomo';
+import {CordovaService} from './services/cordova.service';
 
 @Component({
   // tslint:disable-next-line
@@ -13,7 +15,9 @@ export class AppComponent implements OnInit {
   currentUser: User;
 
   constructor(private router: Router,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private matomoInjector: MatomoInjector) {
+    this.matomoInjector.init('https://alpha.core.nxfifteen.me.uk/', 1);
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 

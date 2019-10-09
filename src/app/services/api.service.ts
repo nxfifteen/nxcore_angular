@@ -32,9 +32,9 @@ export class ApiService {
 
   public getFitBodyWeight() {
     if (!environment.production) {
-      console.log(`${environment.apiUrl}/${this.currentUser.username}/ux/feed/body/weight/186?key=${this.currentUser.token}`);
+      console.log(`${environment.apiUrl}/feed/body/weight/186?key=${this.currentUser.token}`);
     }
-    return this.httpClient.get(`${environment.apiUrl}/${this.currentUser.username}/ux/feed/body/weight/186?key=${this.currentUser.token}`);
+    return this.httpClient.get(`${environment.apiUrl}/feed/body/weight/186?key=${this.currentUser.token}`);
   }
 
   public getProfileValues() {
@@ -67,6 +67,13 @@ export class ApiService {
     return this.httpClient.get(`${environment.apiUrl}/feed/achievements/awards?key=${this.currentUser.token}`);
   }
 
+  public getAchievementsAwardDetails(badgeId: number) {
+    if (!environment.production) {
+      console.log(`${environment.apiUrl}/feed/achievements/awards/${badgeId}?key=${this.currentUser.token}`);
+    }
+    return this.httpClient.get(`${environment.apiUrl}/feed/achievements/awards/${badgeId}?key=${this.currentUser.token}`);
+  }
+
   public getRpgFriends() {
     if (!environment.production) {
       console.log(`${environment.apiUrl}/feed/pvp/leaderboard?key=${this.currentUser.token}`);
@@ -93,6 +100,13 @@ export class ApiService {
       console.log(`${environment.apiUrl}/feed/pvp/challenges?key=${this.currentUser.token}`);
     }
     return this.httpClient.get(`${environment.apiUrl}/feed/pvp/challenges?key=${this.currentUser.token}`);
+  }
+
+  public getRpgPvpDetails(badgeId: number) {
+    if (!environment.production) {
+      console.log(`${environment.apiUrl}/feed/pvp/challenges/${badgeId}?key=${this.currentUser.token}`);
+    }
+    return this.httpClient.get(`${environment.apiUrl}/feed/pvp/challenges/${badgeId}?key=${this.currentUser.token}`);
   }
 
   public submitNewPVPChallenge(friend, target, criteria, duration) {

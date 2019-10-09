@@ -3,8 +3,8 @@
     <div class="col-12">
       LOADING...
       <div class="progress progress-xs mt-2">
-        <progressbar class="progress progress-brand-p" [value]="loading" [max]="loadingExpected"
-                     type="brand-p"></progressbar>
+        <progressbar class="progress progress-success" [value]="loading" [max]="loadingExpected"
+                     type="success"></progressbar>
       </div>
     </div>
   </div>
@@ -12,44 +12,44 @@
 <div class="animated fadeIn" *ngIf="loading>=loadingExpected">
   <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
 
-  <!--<div class="row">-->
-  <!--<div class="col-3 d-none d-sm-block">-->
-  <!--<div class="card">-->
-  <!--<div class="card-body p-3 clearfix">-->
-  <!--<i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
-  <!--<div class="h5 text-info mb-0 mt-2">d-sm-block</div>-->
-  <!--<div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="col-3 d-none d-md-block">-->
-  <!--<div class="card">-->
-  <!--<div class="card-body p-3 clearfix">-->
-  <!--<i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
-  <!--<div class="h5 text-info mb-0 mt-2">d-md-block</div>-->
-  <!--<div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="col-3 d-none d-lg-block">-->
-  <!--<div class="card">-->
-  <!--<div class="card-body p-3 clearfix">-->
-  <!--<i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
-  <!--<div class="h5 text-info mb-0 mt-2">d-lg-block</div>-->
-  <!--<div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="col-3 d-none d-xl-block">-->
-  <!--<div class="card">-->
-  <!--<div class="card-body p-3 clearfix">-->
-  <!--<i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
-  <!--<div class="h5 text-info mb-0 mt-2">d-xl-block</div>-->
-  <!--<div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
+<!--  <div class="row">-->
+<!--    <div class="col-3 d-none d-sm-block">-->
+<!--      <div class="card">-->
+<!--        <div class="card-body p-3 clearfix">-->
+<!--          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
+<!--          <div class="h5 text-info mb-0 mt-2">d-sm-block</div>-->
+<!--          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-3 d-none d-md-block">-->
+<!--      <div class="card">-->
+<!--        <div class="card-body p-3 clearfix">-->
+<!--          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
+<!--          <div class="h5 text-info mb-0 mt-2">d-md-block</div>-->
+<!--          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-3 d-none d-lg-block">-->
+<!--      <div class="card">-->
+<!--        <div class="card-body p-3 clearfix">-->
+<!--          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
+<!--          <div class="h5 text-info mb-0 mt-2">d-lg-block</div>-->
+<!--          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-3 d-none d-xl-block">-->
+<!--      <div class="card">-->
+<!--        <div class="card-body p-3 clearfix">-->
+<!--          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>-->
+<!--          <div class="h5 text-info mb-0 mt-2">d-xl-block</div>-->
+<!--          <div class="text-muted text-uppercase font-weight-bold font-xs">{{widgetsOnFirstRow}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <div class="row">
     <div [class]="widgetGridOnFirstRow" *ngIf="stepWidgetEnable">
@@ -63,8 +63,8 @@
           <div class="row">
             <div class="col-6 col-md-8">
               <div class="progress progress-xs mt-2">
-                <progressbar class="progress progress-brand-p" [value]="stepSummaryPercentageBar" [max]="100"
-                             type="brand-p"></progressbar>
+                <progressbar class="progress progress-success" [value]="stepSummaryPercentageBar" [max]="100"
+                             type="success"></progressbar>
               </div>
             </div>
             <div class="col-6 col-md-4" style="text-align: right">
@@ -95,8 +95,8 @@
           <div class="row">
             <div class="col-6 col-md-8">
               <div class="progress progress-xs mt-2">
-                <progressbar class="progress progress-brand-p" [value]="floorSummaryPercentageBar" [max]="100"
-                             type="brand-p"></progressbar>
+                <progressbar class="progress progress-success" [value]="floorSummaryPercentageBar" [max]="100"
+                             type="success"></progressbar>
               </div>
             </div>
             <div class="col-6 col-md-4" style="text-align: right">
@@ -127,8 +127,8 @@
           <div class="row">
             <div class="col-6 col-md-8">
               <div class="progress progress-xs mt-2">
-                <progressbar class="progress progress-brand-p" [value]="distanceSummaryPercentageBar" [max]="100"
-                             type="brand-p"></progressbar>
+                <progressbar class="progress progress-success" [value]="distanceSummaryPercentageBar" [max]="100"
+                             type="success"></progressbar>
               </div>
             </div>
             <div class="col-6 col-md-4" style="text-align: right">
@@ -258,11 +258,11 @@
                 <div class="card-body">
                   <table class="table table-responsive-sm table-hover table-outline mb-0">
                     <tbody>
-                    <tr *ngFor="let awardsSummary of awardsSummaries">
+                    <tr *ngFor="let awardsSummary of awardsSummaries" (click)="awardClicked(awardsSummary.id)">
                       <td class="text-center col-2">
                         <div class="avatar">
                           <img [alt]="awardsSummary.name" class="img-avatar"
-                               [src]="'assets/badges/' + awardsSummary.image + '.png'">
+                               [src]="awardsSummary.image">
                         </div>
                       </td>
                       <td class="col-10">
@@ -283,12 +283,14 @@
       </div><!-- /rpgChallengeTrophy -->
 
       <div class="col-12 col-md-8 col-lg-8 col-xl-9" *ngIf="rpgChallengeRunning.length>0">
-        <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeRunning">
+        <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}"
+             *ngFor="let runningChallenge of rpgChallengeRunning" (click)="viewChallenge(runningChallenge.id)">
           <div class="card-header">
             <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
-            {{runningChallenge.duration}} Days
+            {{runningChallenge.duration}} Days, ends: {{runningChallenge.endDate}}
             <div class="progress progress-xs mt-2">
-              <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.progressDate" [max]="100"
+              <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}"
+                           [value]="runningChallenge.progressDate" [max]="100"
                            type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
             </div>
           </div>
@@ -296,7 +298,8 @@
             <div class="row">
               <div class="col-12 col-md-6 col-lg-5">
                 <div class="progress">
-                  <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.userDetail.completion"
+                  <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}"
+                               [value]="runningChallenge.userDetail.completion"
                                [max]="100"
                                type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
                 </div>
@@ -309,7 +312,8 @@
               </div>
               <div class="col-12 col-md-6 col-lg-5">
                 <div class="progress">
-                  <progressbar class="progress progress-{{runningChallenge.opponentDetail.outcomeType}}" style="direction: rtl;"
+                  <progressbar class="progress progress-{{runningChallenge.opponentDetail.outcomeType}}"
+                               style="direction: rtl;"
                                [value]="runningChallenge.opponentDetail.completion" [max]="100"
                                type="{{runningChallenge.opponentDetail.outcomeType}}"></progressbar>
                 </div>
@@ -328,17 +332,17 @@
                 <div class="text-uppercase text-muted small">You</div>
                 <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
               </div>
-              <div class="col-1 hidden-lg-down" style="text-align: center">
+              <div class="col-1 d-none d-lg-block" style="text-align: center">
                 <div class="text-value">{{runningChallenge.target}}</div>
                 <div class="text-uppercase text-muted small">{{runningChallenge.criteria}}</div>
               </div>
-              <div class="col-2 hidden-lg-down" style="text-align: center">
+              <div class="col-2 d-none d-lg-block" style="text-align: center">
                 <div class="text-value">IN</div>
               </div>
-              <div class="col-2 hidden-xl-up" style="text-align: center">
+              <div class="col-2 d-xl-none" style="text-align: center">
                 <div class="text-value">Vs</div>
               </div>
-              <div class="col-1 hidden-lg-down" style="text-align: center">
+              <div class="col-1 d-none d-lg-block" style="text-align: center">
                 <div class="text-value">{{runningChallenge.duration}}</div>
                 <div class="text-uppercase text-muted small">Days</div>
               </div>
@@ -373,11 +377,11 @@
           <div class="card-body">
             <table class="table table-responsive-sm table-hover table-outline mb-0">
               <tbody>
-              <tr *ngFor="let awardsSummary of awardsSummaries">
+              <tr *ngFor="let awardsSummary of awardsSummaries" (click)="awardClicked(awardsSummary.id)">
                 <td class="text-center">
                   <div class="avatar">
                     <img [alt]="awardsSummary.name" class="img-avatar"
-                         [src]="'assets/badges/' + awardsSummary.image + '.png'">
+                         [src]="awardsSummary.image">
                   </div>
                 </td>
                 <td>
