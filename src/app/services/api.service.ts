@@ -116,4 +116,11 @@ export class ApiService {
       console.log(user);
     }));
   }
+
+  public getCordovaUpdate() {
+    if (!environment.production) {
+      console.log(`${environment.apiUrl}/cmd/update/cordova/${environment.version}?key=${this.currentUser.token}`);
+    }
+    return this.httpClient.get(`${environment.apiUrl}/cmd/update/cordova/${environment.version}?key=${this.currentUser.token}`);
+  }
 }

@@ -9,6 +9,7 @@ import {User} from '../../_models';
 import {ChallengeActive} from '../../_models/challengeActive';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
+import {CordovaService} from '../../services/cordova.service';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
   isLoading: boolean;
   loading: number;
   loadingExpected: number;
+  cordovaService$: CordovaService;
 
   intraDayWidgetChartOptions: any;
   intraDayWidgetChartColours: any;
@@ -87,7 +89,9 @@ export class DashboardComponent implements OnInit {
               private titleService: Title,
               private markdownService: MarkdownService,
               private apiService: ApiService,
-              private _matomoService: MatomoService) {
+              private _matomoService: MatomoService,
+              private _cordovaService: CordovaService) {
+    this.cordovaService$ = _cordovaService;
     this.setDefaultChartOptions();
     this.loadingExpected = 9;
   }
@@ -103,6 +107,8 @@ export class DashboardComponent implements OnInit {
     } else {
       this.pullToRefresh();
     }
+
+    this.cordovaService$.cordovaUpdateAvailable();
   }
 
   pullToRefresh(): void {

@@ -1,24 +1,21 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Subject, Observable, BehaviorSubject, fromEvent } from 'rxjs';
+import {ApiService} from './api.service';
 
 function _window(): any {
   // return the global native browser window object
   return window;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CordovaService {
 
   private resume: BehaviorSubject<boolean>;
 
-  constructor(private zone: NgZone) {
-    this.resume = new BehaviorSubject<boolean>(null);
-    fromEvent(document, 'resume').subscribe(event => {
-      this.zone.run(() => {
-        this.onResume();
-      });
-    });
-  }
+  constructor(private zone: NgZone,
+              private apiService: ApiService) { }
 
   get cordova(): any {
     return _window().cordova;
@@ -26,6 +23,12 @@ export class CordovaService {
 
   get onCordova(): Boolean {
     return !!_window().cordova;
+  }
+
+  cordovaUpdateAvailable() {
+    this.apiService.getCordovaUpdate().subscribe((data) => {
+      console.log(data);
+    });
   }
 
   public onResume(): void {
