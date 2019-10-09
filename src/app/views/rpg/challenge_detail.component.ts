@@ -360,9 +360,7 @@ export class ChallengeDetailComponent implements OnInit {
 
   private emitApiLoaded() {
     this.loading++;
-    console.log('Loading... ' + this.loading + '/' + this.loadingExpected);
     if (this.loading >= this.loadingExpected) {
-      console.log('Loaded all components');
       this._matomoService.doTracking();
     }
   }

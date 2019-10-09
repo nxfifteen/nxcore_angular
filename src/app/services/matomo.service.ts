@@ -25,7 +25,6 @@ export class MatomoService {
 
   setupTracking(_coreDashboard: string) {
     this.loadStartedTime = new Date().getTime();
-    console.log('Tracker: Setup');
 
     this.coreDashboard = _coreDashboard;
     this.titleService.setTitle(this.coreDashboard);
@@ -36,6 +35,7 @@ export class MatomoService {
     this.deleteCustomVariable(3, 'page');
     this.deleteCustomVariable(4, 'page');
     this.deleteCustomVariable(5, 'page');
+    this.deleteCustomVariable(6, 'page');
 
     this.saveVariablesPage = [];
     this.saveVariablesVisit = [];
@@ -112,8 +112,6 @@ export class MatomoService {
 
     this.setGenerationTimeMs(loadTime);
     this._matomoTracker.trackPageView(customTitle);
-
-    console.log(this.saveVariablesPage);
   }
 
   trackEvent(category: string, action: string, name?: string, value?: number) {
