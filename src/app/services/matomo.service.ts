@@ -12,7 +12,7 @@ export class MatomoService {
   currentUser: User;
   coreDashboard: string;
   saveVariablesPage: Array<string>;
-  saveVariablesVisit: number;
+  saveVariablesVisit: Array<string>;
   loadStartedTime: number;
 
   constructor(private authenticationService: AuthenticationService,
@@ -38,7 +38,7 @@ export class MatomoService {
     this.deleteCustomVariable(5, 'page');
 
     this.saveVariablesPage = [];
-    // this.saveVariablesVisit = [];
+    this.saveVariablesVisit = [];
 
     this.setGenerationTimeMs(0);
   }
@@ -73,13 +73,20 @@ export class MatomoService {
       }
 
       index = index + 1;
+    } else {
+      index = this.saveVariablesVisit.findIndex((v) => {
+        return v === name;
+      });
 
-      console.log('Var name       : ' + name);
-      console.log('Pass Index     : ' + index);
+      if (index === -1) {
+        this.saveVariablesVisit.push(name);
+        index = this.saveVariablesVisit.findIndex((v) => {
+          return v === name;
+        });
+      }
+
+      index = index + 1;
     }
-
-    // console.log('Page variables (' + name + ' [' + index + '] ' + this.saveVariablesPage.length + ')');
-    // console.log(this.saveVariablesVisit + ' Visit variables (' + name + ' [' + index + '])');
 
     this._matomoTracker.setCustomVariable(index, name, value, scope);
   }
@@ -102,10 +109,6 @@ export class MatomoService {
 
   trackPageView(customTitle?: string) {
     const loadTime: number = (new Date().getTime()) - this.loadStartedTime;
-    console.log('Tracker: trackPageView');
-    console.log('           Started at: ' + this.loadStartedTime);
-    console.log('            Loaded at: ' + new Date().getTime());
-    console.log('       Page Loaded in: ' + loadTime);
 
     this.setGenerationTimeMs(loadTime);
     this._matomoTracker.trackPageView(customTitle);
