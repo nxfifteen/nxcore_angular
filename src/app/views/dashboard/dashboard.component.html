@@ -12,7 +12,7 @@
 <div class="animated fadeIn" *ngIf="loading>=loadingExpected">
   <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
 
-  <div class="row" *ngIf="this.cordovaService$.onCordova">
+  <div class="row" *ngIf="cordovaService$.onCordova">
     <div class="col-3 d-none d-sm-block">
       <div class="card">
         <div class="card-body p-3 clearfix">
@@ -207,6 +207,28 @@
         </div>
       </div>
     </div><!--/.col-->
+
+    <div [class]="widgetGridMilestonesRow">
+      <div class="card text-white bg-info">
+        <div class="card-header">
+          Your running version {{ cordovaUpdateAvailable.yourVersion }}
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>manufacturer: {{ cordovaService$.platform.manufacturer }}</li>
+            <li>model: {{ cordovaService$.platform.model }}</li>
+            <li>version: {{ cordovaService$.platform.version }}</li>
+            <li>serial: {{ cordovaService$.platform.serial }}</li>
+            <li>uuid: {{ cordovaService$.platform.uuid }}</li>
+            <li>platform: {{ cordovaService$.platform.platform }}</li>
+          </ul>
+        </div>
+        <div class="card-footer bg-danger">
+          Latest Version: {{ cordovaUpdateAvailable.latestVersion }}
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div *ngIf="rpgChallengeEnable">

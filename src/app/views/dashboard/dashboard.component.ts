@@ -10,6 +10,8 @@ import {ChallengeActive} from '../../_models/challengeActive';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 import {CordovaService} from '../../services/cordova.service';
+import {Observable} from 'rxjs';
+import {AppVersion} from '../../_models/appVersion';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -21,6 +23,7 @@ export class DashboardComponent implements OnInit {
   loading: number;
   loadingExpected: number;
   cordovaService$: CordovaService;
+  cordovaUpdateAvailable: AppVersion;
 
   intraDayWidgetChartOptions: any;
   intraDayWidgetChartColours: any;
@@ -108,7 +111,7 @@ export class DashboardComponent implements OnInit {
       this.pullToRefresh();
     }
 
-    this.cordovaService$.cordovaUpdateAvailable();
+    this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
   }
 
   pullToRefresh(): void {
@@ -128,7 +131,7 @@ export class DashboardComponent implements OnInit {
     this.weightWidgetEnable = false;
     this.weightIntraDayWidgetEnable = false;
     this.awardsSummaries = [];
-    this.widgetGridMilestonesRow = 'col-12 col-md-6';
+    this.widgetGridMilestonesRow = 'col-12 col-md-4';
 
     this.apiService.getProfile().subscribe((data) => {
       this.profileAvatar = data['avatar'];
@@ -268,7 +271,7 @@ export class DashboardComponent implements OnInit {
         }
 
         if (this.milestonesMoreWidgetEnable && this.milestonesLessWidgetEnable) {
-          this.widgetGridMilestonesRow = 'col-12 col-md-6 d-none d-lg-block';
+          this.widgetGridMilestonesRow = 'col-12 col-md-4 d-none d-lg-block';
         } else if (this.milestonesMoreWidgetEnable || this.milestonesLessWidgetEnable) {
           this.widgetGridMilestonesRow = 'col-12 d-none d-lg-block';
         }

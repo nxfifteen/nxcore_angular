@@ -9,6 +9,8 @@ import {Router} from '@angular/router';
 import {SiteNews} from '../../_models/siteNews';
 import {MatomoInjector} from 'ngx-matomo';
 import {CordovaService} from '../../services/cordova.service';
+import {MatomoService} from '../../services/matomo.service';
+import {AppVersion} from '../../_models/appVersion';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,18 +26,23 @@ export class DefaultLayoutComponent implements OnDestroy {
   public configService: ConfigService;
   // public cordovaService$: CordovaService;
   public profileXp: number;
+  cordovaService$: CordovaService;
+  cordovaUpdateAvailable: AppVersion;
   currentUser: User;
   siteNews: Array<SiteNews>;
 
   constructor(private router: Router,
               private apiService: ApiService,
               private _configService: ConfigService,
-              /*private _CordovaService: CordovaService,*/
               private authenticationService: AuthenticationService,
+              private _cordovaService: CordovaService,
               @Inject(DOCUMENT) _document?: any) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.configService = _configService;
-    // this.cordovaService$ = _CordovaService;
+    this.cordovaService$ = _cordovaService;
+
+    this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
+    this.cordovaService$.cordovaUpdateAvailable();
 
     // noinspection JSUnusedLocalSymbols
     this.changes = new MutationObserver((mutations) => {

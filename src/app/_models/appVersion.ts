@@ -1,7 +1,5 @@
-export class User {
-  id: number;
-  username: string;
-  avatar: string;
-  token: string;
-  firstrun: boolean;
+export class AppVersion {
+  latestVersion: string;
+  yourVersion: string;
+  updateAvailable: boolean;
 }

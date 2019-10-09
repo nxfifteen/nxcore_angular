@@ -5,11 +5,9 @@
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'NxFIFTEEN Core Logo'}"
   [sidebarToggler]="'lg'">
   <ul class="nav navbar-nav d-md-down-none">
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health" target="_blank">Project Gitlab</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/store" target="_blank">Store</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/angular" target="_blank">Web UI</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/cordova" target="_blank">Mobile UI</a></li>
-    <li class="nav-item px-3"><a class="nav-link" href="https://git.nxfifteen.rocks/nx-health/samsung-health-sync" target="_blank">Sync Samsung Health</a></li>
+    <li class="nav-item px-3"><a class="nav-link" href="" target="_blank">
+      Version: {{ cordovaUpdateAvailable.yourVersion }}
+    </a></li>
   </ul>
   <ul class="nav navbar-nav ml-auto" *ngIf="currentUser">
     <li class="nav-item dropdown" dropdown placement="bottom right">
