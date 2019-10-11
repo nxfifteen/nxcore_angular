@@ -213,11 +213,21 @@ export class ChallengeDetailComponent implements OnInit {
         this.awardId = parseInt(params.get('id'));
       });
 
-      this.pullToRefresh();
+      this.loadFromApi();
     }
   }
 
   pullToRefresh(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 0);
+    this.buildViewContent(true);
+  }
+
+  loadFromApi(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 1);
+    this.buildViewContent(false);
+  }
+
+  buildViewContent(bustCache?: boolean): void {
     this.loading = 0;
     this.loadingExpected = 1;
     this.challengeOutcomeRibbonWinner = 'none';
@@ -225,7 +235,7 @@ export class ChallengeDetailComponent implements OnInit {
     this.challengeOutcomeFriendly = '';
     this.challengeOutcomeFriendlyText = '';
 
-    this.apiService.getRpgPvpDetails(this.awardId).subscribe((data) => {
+    this.apiService.getRpgPvpDetails(this.awardId, bustCache).subscribe((data) => {
       // @ts-ignore
       this.challengeActive = data;
 

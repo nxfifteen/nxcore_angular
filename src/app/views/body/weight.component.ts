@@ -116,68 +116,82 @@ export class WeightComponent implements OnInit {
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
     } else {
-      this.apiService.getFitBodyWeight().subscribe((data) => {
-        // console.log(data);
-
-        this.weightWidgetWidgetChartSince = data['weight']['since'];
-        this.weightWidgetWidgetChartData = [];
-        for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
-          this.weightWidgetWidgetChartData.push(data['weight']['widget']['data'][i]);
-        }
-        this.weightWidgetWidgetChartLabels = data['weight']['widget']['labels'];
-        this.weightWidgetWidgetChartOptions.scales.yAxes[0].ticks.max = 100;
-        this.weightWidgetWidgetChartOptions.scales.yAxes[0].ticks.min = 0;
-
-
-        this.weightWidgetWidgetChartOptions = {
-          tooltips: {
-            enabled: false,
-            custom: CustomTooltips,
-            intersect: true,
-            mode: 'index',
-            position: 'nearest',
-            callbacks: {
-              labelColor: function (tooltipItem, chart) {
-                return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-              }
-            }
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              gridLines: {
-                drawOnChartArea: false,
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: false,
-                maxTicksLimit: 5,
-                max: data['weight']['widget']['axis']['max'],
-                min: (data['weight']['widget']['axis']['min'] - 1)
-              }
-            }]
-          },
-          elements: {
-            line: {
-              borderWidth: 2
-            },
-            point: {
-              radius: 0,
-              hitRadius: 10,
-              hoverRadius: 4,
-              hoverBorderWidth: 3,
-            }
-          },
-          legend: {
-            display: true
-          }
-        };
-      });
-
-      this.emitApiLoaded();
+      this.loadFromApi();
     }
+  }
+
+  pullToRefresh(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 0);
+    this.buildViewContent(true);
+  }
+
+  loadFromApi(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 1);
+    this.buildViewContent(false);
+  }
+
+  buildViewContent(bustCache?: boolean): void {
+    this.apiService.getFitBodyWeight(bustCache).subscribe((data) => {
+      // console.log(data);
+
+      this.weightWidgetWidgetChartSince = data['weight']['since'];
+      this.weightWidgetWidgetChartData = [];
+      for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
+        this.weightWidgetWidgetChartData.push(data['weight']['widget']['data'][i]);
+      }
+      this.weightWidgetWidgetChartLabels = data['weight']['widget']['labels'];
+      this.weightWidgetWidgetChartOptions.scales.yAxes[0].ticks.max = 100;
+      this.weightWidgetWidgetChartOptions.scales.yAxes[0].ticks.min = 0;
+
+
+      this.weightWidgetWidgetChartOptions = {
+        tooltips: {
+          enabled: false,
+          custom: CustomTooltips,
+          intersect: true,
+          mode: 'index',
+          position: 'nearest',
+          callbacks: {
+            labelColor: function (tooltipItem, chart) {
+              return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+            gridLines: {
+              drawOnChartArea: false,
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: false,
+              maxTicksLimit: 5,
+              max: data['weight']['widget']['axis']['max'],
+              min: (data['weight']['widget']['axis']['min'] - 1)
+            }
+          }]
+        },
+        elements: {
+          line: {
+            borderWidth: 2
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3,
+          }
+        },
+        legend: {
+          display: true
+        }
+      };
+    });
+
+    this.emitApiLoaded();
   }
 
   private emitApiLoaded() {

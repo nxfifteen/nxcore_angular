@@ -107,23 +107,33 @@ export class PvpComponent implements OnInit {
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
     } else {
-      this.pullToRefresh();
+      this.loadFromApi();
     }
   }
 
   pullToRefresh(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 0);
+    this.buildViewContent(true);
+  }
+
+  loadFromApi(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 1);
+    this.buildViewContent(false);
+  }
+
+  buildViewContent(bustCache?: boolean): void {
     this.loading = 0;
 
     this.submitted = false;
     this.submittingForm = false;
 
-    this.apiService.getProfile().subscribe((data) => {
+    this.apiService.getProfile(bustCache).subscribe((data) => {
       this.profileAvatar = data['avatar'];
 
       this.emitApiLoaded();
     });
 
-    this.apiService.getRpgPvp().subscribe((data) => {
+    this.apiService.getRpgPvp(bustCache).subscribe((data) => {
       this.rpgChallengeSummary = {
         win: data['rpg_challenge_friends']['score']['win'],
         lose: data['rpg_challenge_friends']['score']['lose'],
@@ -153,7 +163,7 @@ export class PvpComponent implements OnInit {
       this.emitApiLoaded();
     });
 
-    this.apiService.getRpgNewChallenge().subscribe((data) => {
+    this.apiService.getRpgNewChallenge(bustCache).subscribe((data) => {
       const filteredValues = [];
       for (let i = 0; i < data['friends'].length; i++) {
         if (data['friends'][i]['you'] === 'friend') {
@@ -219,7 +229,7 @@ export class PvpComponent implements OnInit {
           this.f.duration.setValue('');
           this.f.friend.setValue('');
 
-          this.pullToRefresh();
+          this.loadFromApi();
         },
         error => {
           // this.alertService.error(error);

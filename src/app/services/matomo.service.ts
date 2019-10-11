@@ -4,6 +4,7 @@ import {AuthenticationService} from '../_services';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {User} from '../_models';
+import {CordovaService} from './cordova.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +12,41 @@ import {User} from '../_models';
 export class MatomoService {
   currentUser: User;
   coreDashboard: string;
+  injected: boolean;
   saveVariablesPage: Array<string>;
   saveVariablesVisit: Array<string>;
   loadStartedTime: number;
+  siteId: number;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private titleService: Title,
               private _matomoTracker: MatomoTracker,
-              private _matomoInjector: MatomoInjector
+              private _matomoInjector: MatomoInjector,
+              private _cordovaService: CordovaService
   ) {
+    this.injected = false;
+    this.siteId = 1;
+  }
+
+  inject() {
+    if (!this.injected) {
+      if (this._cordovaService.onCordova) {
+        console.log('Running on Cordova');
+        this.siteId = 2;
+      } else {
+        console.log('Running in browser');
+        this.siteId = 1;
+      }
+      this._matomoInjector.init('https://alpha.core.nxfifteen.me.uk/', this.siteId);
+      console.log('Injected Matomo with ID ' + this.siteId.toString());
+      this.injected = true;
+    }
   }
 
   setupTracking(_coreDashboard: string) {
+    this.inject();
+
     this.loadStartedTime = new Date().getTime();
 
     this.coreDashboard = _coreDashboard;

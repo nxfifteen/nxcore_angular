@@ -6,7 +6,7 @@
   [sidebarToggler]="'lg'">
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3"><a class="nav-link" href="" target="_blank">
-      Version: {{ cordovaUpdateAvailable.yourVersion }}
+      &nbsp;
     </a></li>
   </ul>
   <ul class="nav navbar-nav ml-auto" *ngIf="currentUser">
@@ -65,6 +65,6 @@
   </app-aside>
 </div>
 <app-footer>
-  <span><a href="https://git.nxfifteen.rocks/nx-health">NxFITNESS Core</a> &copy; 2019 Stuart McCulloch Anderson.</span>
+  <span><a href="https://git.nxfifteen.rocks/nx-health">NxFITNESS Core</a> V:{{ cordovaUpdateAvailable.latestVersion }} &copy; 2019 Stuart McCulloch Anderson.</span>
   <span class="ml-auto hidden-md-down">An <a href="https://nxfifteen.me.uk">NxFIFTEEN</a> project, powered by <a href="http://coreui.io">CoreUI</a></span>
 </app-footer>

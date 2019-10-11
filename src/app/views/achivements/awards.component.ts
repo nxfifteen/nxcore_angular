@@ -41,15 +41,25 @@ export class AwardsComponent implements OnInit {
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
     } else {
-      this.pullToRefresh();
+      this.loadFromApi();
     }
   }
 
   pullToRefresh(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 0);
+    this.buildViewContent(true);
+  }
+
+  loadFromApi(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 1);
+    this.buildViewContent(false);
+  }
+
+  buildViewContent(bustCache?: boolean): void {
     this.loading = 0;
     this.loadingExpected = 1;
 
-    this.apiService.getAchievementsAwards().subscribe((data) => {
+    this.apiService.getAchievementsAwards(bustCache).subscribe((data) => {
 
       this.awardsSummaries = [];
       if (data['awards']) {

@@ -38,20 +38,30 @@ export class LeaderboardComponent implements OnInit {
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
     } else {
-      this.pullToRefresh();
+      this.loadFromApi();
     }
   }
 
   pullToRefresh(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 0);
+    this.buildViewContent(true);
+  }
+
+  loadFromApi(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 1);
+    this.buildViewContent(false);
+  }
+
+  buildViewContent(bustCache?: boolean): void {
     this.loading = 0;
 
-    this.apiService.getProfile().subscribe((data) => {
+    this.apiService.getProfile(bustCache).subscribe((data) => {
       this.profileAvatar = data['avatar'];
 
       this.emitApiLoaded();
     });
 
-    this.apiService.getRpgFriends().subscribe((data) => {
+    this.apiService.getRpgFriends(bustCache).subscribe((data) => {
       this.rpgFriends = data['friends'];
       this.ragFriendsHighestSteps = data['maxSteps'];
 

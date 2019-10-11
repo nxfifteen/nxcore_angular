@@ -55,6 +55,7 @@
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "cordova-android": "^8.1.0",
+    "cordova-plugin-device": "^2.0.3",
     "cordova-windows": "^7.0.0",
     "core-js": "^2.6.9",
     "flag-icon-css": "^3.4.0",
@@ -103,7 +104,8 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {}
     },
     "platforms": [
       "android",

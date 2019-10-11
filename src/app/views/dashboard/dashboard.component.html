@@ -13,6 +13,35 @@
   <a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>
 
   <div class="row" *ngIf="cordovaService$.onCordova">
+    <div class="col-8" *ngIf="cordovaService$.updateAvailable">
+      <div class="card  bg-danger">
+        <div class="card-body p-3 clearfix">
+          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 text-info mb-0 mt-2">An Updated APK is available</div>
+          <div class="text-muted text-uppercase font-weight-bold font-xs">{{cordovaUpdateAvailable.latestVersion}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card text-white bg-info">
+        <div class="card-header">
+          Your running version {{ cordovaUpdateAvailable.yourVersion }}
+        </div>
+        <div class="card-body">
+          <ul>
+            <li>manufacturer: {{ cordovaService$.platform.manufacturer }}</li>
+            <li>model: {{ cordovaService$.platform.model }}</li>
+            <li>version: {{ cordovaService$.platform.version }}</li>
+            <li>serial: {{ cordovaService$.platform.serial }}</li>
+            <li>uuid: {{ cordovaService$.platform.uuid }}</li>
+            <li>platform: {{ cordovaService$.platform.platform }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="cordovaService$.onCordova">
     <div class="col-3 d-none d-sm-block">
       <div class="card">
         <div class="card-body p-3 clearfix">
@@ -181,6 +210,38 @@
     </div><!-- /distanceSummary -->
   </div>
 
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <span id="CurrentDays">Streak</span>
+        </div>
+        <div class="card-block" id="StreakGoals">
+          <strong>Your Average Streak</strong>
+          <p class="text-muted" id="AverageDays"></p>
+          <div class="progress progress-xs my-3">
+            <div id="AverageDaysProgress" class="progress-bar bg-info" role="progressbar"
+                 style="width: 0" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+
+          <strong>Your Last Streak</strong>
+          <p class="text-muted" id="LastDays"></p>
+          <div class="progress progress-xs my-3">
+            <div id="LastDaysProgress" class="progress-bar bg-info" role="progressbar"
+                 style="width: 0" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+
+          <strong>Your Longest Streak</strong>
+          <p class="text-muted" id="LongestDays"></p>
+          <div class="progress progress-xs my-3">
+            <div id="LongestDaysProgress" class="progress-bar bg-info" role="progressbar"
+                 style="width: 0" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row" *ngIf="milestonesMoreWidgetEnable||milestonesLessWidgetEnable">
     <div [class]="widgetGridMilestonesRow" *ngIf="milestonesMoreWidgetEnable">
       <div class="card text-white bg-success">
@@ -207,27 +268,6 @@
         </div>
       </div>
     </div><!--/.col-->
-
-    <div [class]="widgetGridMilestonesRow">
-      <div class="card text-white bg-info">
-        <div class="card-header">
-          Your running version {{ cordovaUpdateAvailable.yourVersion }}
-        </div>
-        <div class="card-body">
-          <ul>
-            <li>manufacturer: {{ cordovaService$.platform.manufacturer }}</li>
-            <li>model: {{ cordovaService$.platform.model }}</li>
-            <li>version: {{ cordovaService$.platform.version }}</li>
-            <li>serial: {{ cordovaService$.platform.serial }}</li>
-            <li>uuid: {{ cordovaService$.platform.uuid }}</li>
-            <li>platform: {{ cordovaService$.platform.platform }}</li>
-          </ul>
-        </div>
-        <div class="card-footer bg-danger">
-          Latest Version: {{ cordovaUpdateAvailable.latestVersion }}
-        </div>
-      </div>
-    </div>
 
   </div>
 

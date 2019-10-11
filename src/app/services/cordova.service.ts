@@ -2,11 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {map} from 'rxjs/operators';
 import {AppVersion} from '../_models/appVersion';
 import {CordovaDevice} from '../_models/cordovaDevice';
 
-declare var device;
 function _window(): any {
   // return the global native browser window object
   return window;
@@ -27,6 +25,8 @@ export class CordovaService {
       updateAvailable: false,
     });
     this.updateAvailable = this.updateAvailableSubject.asObservable();
+
+    this.cordovaUpdateAvailable();
   }
 
   get cordova(): any {
@@ -62,18 +62,26 @@ export class CordovaService {
   }
 
   cordovaUpdateAvailable() {
-    console.log(`${environment.apiUrl}/cmd/update/cordova/${environment.version}`);
-    return this.http.get<any>(`${environment.apiUrl}/cmd/update/cordova/${environment.version}`)
-      .subscribe((data) => {
-        console.log(data);
+    if (this.onCordova) {
+      console.log(`${environment.apiUrl}/cmd/update/cordova/${environment.version}`);
+      return this.http.get<any>(`${environment.apiUrl}/cmd/update/cordova/${environment.version}`)
+        .subscribe((data) => {
+          // console.log(data);
 
-        if (data['updateAvailable']) {
-          console.log('A New Update is available');
-          this.updateAvailableSubject.next(data);
-        } else {
-          console.log('No Updates are available');
-          this.updateAvailableSubject.next(data);
-        }
-      });
+          if (data['updateAvailable']) {
+            console.log('A New Update is available');
+            this.updateAvailableSubject.next(data);
+          } else {
+            console.log('No Updates are available');
+            this.updateAvailableSubject.next(data);
+          }
+        });
+    } else {
+      return {
+        yourVersion: environment.version,
+        latestVersion: environment.version,
+        updateAvailable: false,
+      };
+    }
   }
 }

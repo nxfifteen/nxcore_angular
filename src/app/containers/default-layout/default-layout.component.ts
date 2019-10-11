@@ -42,7 +42,6 @@ export class DefaultLayoutComponent implements OnDestroy {
     this.cordovaService$ = _cordovaService;
 
     this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
-    this.cordovaService$.cordovaUpdateAvailable();
 
     // noinspection JSUnusedLocalSymbols
     this.changes = new MutationObserver((mutations) => {

@@ -108,13 +108,23 @@ export class DashboardComponent implements OnInit {
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
     } else {
-      this.pullToRefresh();
+      this.loadFromApi();
     }
 
     this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
   }
 
   pullToRefresh(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 0);
+    this.buildViewContent(true);
+  }
+
+  loadFromApi(): void {
+    this._matomoService.trackEvent('core', 'api', 'cache', 1);
+    this.buildViewContent(false);
+  }
+
+  buildViewContent(bustCache?: boolean): void {
     this.loading = 0;
     this.widgetsOnFirstRow = 0;
     this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
@@ -131,14 +141,14 @@ export class DashboardComponent implements OnInit {
     this.weightWidgetEnable = false;
     this.weightIntraDayWidgetEnable = false;
     this.awardsSummaries = [];
-    this.widgetGridMilestonesRow = 'col-12 col-md-4';
+    this.widgetGridMilestonesRow = 'col-12 col-md-6';
 
-    this.apiService.getProfile().subscribe((data) => {
+    this.apiService.getProfile(bustCache).subscribe((data) => {
       this.profileAvatar = data['avatar'];
       this.emitApiLoaded();
     });
 
-    this.apiService.getDashboard().subscribe((data) => {
+    this.apiService.getDashboard(bustCache).subscribe((data) => {
       if (data['steps']) {
         this._matomoService.setCustomVariable('apiAvailabilitySteps', 'true', 'page');
 
@@ -271,7 +281,7 @@ export class DashboardComponent implements OnInit {
         }
 
         if (this.milestonesMoreWidgetEnable && this.milestonesLessWidgetEnable) {
-          this.widgetGridMilestonesRow = 'col-12 col-md-4 d-none d-lg-block';
+          this.widgetGridMilestonesRow = 'col-12 col-md-6 d-none d-lg-block';
         } else if (this.milestonesMoreWidgetEnable || this.milestonesLessWidgetEnable) {
           this.widgetGridMilestonesRow = 'col-12 d-none d-lg-block';
         }

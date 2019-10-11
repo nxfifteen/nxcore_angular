@@ -5,13 +5,6 @@ var path = require('path');
 
 var rootdir = process.argv[2];
 
-console.log("HOOOK: " + process.argv[0]);
-console.log("HOOOK: " + process.argv[1]);
-console.log("HOOOK: " + process.argv[2]);
-console.log("HOOOK: " + process.argv[3]);
-console.log("HOOOK: " + process.argv[4]);
-console.log("HOOOK: " + process.argv[5]);
-
 function replace_string_in_file(filename, to_replace, replace_with) {
     var data = fs.readFileSync(filename, 'utf8');
 
