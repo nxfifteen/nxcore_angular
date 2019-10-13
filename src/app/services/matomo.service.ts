@@ -29,6 +29,11 @@ export class MatomoService {
     this.siteId = 1;
   }
 
+  get pageTitle() {
+    const titleParts = this.coreDashboard.split(' | ');
+    return titleParts.pop() + ' [' + this.coreDashboard + ']';
+  }
+
   inject() {
     if (!this.injected) {
       if (this._cordovaService.onCordova) {

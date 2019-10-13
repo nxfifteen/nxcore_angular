@@ -7,7 +7,7 @@ import {AchievementsRoutingModule} from './achivements-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AwardsDetailComponent} from './awards_detail.component';
-import {TooltipModule} from 'ngx-bootstrap';
+import {AlertModule, TooltipModule} from 'ngx-bootstrap';
 // import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @NgModule({
@@ -16,6 +16,7 @@ import {TooltipModule} from 'ngx-bootstrap';
     AchievementsRoutingModule,
     ProgressbarModule.forRoot(),
     NgbModule,
+    AlertModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     TooltipModule.forRoot(),

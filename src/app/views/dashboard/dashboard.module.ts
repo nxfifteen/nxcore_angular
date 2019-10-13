@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Components Routing
 import { DashboardComponent } from './dashboard.component';
+import {AlertModule} from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { DashboardComponent } from './dashboard.component';
     DashboardRoutingModule,
     ChartsModule,
     BsDropdownModule,
+    AlertModule.forRoot(),
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
     FontAwesomeModule

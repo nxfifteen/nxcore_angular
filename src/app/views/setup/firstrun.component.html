@@ -1,137 +1,148 @@
-<div [hidden]="loadingData" class="row">
-  <div class="col-lg-9">
-    <div class="card">
-      <div class="card-header">
-        <i class="fa fa-edit"></i>User Profile
+<div [hidden]="loadingData">
+  <alert type="md-refresh">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{_matomoService.pageTitle}}</h3>
       </div>
-      <div class="card-body">
-        <mat-vertical-stepper [linear]="true" #stepper>
-          <mat-step [stepControl]="nameFormGroup">
-            <form [formGroup]="nameFormGroup">
-              <ng-template matStepLabel>Fill out your name</ng-template>
-              <div class="row">
-                <div class="form-group col-12 col-sm-6">
-                  <div class="controls">
-                    <div class="input-prepend input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">First</span>
-                      </div>
-                      <input formControlName="firstNameCtrl" id="firstNameCtrl" class="form-control" size="16"
-                             type="text"
-                             placeholder="First name"
-                             [ngClass]="{ 'is-invalid': nameGroupControls.firstNameCtrl.errors }">
-                    </div>
-                    <!--<div *ngIf="submitted && nameGroupControls.firstNameCtrl.errors" class="invalid-feedback">-->
-                    <!--<div *ngIf="submitted && nameGroupControls.firstNameCtrl.errors.required">Invite code is required</div>-->
-                    <!--</div>-->
-                  </div>
-                </div>
-                <div class="form-group col-12 col-sm-6">
-                  <div class="controls">
-                    <div class="input-prepend input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">Last</span>
-                      </div>
-                      <input formControlName="lastNameCtrl" id="lastNameCtrl" class="form-control" size="16" type="text"
-                             placeholder="Last name"
-                             [ngClass]="{ 'is-invalid': nameGroupControls.lastNameCtrl.errors }">
-                    </div>
-                    <!--<div *ngIf="submitted && nameGroupControls.lastNameCtrl.errors" class="invalid-feedback">-->
-                    <!--<div *ngIf="submitted && nameGroupControls.lastNameCtrl.errors.required">Invite code is required</div>-->
-                    <!--</div>-->
-                  </div>
-                </div>
-              </div><!--/.row-->
-              <div class="form-group row">
-                <label class="col-12 col-lg-2 col-form-label" for="avatarCtrl">Avatar URL</label>
-                <div class="col-12 col-lg-10">
-                  <div class="controls">
-                    <div class="input-prepend input-group">
-                      <input formControlName="avatarCtrl" id="avatarCtrl" class="form-control" size="16" type="text"
-                             placeholder="Avatar URL" [ngClass]="{ 'is-invalid': nameGroupControls.avatarCtrl.errors }">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="bodyFormGroup">
-            <form [formGroup]="bodyFormGroup">
-              <ng-template matStepLabel>Fill out your details</ng-template>
-              <div class="form-group row">
-                <label class="col-12 col-lg-2 col-form-label" for="dateOfBirthCtrl">Date of Birth</label>
-                <div class="col-12 col-lg-10">
-                  <div class="controls">
-                    <div class="input-prepend input-group">
-                      <input formControlName="dateOfBirthCtrl" id="dateOfBirthCtrl" class="form-control" size="16"
-                             type="date"
-                             placeholder="date"
-                             [ngClass]="{ 'is-invalid': bodyGroupControls.dateOfBirthCtrl.errors }">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <button class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
-                <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="emailFormGroup">
-            <form [formGroup]="emailFormGroup">
-              <ng-template matStepLabel>Fill out your email address</ng-template>
-              <div class="row">
-                <div class="form-group col-sm-12">
-                  <label class="col-form-label" for="emailCtrl">&nbsp;</label>
-                  <div class="controls">
-                    <div class="input-prepend input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
-                      </div>
-                      <input formControlName="emailCtrl" id="emailCtrl" class="form-control" size="16" type="text"
-                             placeholder="Last name" [ngClass]="{ 'is-invalid': emailGroupControls.emailCtrl.errors }">
-                    </div>
-                  </div>
-                </div>
-              </div><!--/.row-->
-              <div>
-                <button class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
-                <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step>
-            <ng-template matStepLabel>Save</ng-template>
-            You are now done.
-            <div>
-              <button [disabled]="loading" class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
-              <button (click)="onSubmit()" [disabled]="loading" class="btn btn-brand-p px-4">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Save
-              </button>
-            </div>
-          </mat-step>
-        </mat-vertical-stepper>
+      <div class="col-md-6 text-right">
       </div>
     </div>
-  </div> <!--/.col-->
-  <div class="col-lg-3">
-    <div class="card">
-      <div class="card-header">
-        <i class="fa fa-edit"></i>Fitbit Connection
+  </alert>
+
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-edit"></i>User Profile
+        </div>
+        <div class="card-body">
+          <mat-vertical-stepper [linear]="true" #stepper>
+            <mat-step [stepControl]="nameFormGroup">
+              <form [formGroup]="nameFormGroup">
+                <ng-template matStepLabel>Fill out your name</ng-template>
+                <div class="row">
+                  <div class="form-group col-12 col-sm-6">
+                    <div class="controls">
+                      <div class="input-prepend input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">First</span>
+                        </div>
+                        <input formControlName="firstNameCtrl" id="firstNameCtrl" class="form-control" size="16"
+                               type="text"
+                               placeholder="First name"
+                               [ngClass]="{ 'is-invalid': nameGroupControls.firstNameCtrl.errors }">
+                      </div>
+                      <!--<div *ngIf="submitted && nameGroupControls.firstNameCtrl.errors" class="invalid-feedback">-->
+                      <!--<div *ngIf="submitted && nameGroupControls.firstNameCtrl.errors.required">Invite code is required</div>-->
+                      <!--</div>-->
+                    </div>
+                  </div>
+                  <div class="form-group col-12 col-sm-6">
+                    <div class="controls">
+                      <div class="input-prepend input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Last</span>
+                        </div>
+                        <input formControlName="lastNameCtrl" id="lastNameCtrl" class="form-control" size="16"
+                               type="text"
+                               placeholder="Last name"
+                               [ngClass]="{ 'is-invalid': nameGroupControls.lastNameCtrl.errors }">
+                      </div>
+                      <!--<div *ngIf="submitted && nameGroupControls.lastNameCtrl.errors" class="invalid-feedback">-->
+                      <!--<div *ngIf="submitted && nameGroupControls.lastNameCtrl.errors.required">Invite code is required</div>-->
+                      <!--</div>-->
+                    </div>
+                  </div>
+                </div><!--/.row-->
+                <div class="form-group row">
+                  <label class="col-12 col-lg-2 col-form-label" for="avatarCtrl">Avatar URL</label>
+                  <div class="col-12 col-lg-10">
+                    <div class="controls">
+                      <div class="input-prepend input-group">
+                        <input formControlName="avatarCtrl" id="avatarCtrl" class="form-control" size="16" type="text"
+                               placeholder="Avatar URL"
+                               [ngClass]="{ 'is-invalid': nameGroupControls.avatarCtrl.errors }">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="bodyFormGroup">
+              <form [formGroup]="bodyFormGroup">
+                <ng-template matStepLabel>Fill out your details</ng-template>
+                <div class="form-group row">
+                  <label class="col-12 col-lg-2 col-form-label" for="dateOfBirthCtrl">Date of Birth</label>
+                  <div class="col-12 col-lg-10">
+                    <div class="controls">
+                      <div class="input-prepend input-group">
+                        <input formControlName="dateOfBirthCtrl" id="dateOfBirthCtrl" class="form-control" size="16"
+                               type="date"
+                               placeholder="date"
+                               [ngClass]="{ 'is-invalid': bodyGroupControls.dateOfBirthCtrl.errors }">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
+                  <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="emailFormGroup">
+              <form [formGroup]="emailFormGroup">
+                <ng-template matStepLabel>Fill out your email address</ng-template>
+                <div class="row">
+                  <div class="form-group col-sm-12">
+                    <label class="col-form-label" for="emailCtrl">&nbsp;</label>
+                    <div class="controls">
+                      <div class="input-prepend input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">@</span>
+                        </div>
+                        <input formControlName="emailCtrl" id="emailCtrl" class="form-control" size="16" type="text"
+                               placeholder="Last name"
+                               [ngClass]="{ 'is-invalid': emailGroupControls.emailCtrl.errors }">
+                      </div>
+                    </div>
+                  </div>
+                </div><!--/.row-->
+                <div>
+                  <button class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
+                  <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step>
+              <ng-template matStepLabel>Save</ng-template>
+              You are now done.
+              <div>
+                <button [disabled]="loading" class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
+                <button (click)="onSubmit()" [disabled]="loading" class="btn btn-brand-p px-4">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Save
+                </button>
+              </div>
+            </mat-step>
+          </mat-vertical-stepper>
+        </div>
       </div>
-      <div class="card-body">
-        <a [routerLink]="['/setup/fitbit']"><img src="assets/img/service_fitbit.jpeg"></a><br />
-        To start syncing your Fitbit information <a [routerLink]="['/setup/fitbit']">click here</a>, and you'll be taken to Fitbit.com to link your account.
+    </div> <!--/.col-->
+    <div class="col-lg-3">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-edit"></i>Fitbit Connection
+        </div>
+        <div class="card-body">
+          <a [routerLink]="['/setup/fitbit']"><img src="assets/img/service_fitbit.jpeg"></a><br/>
+          To start syncing your Fitbit information <a [routerLink]="['/setup/fitbit']">click here</a>, and you'll be
+          taken to Fitbit.com to link your account.
+        </div>
       </div>
     </div>
-  </div>
-</div><!--/.row-->
-
-
-<!--<button mat-button matStepperPrevious>Back</button>-->
-<!--<button mat-button matStepperNext>Next</button>-->
-<!--<button mat-button (click)="submit()">Submit</button>-->
+  </div><!--/.row-->
+</div>

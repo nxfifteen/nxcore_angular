@@ -11,6 +11,7 @@ import {MyMaterialModule} from '../../material-module';
 import {FirstrunComponent} from './firstrun.component';
 import {SetupRoutingModule} from './setup-routing.module';
 import {AuthWithFitbitComponent} from './auth-with-fitbit.component';
+import {AlertModule} from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {AuthWithFitbitComponent} from './auth-with-fitbit.component';
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
     FontAwesomeModule,
+    AlertModule.forRoot(),
   ],
   declarations: [FirstrunComponent, AuthWithFitbitComponent]
 })

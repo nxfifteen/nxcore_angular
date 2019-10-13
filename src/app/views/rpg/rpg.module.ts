@@ -10,7 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChallengeDetailComponent} from './challenge_detail.component';
 import {BodyRoutingModule} from '../body/body-routing.module';
 import {ChartsModule} from 'ng2-charts';
-import {TooltipModule} from 'ngx-bootstrap';
+import {AlertModule, TooltipModule} from 'ngx-bootstrap';
 // import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @NgModule({
@@ -22,6 +22,7 @@ import {TooltipModule} from 'ngx-bootstrap';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    AlertModule.forRoot(),
     TooltipModule.forRoot()
   ],
   declarations: [PvpComponent, LeaderboardComponent, ChallengeDetailComponent]
