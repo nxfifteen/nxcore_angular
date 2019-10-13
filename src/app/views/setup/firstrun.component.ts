@@ -52,7 +52,7 @@ export class FirstrunComponent implements OnInit {
   ngOnInit() {
     this.loading = 0;
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | Settings | First Run');
+    this._matomoService.setupTracking('Core | Settings | Profile');
     this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
 
     this.nameFormGroup = this._formBuilder.group({

@@ -30,8 +30,7 @@ export class WeightComponent implements OnInit {
               private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService,
-              private _matomoService: MatomoService,
-              private titleService: Title
+              private _matomoService: MatomoService
   ) {
     this.loading = 0;
     this.loadingExpected = 1;
@@ -131,9 +130,9 @@ export class WeightComponent implements OnInit {
   }
 
   buildViewContent(bustCache?: boolean): void {
-    this.apiService.getFitBodyWeight(bustCache).subscribe((data) => {
-      // console.log(data);
+    this.loading = 0;
 
+    this.apiService.getFitBodyWeight(bustCache).subscribe((data) => {
       this.weightWidgetWidgetChartSince = data['weight']['since'];
       this.weightWidgetWidgetChartData = [];
       for (let i = 0; i < data['weight']['widget']['data'].length; i++) {
@@ -142,7 +141,6 @@ export class WeightComponent implements OnInit {
       this.weightWidgetWidgetChartLabels = data['weight']['widget']['labels'];
       this.weightWidgetWidgetChartOptions.scales.yAxes[0].ticks.max = 100;
       this.weightWidgetWidgetChartOptions.scales.yAxes[0].ticks.min = 0;
-
 
       this.weightWidgetWidgetChartOptions = {
         tooltips: {

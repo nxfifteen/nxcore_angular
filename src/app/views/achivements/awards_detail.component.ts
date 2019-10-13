@@ -30,8 +30,7 @@ export class AwardsDetailComponent implements OnInit {
               private markdownService: MarkdownService,
               private apiService: ApiService,
               private _ActivatedRoute: ActivatedRoute,
-              private _matomoService: MatomoService,
-              private titleService: Title) {
+              private _matomoService: MatomoService) {
     this.loading = 0;
     this.loadingExpected = 1;
   }
@@ -68,8 +67,6 @@ export class AwardsDetailComponent implements OnInit {
     this.apiService.getAchievementsAwardDetails(this.awardId, bustCache).subscribe((data) => {
       // @ts-ignore
       this.awardBadge = data;
-      this.titleService.setTitle('Core | Awards | ' + this.awardBadge.name);
-
       this.emitApiLoaded();
     });
   }
@@ -77,7 +74,7 @@ export class AwardsDetailComponent implements OnInit {
   private emitApiLoaded() {
     this.loading++;
     if (this.loading >= this.loadingExpected) {
-      this._matomoService.doTracking();
+      this._matomoService.doTracking(-1, 'Core | Award | Details | ' + this.awardBadge.name);
     }
   }
 }

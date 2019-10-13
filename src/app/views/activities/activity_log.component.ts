@@ -25,6 +25,8 @@ export class ActivityLogComponent implements OnInit {
 
   activityDetails: { dateFrom: string; dateBackTill: string; searchRange: string; };
 
+  pageTitle: string = 'Core | Activities | Activity Log';
+  searchTitle: string = '';
   searchFromDate: string = '';
   searchSearchRange: string = '/within/1m';
 
@@ -50,7 +52,7 @@ export class ActivityLogComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | Activities | Log');
+    this._matomoService.setupTracking(this.pageTitle);
     this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
@@ -83,9 +85,9 @@ export class ActivityLogComponent implements OnInit {
     }
 
     this.apiService.getActivitiesLog(bustCache, fromDate, searchRange).subscribe((data) => {
-      console.log(data);
       this.activityLogs = data['results'];
       this.activityLogsNav = data['nav'];
+      this.searchTitle = data['title'];
       this.activityDetails = {
         dateFrom: data['dateFrom'],
         dateBackTill: data['dateBackTill'],
@@ -123,7 +125,7 @@ export class ActivityLogComponent implements OnInit {
   private emitApiLoaded() {
     this.loading++;
     if (this.loading >= this.loadingExpected) {
-      this._matomoService.doTracking();
+      this._matomoService.doTracking(-1, this.pageTitle + ' - ' + this.searchTitle);
     }
   }
 

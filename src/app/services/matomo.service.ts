@@ -31,7 +31,7 @@ export class MatomoService {
 
   get pageTitle() {
     const titleParts = this.coreDashboard.split(' | ');
-    return titleParts.pop() + ' [' + this.coreDashboard + ']';
+    return titleParts.pop();
   }
 
   inject() {
@@ -71,9 +71,13 @@ export class MatomoService {
     this.setGenerationTimeMs(0);
   }
 
-  doTracking(generationTimeMs?: number) {
-    if (generationTimeMs) {
+  doTracking(generationTimeMs?: number, _coreDashboard?: string) {
+    if (generationTimeMs && generationTimeMs > 0) {
       this.setGenerationTimeMs(generationTimeMs);
+    }
+    if (typeof _coreDashboard !== 'undefined') {
+      this.coreDashboard = _coreDashboard;
+      this.titleService.setTitle(this.coreDashboard);
     }
     this.setCustomUrl(this.router.url);
     this.setDocumentTitle(this.coreDashboard);

@@ -4,13 +4,16 @@ import { ChartsModule } from 'ng2-charts';
 // Components Routing
 import { WeightComponent } from './weight.component';
 import { BodyRoutingModule } from './body-routing.module';
-import {AlertModule} from 'ngx-bootstrap';
+import {AlertModule, ProgressbarModule} from 'ngx-bootstrap';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   imports: [
     BodyRoutingModule,
     AlertModule.forRoot(),
-    ChartsModule
+    ProgressbarModule.forRoot(),
+    ChartsModule,
+    CommonModule
   ],
   declarations: [ WeightComponent ]
 })

@@ -102,7 +102,7 @@ export class PvpComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | RPG | PVP');
+    this._matomoService.setupTracking('Core | RPG | 1:1 Challenges');
     this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);

@@ -203,7 +203,7 @@ export class ChallengeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | RPG | Challenge');
+    this._matomoService.setupTracking('Core | RPG | 1:1 Challenges');
     this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
       this.router.navigate(['/setup/profile']);
@@ -371,7 +371,10 @@ export class ChallengeDetailComponent implements OnInit {
   private emitApiLoaded() {
     this.loading++;
     if (this.loading >= this.loadingExpected) {
-      this._matomoService.doTracking();
+      this._matomoService.doTracking(
+        -1,
+        'Core | RPG | 1:1 Challenges | ' + this.challengeActive.target + '-' +  this.challengeActive.criteria + ' Challenge against ' + this.challengeActive.opponent
+      );
     }
   }
 }

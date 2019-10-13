@@ -8,6 +8,21 @@
       </div>
     </div>
   </div>
+  <div class="container">
+    <div class="row">
+      <div id="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="loading"></div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="animated fadeIn" *ngIf="loading>=loadingExpected">
   <alert type="md-refresh">
@@ -31,7 +46,7 @@
         </button>
 
         <button type="button" class="btn btn-brand btn-sm btn-success mr-1" style="margin-bottom: 4px"
-                (click)="buildViewContent(false, '/from/' + activityLogsNav.thisMonth, '/within/1m')"
+                (click)="buildViewContent(false, '', '/within/1m')"
                 *ngIf="activityLogsNav.thisMonth!=''">
           <i class="fa fa-angle-double-left"></i>
           <span>Today</span>
