@@ -29,6 +29,17 @@
 <div class="app-body">
   <app-sidebar [fixed]="true" [display]="configService.uiSettings.showNavBar"> <!-- [compact]="true" [minimized]="true" -->
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <div class="row" style="margin-left: 0; margin-right: 0">
+      <div class="col-4 bg-success text-center">
+        <a href="https://nxfifteen.me.uk" target="_blank" title="NxFIFTEEN" style="color: #fff"><i class="fa fa-wifi"></i></a>
+      </div>
+      <div class="col-4 bg-info text-center">
+        <a href="https://core.nxfifteen.me.uk/app.apk" target="_blank" title="Download" style="color: #fff"><i class="fa fa-android"></i></a>
+      </div>
+      <div class="col-4 bg-danger text-center">
+        <a href="https://www.patreon.com/nxfifteen" target="_blank" title="Support Core" style="color: #fff"><i class="fa fa-dollar"></i></a>
+      </div>
+    </div>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
   <!-- Main content -->
@@ -41,7 +52,6 @@
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <a class="btn" [routerLink]="['/dashboard']"><i class="fa fa-dashboard"></i> &nbsp;Dashboard</a>
           <a class="btn" [routerLink]="['/body/weight']"><i class="fa fa-balance-scale"></i> &nbsp;Weight</a>
-          <!--<a class="btn" (click)="pullToRefresh()"><i class="fa fa-balance-scale"></i> &nbsp;Refresh</a>-->
         </div>
       </li>
     </cui-breadcrumb>
