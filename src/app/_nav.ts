@@ -46,27 +46,26 @@ export const navItems: NavData[] = [
     name: 'Fun',
   },
   {
-    name: 'Leaderboard',
-    url: '/rpg/leaderboard',
-    icon: 'fa fa-users'
-  },
-  {
-    name: '1:1 Challenges',
-    url: '/rpg/challenges',
-    icon: 'fa fa-trophy',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    },
-  },
-  {
     name: 'Awards',
-    url: '/achivements/awards',
+    url: '/achievements/awards',
     icon: 'fa fa-diamond',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    },
+  },
+  {
+    name: 'Compete',
+    url: '/rpg',
+    icon: 'fa fa-book',
+    children: [
+      {
+        name: 'Leaderboard',
+        url: '/rpg/leaderboard',
+        icon: 'fa fa-users'
+      },
+      {
+        name: '1:1 Challenges',
+        url: '/rpg/challenges',
+        icon: 'fa fa-trophy',
+      },
+    ]
   },
   {
     divider: true
@@ -84,6 +83,23 @@ export const navItems: NavData[] = [
         name: 'Weight',
         url: '/body/weight',
         icon: 'medicalIcons-scale-tool-to-control-body-weight-standing-on-it'
+      },
+    ]
+  },
+  {
+    name: 'Activities',
+    url: '/activities',
+    icon: 'fa fa-book',
+    children: [
+      {
+        name: 'Activity Tracker',
+        url: '/activities/activity',
+        icon: 'fa fa-percent'
+      },
+      {
+        name: 'Activity Log',
+        url: '/activities/log',
+        icon: 'fa fa-archive'
       },
     ]
   },

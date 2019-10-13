@@ -424,7 +424,7 @@ export class DashboardComponent implements OnInit {
 
   awardClicked(id: number) {
     this._matomoService.trackEvent('detail', 'click', 'award', id);
-    this.router.navigate(['/achivements/awards/info', id]);
+    this.router.navigate(['/achievements/awards/info', id]);
   }
 
   viewChallenge(id: any) {

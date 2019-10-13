@@ -87,6 +87,17 @@ export class ApiService {
     return this.makeHttpGetRequest(URL, bustCache);
   }
 
+  public getActivitiesLog(bustCache?: boolean, fromDate?: string, searchRange?: string) {
+    if (typeof fromDate === 'undefined') {
+      fromDate = '';
+    }
+    if (typeof searchRange === 'undefined') {
+      searchRange = '';
+    }
+    const URL = `${environment.apiUrl}/feed/activities/log${fromDate}${searchRange}?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
   public submitNewPVPChallenge(friend, target, criteria, duration) {
     const URL = ``;
     return this.httpClient.post<any>(
@@ -101,15 +112,15 @@ export class ApiService {
       const apiFromCache = this.responseCache.get(URL);
       if (apiFromCache) {
         if (!environment.production) {
-          console.log(URL + ': Returned from cache');
+          console.log(URL + ' : Returned from cache');
         }
         return of(apiFromCache);
       }
     } else {
-      console.log(URL + ': Cache Busted');
+      console.log(URL + ' : Cache Busted');
     }
     if (!bustCache && !environment.production) {
-      console.log(URL + ': Returned from source');
+      console.log(URL + ' : Returned from source');
     }
     const response = this.httpClient.get<any>(URL);
     response.subscribe(data => this.responseCache.set(URL, data));

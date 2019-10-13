@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ProgressbarModule} from 'ngx-bootstrap/progressbar';
 // Components Routing
 import {AwardsComponent} from './awards.component';
-import {AchivementsRoutingModule} from './achivements-routing.module';
+import {AchievementsRoutingModule} from './achivements-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AwardsDetailComponent} from './awards_detail.component';
@@ -13,7 +13,7 @@ import {TooltipModule} from 'ngx-bootstrap';
 @NgModule({
   imports: [
     CommonModule,
-    AchivementsRoutingModule,
+    AchievementsRoutingModule,
     ProgressbarModule.forRoot(),
     NgbModule,
     FormsModule,
@@ -22,5 +22,5 @@ import {TooltipModule} from 'ngx-bootstrap';
   ],
   declarations: [AwardsComponent, AwardsDetailComponent]
 })
-export class AchivementsModule {
+export class AchievementsModule {
 }

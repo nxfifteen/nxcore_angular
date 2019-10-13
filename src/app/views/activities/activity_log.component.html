@@ -1,0 +1,265 @@
+<div *ngIf="loading!=loadingExpected">
+  <div class="row">
+    <div class="col-12">
+      LOADING...
+      <div class="progress progress-xs mt-2">
+        <progressbar class="progress progress-success" [value]="loading" [max]="loadingExpected"
+                     type="success"></progressbar>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="animated fadeIn" *ngIf="loading>=loadingExpected">
+  <alert type="md-refresh">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Activities Recorded</h3> <br/> Between <strong>{{activityDetails.dateBackTill}}</strong> &
+        <strong>{{activityDetails.dateFrom}}</strong>
+      </div>
+      <div class="col-md-6 text-right">
+        <button type="button" class="btn btn-brand btn-sm btn-info mr-1" style="margin-bottom: 4px"
+                (click)="buildViewContent(false, '/from/' + activityLogsNav.nextMonth, '/within/1m')"
+                *ngIf="activityLogsNav.nextMonth!=''">
+          <i class="fa fa-angle-double-left"></i>
+          <span>{{activityLogsNav.nextMonth}}</span>
+        </button>
+
+        <button type="button" class="btn btn-brand btn-sm btn-warning mr-1" style="margin-bottom: 4px"
+                (click)="pullToRefresh()">
+          <i class="fa fa-repeat"></i>
+          <span>Refresh</span>
+        </button>
+
+        <button type="button" class="btn btn-brand btn-sm btn-success mr-1" style="margin-bottom: 4px"
+                (click)="buildViewContent(false, '/from/' + activityLogsNav.thisMonth, '/within/1m')"
+                *ngIf="activityLogsNav.thisMonth!=''">
+          <i class="fa fa-angle-double-left"></i>
+          <span>Today</span>
+        </button>
+
+        <button type="button" class="btn btn-brand btn-sm btn-info mr-1" style="margin-bottom: 4px"
+                (click)="buildViewContent(false, '/from/' + activityLogsNav.prevMonth, '/within/1m')"
+                *ngIf="activityLogsNav.prevMonth!=''">
+          <i class="fa fa-angle-double-right"></i>
+          <span>{{activityLogsNav.prevMonth}}</span>
+        </button>
+      </div>
+    </div>
+  </alert>
+
+  <div class="row">
+    <div class="col-md-5">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card bg-info">
+            <div class="card-body">
+              <i class="fa fa-life-ring float-right"></i>
+              Bellow is a break down of how many minutes you've spent exercising, broken down by time of day.
+              Bellow that, is a comparision graph across all recorded activities.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="activityLogs.length>0">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              Daily Spread
+              <div class="card-header-actions">
+                Between <strong>{{activityDetails.dateBackTill}}</strong> and
+                <strong>{{activityDetails.dateFrom}}</strong>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <!--suppress AngularInvalidExpressionResultType -->
+                <canvas baseChart class="chart"
+                        [data]="activityPartOfDaysChartData"
+                        [labels]="activityPartOfDaysChartLabels"
+                        [legend]="true"
+                        [chartType]="'doughnut'"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              Daily Spread
+              <div class="card-header-actions">
+                Across all recorded activities
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <!--suppress AngularInvalidExpressionResultType -->
+                <canvas baseChart class="chart"
+                        [data]="activityAllTimePartOfDaysChartData"
+                        [labels]="activityAllTimePartOfDaysChartLabels"
+                        [legend]="true"
+                        [chartType]="'doughnut'"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card bg-info">
+            <div class="card-body">
+              <i class="fa fa-life-ring float-right"></i>
+              Bellow is a break down of how many minutes you've spent exercising, broken down by the type of exercise
+              being done.
+              Bellow that, is a comparision graph across all recorded activities.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="activityLogs.length>0">
+
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              Exercise Type Spread
+              <div class="card-header-actions">
+                Between <strong>{{activityDetails.dateBackTill}}</strong> and
+                <strong>{{activityDetails.dateFrom}}</strong>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <!--suppress AngularInvalidExpressionResultType -->
+                <canvas baseChart class="chart"
+                        [data]="activityDurationsChartData"
+                        [labels]="activityDurationsChartLabels"
+                        [legend]="true"
+                        [chartType]="'pie'"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              Exercise Type Spread
+              <div class="card-header-actions">
+                Across all recorded activities
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <!--suppress AngularInvalidExpressionResultType -->
+                <canvas baseChart class="chart"
+                        [data]="activityAllTimeDurationsChartData"
+                        [labels]="activityAllTimeDurationsChartLabels"
+                        [legend]="true"
+                        [chartType]="'pie'"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-7" id="wrpTimeline">
+      <div class="card">
+        <div class="card-header">
+          Exercise Type Spread
+        </div>
+        <div class="card-body">
+          <div *ngIf="activityLogs.length==0">
+            No recorded activities for this period
+          </div>
+
+          <div id="ActivityHistory" class="timeline" *ngIf="activityLogs.length>0">
+            <div class="timeline-item" [ngClass]="{ alt: odd }"
+                 *ngFor="let loggedActivity of activityLogs; let i = index; let odd=odd; let even=even;">
+              <div class="timeline-desk">
+                <div class="card card-exercise card-exercise-{{loggedActivity.exerciseTag}}">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6"><h1>{{loggedActivity.exerciseType}}</h1></div>
+                      <div class="col-sm-12 col-md-6 text-right">{{loggedActivity.dateFormatted}}</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <span class="timeline-icon"><i class="fa fa-check"></i></span>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6">{{loggedActivity.date}} @{{loggedActivity.started}}</div>
+                      <div class="col-sm-12 col-md-6"><i class="exercise-icon fa fa-edit"></i>
+                        Tracker: {{loggedActivity.tracker}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.steps>0"><i
+                        class="exercise-icon fa fa-paw"></i> {{loggedActivity.steps}} / {{loggedActivity.stepsTotal}}
+                        Steps
+                      </div>
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.calorie>0"><i
+                        class="exercise-icon fa fa-fire"></i> {{loggedActivity.calorie}} Calories
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.duration>0"><i
+                        class="exercise-icon fa fa-clock-o"></i> {{loggedActivity.duration}} Minutes
+                      </div>
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.distance>0"><i
+                        class="exercise-icon fa fa-map-o"></i> {{loggedActivity.distance}} km
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.altitudeMax>0"><i
+                        class="exercise-icon fa fa-sort-up"></i> {{loggedActivity.altitudeMax}} Max altitude
+                      </div>
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.altitudeMin>0"><i
+                        class="exercise-icon fa fa-sort-down"></i> {{loggedActivity.altitudeMin}} Min altitude
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.speedMax>0"><i
+                        class="exercise-icon fitnessIcons-man"></i> {{loggedActivity.speedMax}} Max speed
+                      </div>
+                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.speedMean>0"><i
+                        class="exercise-icon fitnessIcons-man"></i> {{loggedActivity.speedMean}} Min speed
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-4" *ngIf="loggedActivity.heartRateMax>0"><i
+                        class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMax}} Max heart
+                      </div>
+                      <div class="col-sm-12 col-md-4" *ngIf="loggedActivity.heartRateMean>0"><i
+                        class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMean}} Mean heart
+                      </div>
+                      <div class="col-sm-12 col-md-4" *ngIf="loggedActivity.heartRateMin>0"><i
+                        class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMin}} Min heart
+                      </div>
+                    </div>
+                    <div class="row d-sm-down-none">
+                      <div class="col-md-12">
+                        <div [ngClass]="{ 'pull-right': odd, 'pull-left': even }">
+                          <a class="exercise-view-on-map"><i class="fa fa-map-marker"></i> View on Map</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
