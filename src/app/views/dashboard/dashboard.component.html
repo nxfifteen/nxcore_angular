@@ -346,24 +346,21 @@
                   Awards
                 </div>
                 <div class="card-body">
-                  <table class="table table-responsive-sm table-hover table-outline mb-0">
-                    <tbody>
-                    <tr *ngFor="let awardsSummary of awardsSummaries" (click)="awardClicked(awardsSummary.id)">
-                      <td class="text-center col-2">
-                        <div class="avatar">
-                          <img [alt]="awardsSummary.name" class="img-avatar"
-                               [src]="awardsSummary.image">
-                        </div>
-                      </td>
-                      <td class="col-10">
-                        <div>{{ awardsSummary.name }}</div>
-                        <div class="small text-muted d-none d-md-block">
-                          {{ awardsSummary.longtext }}
-                        </div>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
+                  <div class="row" *ngFor="let awardsSummary of awardsSummaries"
+                       (click)="awardClicked(awardsSummary.id)">
+                    <div class="text-center col-2">
+                      <div class="avatar">
+                        <img [alt]="awardsSummary.name" class="img-avatar"
+                             [src]="awardsSummary.image">
+                      </div>
+                    </div>
+                    <div class="col-10">
+                      <div>{{ awardsSummary.name }}</div>
+                      <div class="small text-muted d-none d-md-block">
+                        {{ awardsSummary.longtext }}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -465,30 +462,28 @@
             Awards
           </div>
           <div class="card-body">
-            <table class="table table-responsive-sm table-hover table-outline mb-0">
-              <tbody>
-              <tr *ngFor="let awardsSummary of awardsSummaries" (click)="awardClicked(awardsSummary.id)">
-                <td class="text-center">
-                  <div class="avatar">
-                    <img [alt]="awardsSummary.name" class="img-avatar"
-                         [src]="awardsSummary.image">
-                  </div>
-                </td>
-                <td>
-                  <div>{{ awardsSummary.name }}</div>
-                  <div class="small text-muted d-none d-md-block">
-                    {{ awardsSummary.longtext }}
-                  </div>
-                </td>
-                <td>
-                  <div>Awarded {{ awardsSummary.count }} time(s)</div>
-                  <div class="small text-muted d-none d-md-block">
-                    Last Awarded: {{ awardsSummary.awarded }}
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+
+            <div class="row" *ngFor="let awardsSummary of awardsSummaries" (click)="awardClicked(awardsSummary.id)">
+              <div class="text-center col-2 col-md-1">
+                <div class="avatar">
+                  <img [alt]="awardsSummary.name" class="img-avatar"
+                       [src]="awardsSummary.image">
+                </div>
+              </div>
+              <div class="col-5 col-md-6">
+                <div>{{ awardsSummary.name }}</div>
+                <div class="small text-muted d-none d-md-block">
+                  {{ awardsSummary.longtext }}
+                </div>
+              </div>
+              <div class="col-5 col-md-5 text-right">
+                <div>Awarded {{ awardsSummary.count }} time(s)</div>
+                <div class="small text-muted d-none d-md-block">
+                  Last Awarded: {{ awardsSummary.awarded }}
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
