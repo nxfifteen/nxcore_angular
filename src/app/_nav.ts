@@ -91,11 +91,11 @@ export const navItems: NavData[] = [
     url: '/activities',
     icon: 'fa fa-book',
     children: [
-      {
+      /*{
         name: 'Activity Tracker',
         url: '/activities/activity',
         icon: 'fa fa-percent'
-      },
+      },*/
       {
         name: 'Activity Log',
         url: '/activities/log',
@@ -108,24 +108,17 @@ export const navItems: NavData[] = [
   },
   {
     title: true,
-    name: 'Profile',
+    name: 'Settings',
   },
   {
-    name: 'Setup',
-    url: '/setup',
-    icon: 'fa fa-cogs',
-    children: [
-      {
-        name: 'Profile',
-        url: '/setup/profile',
-        icon: 'fa fa-user'
-      },
-    ],
+    name: 'Profile',
+    url: '/setup/profile',
+    icon: 'fa fa-user'
   },
   {
     divider: true
   },
-  {
+  /*{
     title: true,
     name: 'Dev Panel',
   },
@@ -164,5 +157,5 @@ export const navItems: NavData[] = [
         icon: 'fa fa-file-image-o'
       },
     ]
-  },
+  },*/
 ];
