@@ -12,6 +12,7 @@ import {MatomoService} from '../../services/matomo.service';
 import {CordovaService} from '../../services/cordova.service';
 import {Observable} from 'rxjs';
 import {AppVersion} from '../../_models/appVersion';
+import {CordovaDevice} from '../../_models/cordovaDevice';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
   loadingExpected: number;
   cordovaService$: CordovaService;
   cordovaUpdateAvailable: AppVersion;
+  cordovaDevice: CordovaDevice;
 
   intraDayWidgetChartOptions: any;
   intraDayWidgetChartColours: any;
@@ -43,6 +45,7 @@ export class DashboardComponent implements OnInit {
   awardsSummaries: Array<any>;
 
   stepWidgetEnable: boolean;
+  stepSteakWidgetEnable: boolean;
   stepIntraDayWidgetEnable: boolean;
   stepSummary: number;
   stepSummaryGoal: number;
@@ -111,7 +114,10 @@ export class DashboardComponent implements OnInit {
       this.loadFromApi();
     }
 
-    this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
+    if (this.cordovaService$.onCordova) {
+      this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
+      this.cordovaService$.cordovaDevice.subscribe(x => this.cordovaDevice = x);
+    }
   }
 
   pullToRefresh(): void {
@@ -129,6 +135,7 @@ export class DashboardComponent implements OnInit {
     this.widgetsOnFirstRow = 0;
     this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
     this.stepWidgetEnable = false;
+    this.stepSteakWidgetEnable = false;
     this.stepIntraDayWidgetEnable = false;
     this.floorWidgetEnable = false;
     this.floorIntraDayWidgetEnable = false;

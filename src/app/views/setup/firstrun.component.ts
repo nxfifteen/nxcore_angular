@@ -44,8 +44,7 @@ export class FirstrunComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private alertService: AlertService,
               private apiService: ApiService,
-              private _matomoService: MatomoService,
-              private titleService: Title) {
+              public _matomoService: MatomoService) {
     this.loadingExpected = 1;
   }
 

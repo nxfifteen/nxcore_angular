@@ -42,10 +42,10 @@
 
   <div class="row" *ngIf="cordovaService$.onCordova">
     <div class="col-8" *ngIf="cordovaService$.updateAvailable">
-      <div class="card  bg-danger">
+      <div class="card bg-info">
         <div class="card-body p-3 clearfix">
-          <i class="fa fa-moon-o bg-info p-3 font-2xl mr-3 float-left"></i>
-          <div class="h5 text-info mb-0 mt-2">An Updated APK is available</div>
+          <i class="fa fa-moon-o p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 mb-0 mt-2">An Updated APK is available</div>
           <div class="text-muted text-uppercase font-weight-bold font-xs">{{cordovaUpdateAvailable.latestVersion}}</div>
         </div>
       </div>
@@ -57,12 +57,12 @@
         </div>
         <div class="card-body">
           <ul>
-            <li>manufacturer: {{ cordovaService$.platform.manufacturer }}</li>
-            <li>model: {{ cordovaService$.platform.model }}</li>
-            <li>version: {{ cordovaService$.platform.version }}</li>
-            <li>serial: {{ cordovaService$.platform.serial }}</li>
-            <li>uuid: {{ cordovaService$.platform.uuid }}</li>
-            <li>platform: {{ cordovaService$.platform.platform }}</li>
+            <li>manufacturer: {{ cordovaDevice.manufacturer }}</li>
+            <li>model: {{ cordovaDevice.model }}</li>
+            <li>version: {{ cordovaDevice.version }}</li>
+            <li>serial: {{ cordovaDevice.serial }}</li>
+            <li>uuid: {{ cordovaDevice.uuid }}</li>
+            <li>platform: {{ cordovaDevice.platform }}</li>
           </ul>
         </div>
       </div>
@@ -238,7 +238,7 @@
     </div><!-- /distanceSummary -->
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="stepSteakWidgetEnable">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">

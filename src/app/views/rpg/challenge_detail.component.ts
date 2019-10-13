@@ -9,6 +9,7 @@ import {User} from '../../_models';
 import {ChallengeActive} from '../../_models/challengeActive';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
+import {ActivityLogNav} from '../../_models/activityLog';
 
 @Component({
   templateUrl: 'challenge_detail.component.html'
@@ -19,6 +20,7 @@ export class ChallengeDetailComponent implements OnInit {
   currentUser: User;
   awardId: number;
   challengeActive: ChallengeActive;
+  challengeNav: ActivityLogNav;
 
   challengeWidgetChartOptions: any;
   challengeWidgetChartColours: any;
@@ -238,6 +240,7 @@ export class ChallengeDetailComponent implements OnInit {
     this.apiService.getRpgPvpDetails(this.awardId, bustCache).subscribe((data) => {
       // @ts-ignore
       this.challengeActive = data;
+      this.challengeNav = data['nav'];
 
       switch (this.challengeActive.outcome) {
         case 'win':
@@ -373,9 +376,17 @@ export class ChallengeDetailComponent implements OnInit {
     if (this.loading >= this.loadingExpected) {
       this._matomoService.doTracking(
         -1,
-        'Core | RPG | 1:1 Challenges | ' + this.challengeActive.target + '-' +  this.challengeActive.criteria + ' Challenge against ' + this.challengeActive.opponent
+        'Core | RPG | 1:1 Challenges | '
+        + this.challengeActive.target + '-' + this.challengeActive.criteria + ' Challenge against ' + this.challengeActive.opponent
       );
     }
+  }
+
+  navChallenge(nextMonth: number) {
+    this.router.navigate(['/rpg/challenges/info', nextMonth]);
+
+    this.awardId = nextMonth;
+    this.loadFromApi();
   }
 }
 

@@ -31,10 +31,24 @@
         <h3>{{_matomoService.pageTitle}}</h3>
       </div>
       <div class="col-md-6 text-right">
+        <button type="button" class="btn btn-brand btn-sm btn-info mr-1" style="margin-bottom: 4px"
+                (click)="navChallenge(challengeNav.nextMonth)"
+                *ngIf="challengeNav.nextMonth!=''">
+          <i class="fa fa-angle-double-left"></i>
+          <span>Next</span>
+        </button>
+
         <button type="button" class="btn btn-brand btn-sm btn-warning mr-1" style="margin-bottom: 4px"
                 (click)="pullToRefresh()">
           <i class="fa fa-repeat"></i>
           <span>Refresh</span>
+        </button>
+
+        <button type="button" class="btn btn-brand btn-sm btn-info mr-1" style="margin-bottom: 4px"
+                (click)="navChallenge(challengeNav.prevMonth)"
+                *ngIf="challengeNav.prevMonth!=''">
+          <i class="fa fa-angle-double-right"></i>
+          <span>Previous</span>
         </button>
       </div>
     </div>

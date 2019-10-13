@@ -140,9 +140,16 @@
     </div>
   </div>
 
+  <alert type="md-refresh">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Running Challenges</h3>
+      </div>
+    </div>
+  </alert>
+
   <div class="row" *ngIf="rpgChallengeRunning.length>0">
     <div class="col-12">
-      <h3>Running 1:1 Challenges</h3>
       <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeRunning" (click)="viewChallenge(runningChallenge.id)">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
@@ -215,44 +222,21 @@
     </div>
   </div>
 
+  <alert type="md-refresh">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Finished Challenges</h3>
+      </div>
+    </div>
+  </alert>
+
   <div class="row" *ngIf="rpgChallengeCompleted.length>0">
-    <div class="col-12">
-      <h3>Finished 1:1 Challenges</h3>
-      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" *ngFor="let runningChallenge of rpgChallengeCompleted" (click)="viewChallenge(runningChallenge.id)">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let runningChallenge of rpgChallengeCompleted">
+      <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}" (click)="viewChallenge(runningChallenge.id)">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
-          {{runningChallenge.duration}} Days, ends: {{runningChallenge.endDate}}
-          <div class="progress progress-xs mt-2">
-            <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.progressDate" [max]="100"
-                         type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
-          </div>
+          {{runningChallenge.duration}} Days, ended: {{runningChallenge.endDate}}
         </div>
-<!--        <div class="card-body">-->
-<!--          <div class="row">-->
-<!--            <div class="col-12 col-lg-5">-->
-<!--              <div class="progress">-->
-<!--                <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}" [value]="runningChallenge.userDetail.completion" [max]="100"-->
-<!--                             type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>-->
-<!--              </div>-->
-<!--              <div style="text-align: right;">-->
-<!--                {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="col-2 hidden-md-down" style="text-align: center; font-size: 2rem;vertical-align: middle;">-->
-<!--              <i class="fa fa-flag-checkered"></i>-->
-<!--            </div>-->
-<!--            <div class="col-12 col-lg-5">-->
-<!--              <div class="progress">-->
-<!--                <progressbar class="progress progress-{{runningChallenge.opponentDetail.outcomeType}}" style="direction: rtl;"-->
-<!--                             [value]="runningChallenge.opponentDetail.completion" [max]="100"-->
-<!--                             type="{{runningChallenge.opponentDetail.outcomeType}}"></progressbar>-->
-<!--              </div>-->
-<!--              <div>-->
-<!--                {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
         <div class="card-footer">
           <div class="row">
             <div class="col-4" style="text-align: center">
@@ -278,77 +262,5 @@
       </div>
     </div>
   </div>
-
-<!--  <div class="row">
-    <div class="col-12 col-lg-6">
-      <h1>Inbox</h1>
-      <div class="card card-accent-info">
-        <div class="card-header">
-          <i class="fa fa-align-justify"></i> Pending Challenges
-        </div>
-        <div class="card-body">
-          <table class="table table-sm">
-            <thead>
-            <tr>
-              <th class="hidden-md-down">&nbsp;</th>
-              <th>Opponent</th>
-              <th>Criteria</th>
-              <th>Target</th>
-              <th>Duration</th>
-              <th class="hidden-md-down">Received</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let toAccept of rpgChallengeToAccept; let i = index" (click)="acceptChallenge(toAccept.id, i)"
-                [class.active]="i == selectedInboxChallenge">
-              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar"
-                                              alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
-              <td>{{ toAccept.opponent }}</td>
-              <td>{{ toAccept.criteria }}</td>
-              <td>{{ toAccept.target }}</td>
-              <td>{{ toAccept.duration }} days</td>
-              <td class="hidden-md-down">{{ toAccept.invited }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-lg-6">
-      <h1>Outbox</h1>
-      <div class="card card-accent-warning">
-        <div class="card-header">
-          <i class="fa fa-align-justify"></i> Waiting Challenges
-        </div>
-        <div class="card-body">
-          <table class="table table-sm">
-            <thead>
-            <tr>
-              <th class="hidden-md-down">&nbsp;</th>
-              <th>Opponent</th>
-              <th>Criteria</th>
-              <th>Target</th>
-              <th>Duration</th>
-              <th class="hidden-md-down">Sent</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let toAccept of rpgChallengePending; let i = index" (click)="rejectChallenge(toAccept.id, i)"
-                [class.active]="i == selectedOutboxChallenge">
-              <td class="hidden-md-down"><img src="{{toAccept.opponentAvatar}}" class="img-avatar"
-                                              alt="{{toAccept.opponent}}" width="35px" height="35px"/></td>
-              <td>{{ toAccept.opponent }}</td>
-              <td>{{ toAccept.criteria }}</td>
-              <td>{{ toAccept.target }}</td>
-              <td>{{ toAccept.duration }} days</td>
-              <td class="hidden-md-down">{{ toAccept.invited }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>-->
 
 </div>
