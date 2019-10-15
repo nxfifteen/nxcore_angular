@@ -72,6 +72,10 @@ export const routes: Routes = [
           canActivate: [AuthGuard],
           loadChildren: () => import('./views/activities/activities.module').then(m => m.ActivitiesModule)
         },
+        {
+          path: 'help',
+          loadChildren: () => import('./views/docs/docs.module').then(m => m.DocsModule)
+        },
       ]
     }
   ]
