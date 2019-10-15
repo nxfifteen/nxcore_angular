@@ -4,13 +4,9 @@ import {AuthenticationService} from '../../_services';
 import {environment} from '../../../environments/environment';
 import {User} from '../../_models';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ApiService} from '../../services/api.service';
-import {MatomoTracker} from 'ngx-matomo';
-import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 
 @Component({
-  selector: 'app-auth-with-fitbit',
   templateUrl: './auth-with-fitbit.component.html'
 })
 export class AuthWithFitbitComponent implements OnInit {
@@ -35,7 +31,7 @@ export class AuthWithFitbitComponent implements OnInit {
         this.completed = true;
         this.currentUser.firstrun = false;
       } else {
-        this.authUrl = `${environment.apiUrl}/auth/with/fitbit/${this.currentUser.username}?key=${this.currentUser.token}&return=${environment.uiUrl}`;
+        this.authUrl = `${environment.apiUrl}/auth/with/fitbit/${this.currentUser.username}?key=${this.currentUser.token}&return=${environment.uiUrl}&returnPath=oauth/setup/fitbit`;
         this.document.location.href = this.authUrl;
       }
     });

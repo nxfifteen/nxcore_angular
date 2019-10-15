@@ -2,19 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService, AuthenticationService} from '../../_services';
 import {ApiService} from '../../services/api.service';
-import {environment} from '../../../environments/environment';
-import {first, map} from 'rxjs/operators';
-import {MatomoTracker} from 'ngx-matomo';
-import {Title} from '@angular/platform-browser';
+import {first} from 'rxjs/operators';
 import {User} from '../../_models';
 import {Router} from '@angular/router';
 import {MatomoService} from '../../services/matomo.service';
 
 @Component({
-  templateUrl: './firstrun.component.html',
-  styleUrls: ['./firstrun.component.scss']
+  templateUrl: './profile.component.html'
 })
-export class FirstrunComponent implements OnInit {
+export class SettingsProfileComponent implements OnInit {
   currentUser: User;
   nameFormGroup: FormGroup;
   bodyFormGroup: FormGroup;

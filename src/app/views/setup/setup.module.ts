@@ -8,10 +8,11 @@ import {ProgressbarModule} from 'ngx-bootstrap/progressbar';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 // Components Routing
 import {MyMaterialModule} from '../../material-module';
-import {FirstrunComponent} from './firstrun.component';
+import {SettingsProfileComponent} from './profile.component';
 import {SetupRoutingModule} from './setup-routing.module';
 import {AuthWithFitbitComponent} from './auth-with-fitbit.component';
 import {AlertModule} from 'ngx-bootstrap';
+import {AccountLinkComponent} from './accountlink.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,7 @@ import {AlertModule} from 'ngx-bootstrap';
     FontAwesomeModule,
     AlertModule.forRoot(),
   ],
-  declarations: [FirstrunComponent, AuthWithFitbitComponent]
+  declarations: [SettingsProfileComponent, AccountLinkComponent, AuthWithFitbitComponent]
 })
 export class SetupModule {
 }

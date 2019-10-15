@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { FirstrunComponent } from './firstrun.component';
+import {SettingsProfileComponent} from './profile.component';
 import {AuthWithFitbitComponent} from './auth-with-fitbit.component';
+import {AccountLinkComponent} from './accountlink.component';
 
 const routes: Routes = [
   {
@@ -17,9 +18,28 @@ const routes: Routes = [
       },
       {
         path: 'profile',
-        component: FirstrunComponent,
+        component: SettingsProfileComponent,
         data: {
           title: 'First Run'
+        }
+      }
+    ]
+  },
+  {
+    path: 'oauth',
+    data: {
+      title: 'OAuth'
+    },
+    children: [
+      {
+        path: '',
+        redirectTo: 'select'
+      },
+      {
+        path: 'select',
+        component: AccountLinkComponent,
+        data: {
+          title: 'Select Your Account'
         }
       },
       {

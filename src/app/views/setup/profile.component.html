@@ -10,7 +10,7 @@
   </alert>
 
   <div class="row">
-    <div class="col-lg-9">
+    <div class="col-12">
       <div class="card">
         <div class="card-header">
           <i class="fa fa-edit"></i>User Profile
@@ -121,9 +121,9 @@
               <ng-template matStepLabel>Save</ng-template>
               You are now done.
               <div>
-                <button [disabled]="loading" class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
-                <button (click)="onSubmit()" [disabled]="loading" class="btn btn-brand-p px-4">
-                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                <button [disabled]="loadingFormResponce" class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
+                <button (click)="onSubmit()" [disabled]="loadingFormResponce" class="btn btn-brand-p px-4">
+                  <span *ngIf="loadingFormResponce" class="spinner-border spinner-border-sm mr-1"></span>
                   Save
                 </button>
               </div>
@@ -132,17 +132,5 @@
         </div>
       </div>
     </div> <!--/.col-->
-    <div class="col-lg-3">
-      <div class="card">
-        <div class="card-header">
-          <i class="fa fa-edit"></i>Fitbit Connection
-        </div>
-        <div class="card-body">
-          <a [routerLink]="['/setup/fitbit']"><img src="assets/img/service_fitbit.jpeg"></a><br/>
-          To start syncing your Fitbit information <a [routerLink]="['/setup/fitbit']">click here</a>, and you'll be
-          taken to Fitbit.com to link your account.
-        </div>
-      </div>
-    </div>
   </div><!--/.row-->
 </div>

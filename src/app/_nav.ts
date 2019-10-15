@@ -116,6 +116,33 @@ export const navItems: NavData[] = [
     icon: 'fa fa-user'
   },
   {
+    name: 'Select Your Account',
+    url: '/setup/oauth',
+    icon: 'fa fa-user'
+  },
+  {
+    divider: true
+  },
+  {
+    title: true,
+    name: 'Help',
+  },
+  {
+    name: 'Patreon',
+    url: '/help/patreon',
+    icon: 'fa fa-user'
+  },
+  {
+    name: 'Privacy Policy',
+    url: '/help/privacy',
+    icon: 'fa fa-user'
+  },
+  {
+    name: 'Terms of Service',
+    url: '/help/terms',
+    icon: 'fa fa-user'
+  },
+  {
     divider: true
   },
   /*{
