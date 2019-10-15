@@ -6,6 +6,8 @@ import {Title} from '@angular/platform-browser';
 import {User} from '../_models';
 import {CordovaService} from './cordova.service';
 
+declare var device;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +23,7 @@ export class MatomoService {
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private titleService: Title,
-              private _matomoTracker: MatomoTracker,
+              public _matomoTracker: MatomoTracker,
               private _matomoInjector: MatomoInjector,
               private _cordovaService: CordovaService
   ) {
@@ -39,6 +41,7 @@ export class MatomoService {
       if (this._cordovaService.onCordova) {
         console.log('Running on Cordova');
         this.siteId = 2;
+        // document.addEventListener('deviceready', this.cordovaDeviceUpdate, false);
       } else {
         console.log('Running in browser');
         this.siteId = 1;
@@ -48,6 +51,12 @@ export class MatomoService {
       this.injected = true;
     }
   }
+
+  // cordovaDeviceUpdate() {
+  //   this.setCustomVariable('model', device.model, 'visit');
+  //   this.setCustomVariable('platform', device.platform, 'visit');
+  //   this.setCustomVariable('version', device.version, 'visit');
+  // }
 
   setupTracking(_coreDashboard: string) {
     this.inject();
@@ -64,6 +73,13 @@ export class MatomoService {
     this.deleteCustomVariable(4, 'page');
     this.deleteCustomVariable(5, 'page');
     this.deleteCustomVariable(6, 'page');
+
+    this.deleteCustomVariable(1, 'visit');
+    this.deleteCustomVariable(2, 'visit');
+    this.deleteCustomVariable(3, 'visit');
+    this.deleteCustomVariable(4, 'visit');
+    this.deleteCustomVariable(5, 'visit');
+    this.deleteCustomVariable(6, 'visit');
 
     this.saveVariablesPage = [];
     this.saveVariablesVisit = [];
