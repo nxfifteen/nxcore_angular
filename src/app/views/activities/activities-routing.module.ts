@@ -25,17 +25,25 @@ const routes: Routes = [
       },
       {
         path: 'log',
-        component: ActivityLogComponent,
         data: {
           title: 'Activity Log'
-        }
-      },
-      {
-        path: 'detail/:id',
-        component: ActivityLogDetailsComponent,
-        data: {
-          title: 'Activity Details'
-        }
+        },
+        children: [
+          {
+            path: '',
+            component: ActivityLogComponent,
+            data: {
+              title: 'Activity Log'
+            },
+          },
+          {
+            path: ':id',
+            component: ActivityLogDetailsComponent,
+            data: {
+              title: 'Activity Details'
+            }
+          }
+        ]
       }
     ]
   }

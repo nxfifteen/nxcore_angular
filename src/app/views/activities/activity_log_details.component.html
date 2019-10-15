@@ -28,7 +28,8 @@
   <alert type="md-refresh">
     <div class="row">
       <div class="col-md-6">
-        <h3>{{_matomoService.pageTitle}}</h3>
+        <h3>{{_matomoService.pageTitle}}</h3> <small>From {{loggedActivity.started}}
+        to {{loggedActivity.finished}}</small>
       </div>
       <div class="col-md-6 text-right">
         <button (click)="buildViewContent(activityLogsNav.nextMonth)" *ngIf="activityLogsNav.nextMonth!=''"
@@ -58,66 +59,138 @@
 
   <div class="row">
     <div class="col-12 col-lg-7">
-      <div class="card card-exercise card-exercise-{{loggedActivity.exerciseTag}}">
+
+      <div class="card">
         <div class="card-header">
-          <div class="row">
-            <div class="col-sm-12 col-md-6"><h1>{{loggedActivity.exerciseType}}</h1></div>
-            <div class="col-sm-12 col-md-6 text-right">{{loggedActivity.dateFormatted}}</div>
+          Impact
+          <div class="card-header-actions">
+            <span *ngIf="loggedActivity.distance>0">{{loggedActivity.distance}} km |</span>
+            <span *ngIf="loggedActivity.duration>0">{{loggedActivity.duration}} mins |</span>
+            <span *ngIf="loggedActivity.heartRateMean>0">{{loggedActivity.heartRateMean}} bpm |</span>
+            <span *ngIf="loggedActivity.calorie>0">{{loggedActivity.calorie}} cals</span>
           </div>
         </div>
         <div class="card-body">
-          <span class="timeline-icon"><i class="fa fa-check"></i></span>
+
           <div class="row">
-            <div class="col-sm-12 col-md-6">{{loggedActivity.date}} @{{loggedActivity.started}}</div>
-            <div class="col-sm-12 col-md-6"><i class="exercise-icon fa fa-edit"></i>
-              Tracker: {{loggedActivity.tracker}}</div>
+
+            <div *ngIf="loggedActivity.steps>0" [class]="gridImpactRow">
+              <div class="card">
+                <div class="card-body p-0 clearfix">
+                  <i class="fa fa-paw bg-success p-4 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-success mb-0 pt-3">+{{loggedActivity.steps}}</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">of {{loggedActivity.stepsTotal}} steps
+                    taken
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="loggedActivity.calorie>0" [class]="gridImpactRow">
+              <div class="card">
+                <div class="card-body p-0 clearfix">
+                  <i class="fa fa-fire bg-warning p-4 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-warning mb-0 pt-3">+{{loggedActivity.calorie}}</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">of {{loggedActivity.calorieTotal}}
+                    calories burnt
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="loggedActivity.duration>0" [class]="gridImpactRow">
+              <div class="card">
+                <div class="card-body p-0 clearfix">
+                  <i class="fa fa-clock-o bg-info p-4 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-info mb-0 pt-3">+{{loggedActivity.duration}}</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">of {{loggedActivity.durationTotal}}
+                    minutes active
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <div class="row">
-            <div *ngIf="loggedActivity.steps>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fa fa-paw"></i> {{loggedActivity.steps}} / {{loggedActivity.stepsTotal}}
-              Steps
+        </div>
+      </div> <!-- Impact Card -->
+
+      <div class="row">
+        <div *ngIf="loggedActivity.heartRateMean>0" [class]="gridStatRow">
+          <div class="brand-card">
+            <div class="brand-card-header bg-red text-white">
+              <i class="fitnessIcons-medical"></i>&nbsp;&nbsp;&nbsp;&nbsp;BPM
             </div>
-            <div *ngIf="loggedActivity.calorie>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fa fa-fire"></i> {{loggedActivity.calorie}} Calories
-            </div>
-          </div>
-          <div class="row">
-            <div *ngIf="loggedActivity.duration>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fa fa-clock-o"></i> {{loggedActivity.duration}} Minutes
-            </div>
-            <div *ngIf="loggedActivity.distance>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fa fa-map-o"></i> {{loggedActivity.distance}} km
-            </div>
-          </div>
-          <div class="row">
-            <div *ngIf="loggedActivity.altitudeMax>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fa fa-sort-up"></i> {{loggedActivity.altitudeMax}} Max altitude
-            </div>
-            <div *ngIf="loggedActivity.altitudeMin>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fa fa-sort-down"></i> {{loggedActivity.altitudeMin}} Min altitude
-            </div>
-          </div>
-          <div class="row">
-            <div *ngIf="loggedActivity.speedMax>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fitnessIcons-man"></i> {{loggedActivity.speedMax}} Max speed
-            </div>
-            <div *ngIf="loggedActivity.speedMean>0" class="col-sm-12 col-md-6"><i
-              class="exercise-icon fitnessIcons-man"></i> {{loggedActivity.speedMean}} Min speed
+            <div class="brand-card-body">
+              <div>
+                <div class="text-value">{{loggedActivity.heartRateMin}}</div>
+                <div class="text-uppercase text-muted small">Min</div>
+              </div>
+              <div>
+                <div class="text-value">{{loggedActivity.heartRateMean}}</div>
+                <div class="text-uppercase text-muted small">Mean</div>
+              </div>
+              <div>
+                <div class="text-value">{{loggedActivity.heartRateMax}}</div>
+                <div class="text-uppercase text-muted small">Max</div>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div *ngIf="loggedActivity.heartRateMax>0" class="col-sm-12 col-md-4"><i
-              class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMax}} Max heart
+        </div> <!-- Heart Card -->
+        <div *ngIf="loggedActivity.speedMean>0" [class]="gridStatRow">
+          <div class="brand-card">
+            <div class="brand-card-header bg-info text-white">
+              <i class="fitnessIcons-man"></i>&nbsp;&nbsp;&nbsp;&nbsp;kph
             </div>
-            <div *ngIf="loggedActivity.heartRateMean>0" class="col-sm-12 col-md-4"><i
-              class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMean}} Mean heart
+            <div class="brand-card-body">
+              <div>
+                <div class="text-value">{{loggedActivity.speedMean}}</div>
+                <div class="text-uppercase text-muted small">Mean</div>
+              </div>
+              <div>
+                <div class="text-value">{{loggedActivity.speedMax}}</div>
+                <div class="text-uppercase text-muted small">Max</div>
+              </div>
             </div>
-            <div *ngIf="loggedActivity.heartRateMin>0" class="col-sm-12 col-md-4"><i
-              class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMin}} Min heart
+          </div>
+        </div> <!-- Speed Card -->
+        <div *ngIf="loggedActivity.altitudeMin>0" [class]="gridStatRow">
+          <div class="brand-card">
+            <div class="brand-card-header bg-primary text-white">
+              <i class="adventureIcons-sports-10"></i>&nbsp;&nbsp;&nbsp;&nbsp;Meters
+            </div>
+            <div class="brand-card-body">
+              <div>
+                <div class="text-value">{{loggedActivity.altitudeMax}}</div>
+                <div class="text-uppercase text-muted small">Max</div>
+              </div>
+              <div>
+                <div class="text-value">{{loggedActivity.altitudeGain}}</div>
+                <div class="text-uppercase text-muted small">Gain</div>
+              </div>
+              <div>
+                <div class="text-value">{{loggedActivity.altitudeMin}}</div>
+                <div class="text-uppercase text-muted small">Min</div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Altitude Card -->
+      </div> <!-- Stats Card -->
+
+      <div class="row">
+        <div class="col-12">
+          <div class="brand-card">
+            <div class="brand-card-header bg-purple text-white">
+              <i class="personal-love-note"></i>
+            </div>
+            <div class="brand-card-body">
+              <div>
+                <div class="text-value">{{loggedActivity.tracker}}</div>
+                <div class="text-uppercase text-muted small">Tracker</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> <!-- Tracker Card -->
 
     </div>
 
@@ -139,3 +212,13 @@
   </div>
 
 </div>
+<!--
+      <div class="card">
+        <div class="card-header">
+
+        </div>
+        <div class="card-body">
+
+        </div>
+      </div>
+-->

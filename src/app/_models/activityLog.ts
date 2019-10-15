@@ -9,12 +9,16 @@ export class ActivityLog {
   started: string;
   finished: string;
   duration: number;
+  durationTotal: number;
   stepsTotal: number;
   steps: number;
   altitudeMax: number;
   altitudeMin: number;
+  altitudeGain: number;
   calorie: number;
+  calorieTotal: number;
   distance: number;
+  distanceTotal: number;
   speedMax: number;
   speedMean: number;
   heartRateMax: number;

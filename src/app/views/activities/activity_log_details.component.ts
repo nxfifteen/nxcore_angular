@@ -21,6 +21,9 @@ export class ActivityLogDetailsComponent implements OnInit {
   loggedActivityName: string;
   activityLogsNav: ActivityLogNav;
 
+  gridImpactRow: string = 'col-4';
+  gridStatRow: string = 'col-4';
+
   pageTitle: string = 'Core | Activities';
 
   constructor(private authenticationService: AuthenticationService,
@@ -64,10 +67,33 @@ export class ActivityLogDetailsComponent implements OnInit {
     this.loading = 0;
 
     this.apiService.getActivitiesLogDetails(activityId, bustCache).subscribe((data) => {
-      console.log(data);
       this.loggedActivity = data['results'];
       this.activityLogsNav = data['nav'];
       this.loggedActivityName = this.loggedActivity.dateFormatted + ' - ' + this.loggedActivity.exerciseType;
+
+      let impactRowItems = 0;
+      if (this.loggedActivity.steps > 0) {
+        impactRowItems++;
+      }
+      if (this.loggedActivity.calorie > 0) {
+        impactRowItems++;
+      }
+      if (this.loggedActivity.duration > 0) {
+        impactRowItems++;
+      }
+      this.gridImpactRow = this.calcGridSize(impactRowItems);
+
+      let statRowItems = 0;
+      if (this.loggedActivity.heartRateMean > 0) {
+        statRowItems++;
+      }
+      if (this.loggedActivity.speedMean > 0) {
+        statRowItems++;
+      }
+      if (this.loggedActivity.altitudeMin > 0) {
+        statRowItems++;
+      }
+      this.gridStatRow = this.calcGridSize(statRowItems);
 
       this.emitApiLoaded();
     });
@@ -77,6 +103,19 @@ export class ActivityLogDetailsComponent implements OnInit {
     this.loading++;
     if (this.loading >= this.loadingExpected) {
       this._matomoService.doTracking(-1, this.pageTitle + ' | ' + this.loggedActivityName);
+    }
+  }
+
+  calcGridSize(rowItems: number) {
+    switch (rowItems) {
+      case 1:
+        return 'col-12';
+      case 2:
+        return 'col-12 col-md-6';
+      case 3:
+        return 'col-12 col-md-4';
+      case 4:
+        return 'col-12 col-md-3';
     }
   }
 }
