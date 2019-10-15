@@ -170,7 +170,8 @@
                 {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
               </div>
             </div>
-            <div class="col-2 hidden-md-down" style="text-align: center; font-size: 2rem;vertical-align: middle;">
+            <div class="col-2 d-none d-lg-block d-xl-block"
+                 style="text-align: center; font-size: 2rem;vertical-align: middle;">
               <i class="fa fa-flag-checkered"></i>
             </div>
             <div class="col-12 col-lg-5">
@@ -187,28 +188,28 @@
         </div>
         <div class="card-footer">
           <div class="row">
-            <div class="col-5 col-xl-4" style="text-align: center">
+            <div class="col-5 col-md-5 col-lg-3 col-xl-3" style="text-align: center">
               <div class="text-value">
                 <img src="{{profileAvatar}}" class="img-avatar" alt="You" width="55px" height="55px"/>
               </div>
               <div class="text-uppercase text-muted small">You</div>
               <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
             </div>
-            <div class="col-1 d-none d-lg-block" style="text-align: center">
+            <div class="col-1 col-lg-2 col-xl-2 d-none d-lg-block" style="text-align: center">
               <div class="text-value">{{runningChallenge.target}}</div>
               <div class="text-uppercase text-muted small">{{runningChallenge.criteria}}</div>
             </div>
-            <div class="col-2 d-none d-lg-block" style="text-align: center">
-              <div class="text-value">IN</div>
-            </div>
-            <div class="col-2 d-xl-none" style="text-align: center">
+            <div class="col-2 col-md-2 d-lg-none d-xl-none" style="text-align: center">
               <div class="text-value">Vs</div>
             </div>
-            <div class="col-1 d-none d-lg-block" style="text-align: center">
+            <div class="col-12 col-lg-2 col-xl-2 d-none d-lg-block d-xl-block" style="text-align: center">
+              <div class="text-value">IN</div>
+            </div>
+            <div class="col-12 col-lg-2 col-xl-2 d-none d-lg-block d-xl-block" style="text-align: center">
               <div class="text-value">{{runningChallenge.duration}}</div>
               <div class="text-uppercase text-muted small">Days</div>
             </div>
-            <div class="col-5 col-xl-4" style="text-align: center">
+            <div class="col-5 col-md-5 col-lg-3 col-xl-3" style="text-align: center">
               <div class="text-value">
                 <img src="{{runningChallenge.opponentAvatar}}" class="img-avatar" alt="{{runningChallenge.opponent}}"
                      width="55px" height="55px"/>
