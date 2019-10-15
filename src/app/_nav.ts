@@ -120,31 +120,28 @@ export const navItems: NavData[] = [
     url: '/setup/oauth',
     icon: 'fa fa-user'
   },
-  {
-    divider: true
-  },
-  {
-    title: true,
-    name: 'Help',
-  },
-  {
-    name: 'Patreon',
-    url: '/help/patreon',
-    icon: 'fa fa-user'
-  },
-  {
-    name: 'Privacy Policy',
-    url: '/help/privacy',
-    icon: 'fa fa-user'
-  },
-  {
-    name: 'Terms of Service',
-    url: '/help/terms',
-    icon: 'fa fa-user'
-  },
-  {
-    divider: true
-  },
+  /*  {
+      divider: true
+    },
+    {
+      title: true,
+      name: 'Help',
+    },
+    {
+      name: 'Patreon',
+      url: '/help/patreon',
+      icon: 'fa fa-user'
+    },
+    {
+      name: 'Privacy Policy',
+      url: '/help/privacy',
+      icon: 'fa fa-user'
+    },
+    {
+      name: 'Terms of Service',
+      url: '/help/terms',
+      icon: 'fa fa-user'
+    },*/
   /*{
     title: true,
     name: 'Dev Panel',
