@@ -35,7 +35,7 @@ export class ApiService {
 
   public getProfileValues(bustCache?: boolean) {
     const URL = `${environment.apiUrl}/users/profile?key=${this.currentUser.token}`;
-    return this.makeHttpGetRequest(URL, bustCache);
+    return this.makeHttpGetRequest(URL, true);
   }
 
   public saveProfileValues(firstName, lastName, dateOfBirth, email, avatar) {
