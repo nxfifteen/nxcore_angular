@@ -1,0 +1,155 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container" width="90%">
+      <div class="row justify-content-center">
+        <div class="col-md-12 mx-auto">
+          <div class="card-group">
+            <div class="card p-4" style="width:80%">
+              <div class="card-header">
+                Tell Me About Yourself
+              </div>
+              <div class="card-body">
+                <mat-horizontal-stepper #stepper [linear]="true">
+                  <mat-step [stepControl]="nameFormGroup">
+                    <form [formGroup]="nameFormGroup">
+                      <ng-template matStepLabel>Fill out your name</ng-template>
+                      <div class="row">
+                        <div class="form-group col-12 col-sm-6">
+                          <div class="controls">
+                            <div class="input-prepend input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">First</span>
+                              </div>
+                              <input [ngClass]="{ 'is-invalid': nameGroupControls.firstNameCtrl.errors }"
+                                     class="form-control" formControlName="firstNameCtrl" id="firstNameCtrl"
+                                     placeholder="First name"
+                                     size="16"
+                                     type="text">
+                            </div>
+                            <!--<div *ngIf="submitted && nameGroupControls.firstNameCtrl.errors" class="invalid-feedback">-->
+                            <!--<div *ngIf="submitted && nameGroupControls.firstNameCtrl.errors.required">Invite code is required</div>-->
+                            <!--</div>-->
+                          </div>
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                          <div class="controls">
+                            <div class="input-prepend input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">Last</span>
+                              </div>
+                              <input [ngClass]="{ 'is-invalid': nameGroupControls.lastNameCtrl.errors }"
+                                     class="form-control" formControlName="lastNameCtrl" id="lastNameCtrl"
+                                     placeholder="Last name"
+                                     size="16"
+                                     type="text">
+                            </div>
+                            <!--<div *ngIf="submitted && nameGroupControls.lastNameCtrl.errors" class="invalid-feedback">-->
+                            <!--<div *ngIf="submitted && nameGroupControls.lastNameCtrl.errors.required">Invite code is required</div>-->
+                            <!--</div>-->
+                          </div>
+                        </div>
+                      </div><!--/.row-->
+                      <div class="form-group row">
+                        <label class="col-12 col-lg-2 col-form-label" for="avatarCtrl">Avatar URL</label>
+                        <div class="col-12 col-lg-10">
+                          <div class="controls">
+                            <div class="input-prepend input-group">
+                              <input [ngClass]="{ 'is-invalid': nameGroupControls.avatarCtrl.errors }"
+                                     class="form-control" formControlName="avatarCtrl" id="avatarCtrl"
+                                     placeholder="Avatar URL"
+                                     size="16"
+                                     type="text">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                  <mat-step [stepControl]="bodyFormGroup">
+                    <form [formGroup]="bodyFormGroup">
+                      <ng-template matStepLabel>Fill out your details</ng-template>
+                      <div class="form-group row">
+                        <label class="col-12 col-lg-2 col-form-label" for="dateOfBirthCtrl">Date of Birth</label>
+                        <div class="col-12 col-lg-10">
+                          <div class="controls">
+                            <div class="input-prepend input-group">
+                              <input [ngClass]="{ 'is-invalid': bodyGroupControls.dateOfBirthCtrl.errors }"
+                                     class="form-control" formControlName="dateOfBirthCtrl"
+                                     id="dateOfBirthCtrl"
+                                     placeholder="date"
+                                     size="16"
+                                     type="date">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <button class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
+                        <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                  <mat-step [stepControl]="emailFormGroup">
+                    <form [formGroup]="emailFormGroup">
+                      <ng-template matStepLabel>Fill out your email address</ng-template>
+                      <div class="row">
+                        <div class="form-group col-sm-12">
+                          <label class="col-form-label" for="emailCtrl">&nbsp;</label>
+                          <div class="controls">
+                            <div class="input-prepend input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                              </div>
+                              <input [ngClass]="{ 'is-invalid': emailGroupControls.emailCtrl.errors }"
+                                     class="form-control" formControlName="emailCtrl" id="emailCtrl"
+                                     placeholder="Last name"
+                                     size="16"
+                                     type="text">
+                            </div>
+                          </div>
+                        </div>
+                      </div><!--/.row-->
+                      <div>
+                        <button class="btn btn-brand-s px-4" matStepperPrevious>Back</button>
+                        <button class="btn btn-brand-p px-4" matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                  <mat-step>
+                    <ng-template matStepLabel>Save</ng-template>
+                    You are now done.
+                    <div>
+                      <button [disabled]="loadingFormResponce" class="btn btn-brand-s px-4" matStepperPrevious>Back
+                      </button>
+                      <button (click)="onSubmit()" [disabled]="loadingFormResponce" class="btn btn-brand-p px-4">
+                        <span *ngIf="loadingFormResponce" class="spinner-border spinner-border-sm mr-1"></span>
+                        Save
+                      </button>
+                    </div>
+                  </mat-step>
+                </mat-horizontal-stepper>
+              </div>
+            </div>
+            <div class="text-white bg-brand-p py-5 d-md-down-none" style="width:20%">
+              <div class="card-body text-center">
+                <div>
+                  <h2>BETA</h2>
+                  <p>
+                    Currently Core is in active Beta, you will have to be on my Fitbit friends list for your
+                    profile to work. You can request access to the beta, first read the FAQ bellow.
+                  </p>
+                  <a class="btn bg-brand-p active mt-3"
+                     href="https://nxfifteen.me.uk/gitlab/rocks/core/wikis/beta-access-request"
+                     target="_blank">BETA Access FAQ</a>
+                </div>
+              </div>
+            </div>
+          </div> <!--/.col-->
+        </div> <!--/.col-->
+      </div><!--/.row-->
+    </div>
+  </main>
+</div>

@@ -1,0 +1,60 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container" width="90%">
+      <div class="row justify-content-center">
+        <div class="col-md-12 mx-auto">
+          <div class="card-group">
+            <div [hidden]="completed" class="card p-4">
+              <div class="card-header">
+                Connecting to Google Fit
+              </div>
+              <div class="card-body">
+                <p>
+                  You'll now be taken to Fitbit.com to sign in
+                </p>
+              </div>
+            </div>
+            <div [hidden]="!completed" class="card p-4">
+              <div class="card-header">
+                Connection to Google Fit completed
+              </div>
+              <div class="card-body">
+                <p>That's it. You've now connected to Fitbit.</p>
+                <p>It might take a while for your records to fully sync, but the process has been started so please just
+                  wait a little longer.</p>
+              </div>
+              <div class="card-footer">
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <button class="btn btn-block btn-outline-info" routerLink="/onboarding/link" type="button">Connect
+                      Another Account
+                    </button>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <button class="btn btn-block btn-outline-success" routerLink="/dashboard/welcome" type="button">
+                      Finish
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-white bg-brand-p py-5 d-md-down-none" style="width:20%">
+              <div class="card-body text-center">
+                <div>
+                  <h2>BETA</h2>
+                  <p>
+                    Currently Core is in active Beta, you will have to be on my Fitbit friends list for your
+                    profile to work. You can request access to the beta, first read the FAQ bellow.
+                  </p>
+                  <a class="btn bg-brand-p active mt-3"
+                     href="https://nxfifteen.me.uk/gitlab/rocks/core/wikis/beta-access-request"
+                     target="_blank">BETA Access FAQ</a>
+                </div>
+              </div>
+            </div>
+          </div> <!--/.col-->
+        </div> <!--/.col-->
+      </div><!--/.row-->
+    </div>
+  </main>
+</div>
