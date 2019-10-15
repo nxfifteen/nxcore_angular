@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {ActivityComponent} from './activity.component';
 import {ActivityLogComponent} from './activity_log.component';
+import {ActivityLogDetailsComponent} from './activity_log_details.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,13 @@ const routes: Routes = [
         component: ActivityLogComponent,
         data: {
           title: 'Activity Log'
+        }
+      },
+      {
+        path: 'detail/:id',
+        component: ActivityLogDetailsComponent,
+        data: {
+          title: 'Activity Details'
         }
       }
     ]

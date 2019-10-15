@@ -199,6 +199,7 @@
 
           <div id="ActivityHistory" class="timeline" *ngIf="activityLogs.length>0">
             <div class="timeline-item" [ngClass]="{ alt: odd }"
+                 (click)="activityClicked(loggedActivity.id)"
                  *ngFor="let loggedActivity of activityLogs; let i = index; let odd=odd; let even=even;">
               <div class="timeline-desk">
                 <div class="card card-exercise card-exercise-{{loggedActivity.exerciseTag}}">
