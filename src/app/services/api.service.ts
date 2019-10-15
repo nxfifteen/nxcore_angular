@@ -98,6 +98,11 @@ export class ApiService {
     return this.makeHttpGetRequest(URL, bustCache);
   }
 
+  public getActivitiesLogDetails(badgeId: number, bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/feed/activities/detail/${badgeId}?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
   public submitNewPVPChallenge(friend, target, criteria, duration) {
     const URL = ``;
     return this.httpClient.post<any>(
