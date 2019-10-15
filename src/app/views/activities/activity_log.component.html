@@ -205,8 +205,8 @@
                 <div class="card card-exercise card-exercise-{{loggedActivity.exerciseTag}}">
                   <div class="card-header">
                     <div class="row">
-                      <div class="col-sm-12 col-md-6"><h1>{{loggedActivity.exerciseType}}</h1></div>
-                      <div class="col-sm-12 col-md-6 text-right">{{loggedActivity.dateFormatted}}</div>
+                      <div class="col-sm-12 col-md-5"><h1>{{loggedActivity.exerciseType}}</h1></div>
+                      <div class="col-sm-12 col-md-7 text-right">{{loggedActivity.dateFormatted}}</div>
                     </div>
                   </div>
                   <div class="card-body">
@@ -231,40 +231,6 @@
                       </div>
                       <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.distance>0"><i
                         class="exercise-icon fa fa-map-o"></i> {{loggedActivity.distance}} km
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.altitudeMax>0"><i
-                        class="exercise-icon fa fa-sort-up"></i> {{loggedActivity.altitudeMax}} Max altitude
-                      </div>
-                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.altitudeMin>0"><i
-                        class="exercise-icon fa fa-sort-down"></i> {{loggedActivity.altitudeMin}} Min altitude
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.speedMax>0"><i
-                        class="exercise-icon fitnessIcons-man"></i> {{loggedActivity.speedMax}} Max speed
-                      </div>
-                      <div class="col-sm-12 col-md-6" *ngIf="loggedActivity.speedMean>0"><i
-                        class="exercise-icon fitnessIcons-man"></i> {{loggedActivity.speedMean}} Min speed
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12 col-md-4" *ngIf="loggedActivity.heartRateMax>0"><i
-                        class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMax}} Max heart
-                      </div>
-                      <div class="col-sm-12 col-md-4" *ngIf="loggedActivity.heartRateMean>0"><i
-                        class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMean}} Mean heart
-                      </div>
-                      <div class="col-sm-12 col-md-4" *ngIf="loggedActivity.heartRateMin>0"><i
-                        class="exercise-icon fitnessIcons-medical"></i> {{loggedActivity.heartRateMin}} Min heart
-                      </div>
-                    </div>
-                    <div class="row d-sm-down-none">
-                      <div class="col-md-12">
-                        <div [ngClass]="{ 'pull-right': odd, 'pull-left': even }">
-                          <a class="exercise-view-on-map"><i class="fa fa-map-marker"></i> View on Map</a>
-                        </div>
                       </div>
                     </div>
                   </div>
