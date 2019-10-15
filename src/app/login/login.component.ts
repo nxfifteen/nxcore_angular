@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../_services';
+import {AlertService, AuthenticationService} from '../_services';
 
 @Component({
   selector: 'app-dashboard',
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
         data => {
           console.log(data);
           if (data.firstrun) {
-            this.router.navigate(['/setup/profile']);
+            this.router.navigate(['/onboarding']);
           } else {
             this.router.navigate([this.returnUrl]);
           }

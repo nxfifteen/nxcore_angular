@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {Friends} from '../../_models/friends';
-import {MatomoTracker} from 'ngx-matomo';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 
@@ -33,11 +32,11 @@ export class LeaderboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | RPG | Leaderboard');
-    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/profile']);
+      this.router.navigate(['/onboarding']);
     } else {
+      this._matomoService.setupTracking('Core | RPG | Leaderboard');
+      this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
       this.loadFromApi();
     }
   }

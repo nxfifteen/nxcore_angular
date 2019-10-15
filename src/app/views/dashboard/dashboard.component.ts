@@ -10,7 +10,6 @@ import {ChallengeActive} from '../../_models/challengeActive';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 import {CordovaService} from '../../services/cordova.service';
-import {Observable} from 'rxjs';
 import {AppVersion} from '../../_models/appVersion';
 import {CordovaDevice} from '../../_models/cordovaDevice';
 
@@ -103,20 +102,19 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = 0;
-    this.isLoading = true;
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | Dashboard');
-    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/profile']);
+      this.router.navigate(['/onboarding']);
     } else {
+      this.loading = 0;
+      this.isLoading = true;
+      this._matomoService.setupTracking('Core | Dashboard');
+      this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
       this.loadFromApi();
     }
 
     if (this.cordovaService$.onCordova) {
       this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
-      this.cordovaService$.cordovaDevice.subscribe(x => this.cordovaDevice = x);
     }
   }
 

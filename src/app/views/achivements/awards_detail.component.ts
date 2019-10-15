@@ -5,8 +5,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {AwardBadge} from '../../_models/awardBadge';
-import {MatomoTracker} from 'ngx-matomo';
-import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 
 @Component({
@@ -37,11 +35,11 @@ export class AwardsDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | Award | Details');
-    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/profile']);
+      this.router.navigate(['/onboarding']);
     } else {
+      this._matomoService.setupTracking('Core | Award | Details');
+      this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
       this._ActivatedRoute.paramMap.subscribe(params => {
         // tslint:disable-next-line:radix
         this.awardId = parseInt(params.get('id'));

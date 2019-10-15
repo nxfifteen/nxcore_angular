@@ -13,12 +13,16 @@ export const routes: Routes = [
       pathMatch: 'full'
     },
     {
-      path: 'login',
-      component: LoginComponent,
-      data: {
-        title: 'Login Page'
-      },
+      path: 'onboarding',
+      loadChildren: () => import('./views/onboarding/onboarding.module').then(m => m.OnboardingModule)
     },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: 'Login Page'
+    },
+  },
     {
       path: 'register',
       component: RegisterComponent,

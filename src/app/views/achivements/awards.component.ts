@@ -4,8 +4,6 @@ import {MarkdownService} from 'ngx-markdown';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
-import {MatomoTracker} from 'ngx-matomo';
-import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 
 @Component({
@@ -28,19 +26,18 @@ export class AwardsComponent implements OnInit {
               private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService,
-              private _matomoService: MatomoService,
-              private titleService: Title) {
+              private _matomoService: MatomoService) {
     this.loading = 0;
     this.loadingExpected = 1;
   }
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | Awards');
-    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/profile']);
+      this.router.navigate(['/onboarding']);
     } else {
+      this._matomoService.setupTracking('Core | Awards');
+      this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
       this.loadFromApi();
     }
   }

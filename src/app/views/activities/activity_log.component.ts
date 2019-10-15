@@ -52,11 +52,11 @@ export class ActivityLogComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking(this.pageTitle);
-    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/profile']);
+      this.router.navigate(['/onboarding']);
     } else {
+      this._matomoService.setupTracking(this.pageTitle);
+      this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
       this.loadFromApi();
     }
   }

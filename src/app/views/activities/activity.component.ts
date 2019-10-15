@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {getStyle} from '@coreui/coreui/dist/js/coreui-utilities';
-import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
-import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 
 @Component({
@@ -29,11 +26,11 @@ export class ActivityComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this._matomoService.setupTracking('Core | Activities | Tracker');
-    this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
     if (this.currentUser.firstrun) {
-      this.router.navigate(['/setup/profile']);
+      this.router.navigate(['/onboarding']);
     } else {
+      this._matomoService.setupTracking('Core | Activities | Tracker');
+      this._matomoService.setCustomVariable('apiCalls', this.loadingExpected.toString(), 'page');
       this.loadFromApi();
     }
   }
@@ -48,7 +45,8 @@ export class ActivityComponent implements OnInit {
     this.buildViewContent(false);
   }
 
-  buildViewContent(bustCache?: boolean): void { }
+  buildViewContent(bustCache?: boolean): void {
+  }
 
   private emitApiLoaded() {
     this.loading++;
