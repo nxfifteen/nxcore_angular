@@ -31,3 +31,9 @@ export class ActivityLogNav {
   thisMonth: string;
   prevMonth: string;
 }
+
+export class ActivityLocationData {
+  start_time: string;
+  latitude: number;
+  longitude: number;
+}
