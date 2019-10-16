@@ -82,7 +82,7 @@ export class ApiService {
     return this.makeHttpGetRequest(URL, bustCache);
   }
 
-  public getRpgPvpDetails(badgeId: number, bustCache?: boolean) {
+  public getRpgPvpDetails(badgeId: number | string, bustCache?: boolean) {
     const URL = `${environment.apiUrl}/feed/pvp/challenges/${badgeId}?key=${this.currentUser.token}`;
     return this.makeHttpGetRequest(URL, bustCache);
   }
@@ -98,7 +98,7 @@ export class ApiService {
     return this.makeHttpGetRequest(URL, bustCache);
   }
 
-  public getActivitiesLogDetails(badgeId: number, bustCache?: boolean) {
+  public getActivitiesLogDetails(badgeId: number | string, bustCache?: boolean) {
     const URL = `${environment.apiUrl}/feed/activities/detail/${badgeId}?key=${this.currentUser.token}`;
     return this.makeHttpGetRequest(URL, bustCache);
   }

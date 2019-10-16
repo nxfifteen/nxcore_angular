@@ -93,7 +93,7 @@ export const navItems: NavData[] = [
     children: [
       /*{
         name: 'Activity Tracker',
-        url: '/activities/activity',
+        url: '/activities/tracker',
         icon: 'fa fa-percent'
       },*/
       {

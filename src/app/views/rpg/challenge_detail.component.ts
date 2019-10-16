@@ -10,6 +10,7 @@ import {ChallengeActive} from '../../_models/challengeActive';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 import {ActivityLogNav} from '../../_models/activityLog';
+import {environment} from '../../../environments/environment';
 
 @Component({
   templateUrl: 'challenge_detail.component.html'
@@ -368,6 +369,23 @@ export class ChallengeDetailComponent implements OnInit {
       };
 
       this.emitApiLoaded();
+
+      if (typeof this.challengeNav.nextMonth !== 'undefined' && this.challengeNav.nextMonth !== '') {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getRpgPvpDetails(this.challengeNav.nextMonth, false).subscribe((data) => {
+          if (!environment.production) {
+            console.log('Pre-cached ' + this.challengeNav.nextMonth);
+          }
+        });
+      }
+      if (typeof this.challengeNav.prevMonth !== 'undefined' && this.challengeNav.prevMonth !== '') {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getRpgPvpDetails(this.challengeNav.prevMonth, false).subscribe((data) => {
+          if (!environment.production) {
+            console.log('Pre-cached ' + this.challengeNav.prevMonth);
+          }
+        });
+      }
     });
   }
 
@@ -382,10 +400,15 @@ export class ChallengeDetailComponent implements OnInit {
     }
   }
 
-  navChallenge(nextMonth: number) {
+  navChallenge(nextMonth: number | string) {
     this.router.navigate(['/rpg/challenges/info', nextMonth]);
 
-    this.awardId = nextMonth;
+    if (typeof nextMonth === 'string') {
+      // tslint:disable-next-line:radix
+      this.awardId = parseInt(nextMonth);
+    } else {
+      this.awardId = nextMonth;
+    }
     this.loadFromApi();
   }
 }
