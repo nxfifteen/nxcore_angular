@@ -5,12 +5,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {MatomoService} from '../../services/matomo.service';
-import {ActivityLog, ActivityLogNav} from '../../_models/activityLog';
+import {ActivityLocationData, ActivityLog, ActivityLogNav} from '../../_models/activityLog';
 import {hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import {icon, latLng, Map, marker, Marker, point, polyline, Polyline, tileLayer, TileLayer} from 'leaflet';
 
 @Component({
-  templateUrl: './activity_log_details.component.html'
+  templateUrl: './activity_log_details.component.html',
+  styleUrls: ['activity_log_details.component.scss']
 })
 export class ActivityLogDetailsComponent implements OnInit {
   loading: number;
@@ -27,6 +29,15 @@ export class ActivityLogDetailsComponent implements OnInit {
   gridStatRow: string = 'col-4';
 
   pageTitle: string = 'Core | Activities';
+
+  public displayMap: boolean = false;
+  public streetMaps: TileLayer;
+  public wMaps: TileLayer;
+  public markerStart: Marker;
+  public markerFinish: Marker;
+  public layersControl: any;
+  public mapOptions: any;
+  public route: Polyline;
 
   // distanceChart
   public distanceChartData1: Array<number> = [];
@@ -351,6 +362,7 @@ export class ActivityLogDetailsComponent implements OnInit {
 
   buildViewContent(activityId: any, bustCache?: boolean) {
     this.loading = 0;
+    this.displayMap = false;
     this.speedChartLabels = [];
     this.speedChartData1 = [];
     this.speedChartData = [
@@ -387,7 +399,7 @@ export class ActivityLogDetailsComponent implements OnInit {
     this.apiService.getActivitiesLogDetails(activityId, bustCache).subscribe((data) => {
       this.loggedActivity = data['results'];
       this.activityLogsNav = data['nav'];
-      this.loggedActivityName = this.loggedActivity.dateFormatted + ' - ' + this.loggedActivity.exerciseType;
+      this.loggedActivityName = this.loggedActivity.dateFormatted + ' - ' + this.loggedActivity.exerciseTag;
 
       let impactRowItems = 0;
       if (this.loggedActivity.steps > 0) {
@@ -412,9 +424,6 @@ export class ActivityLogDetailsComponent implements OnInit {
         statRowItems++;
       }
       this.gridStatRow = this.calcGridSize(statRowItems);
-
-      console.log(data['results']['liveData'].length);
-      console.log(data['results']['liveData']);
 
       if (typeof data['results']['liveData']['distance'] !== 'undefined' && data['results']['liveData']['distance'].length > 0) {
         for (let i = 0; i < data['results']['liveData']['distance'].length; i++) {
@@ -452,10 +461,9 @@ export class ActivityLogDetailsComponent implements OnInit {
         this.altitudeChartOptions.scales.yAxes[0].ticks.min = 0;
       }
 
-      console.log(this.distanceChartData1.length);
-      console.log(this.speedChartData1.length);
-      console.log(this.heartChartData1.length);
-      console.log(this.altitudeChartData1.length);
+      if (typeof data['results']['locationData'] !== 'undefined' && data['results']['locationData'].length > 0) {
+        this.buildMapView(data['results']['locationData']);
+      }
 
       this.emitApiLoaded();
     });
@@ -479,5 +487,79 @@ export class ActivityLogDetailsComponent implements OnInit {
       case 4:
         return 'col-12 col-md-3';
     }
+  }
+
+  onMapReady(map: Map) {
+    map.fitBounds(this.route.getBounds(), {
+      padding: point(24, 24),
+      maxZoom: 20,
+      animate: true
+    });
+  }
+
+  buildMapView(locationData: Array<ActivityLocationData>) {
+    this.displayMap = true;
+
+    // Define our base layers so we can reference them multiple times
+    this.streetMaps = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      detectRetina: true,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    this.wMaps = tileLayer('http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+      detectRetina: true,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    // Marker for the top of Mt. Ranier
+    this.markerStart = marker([locationData[0].latitude, locationData[0].longitude], {
+      icon: icon({
+        iconSize: [33, 45],
+        iconAnchor: [13, 41],
+        iconUrl: 'assets/map/pin-icon-start.png',
+        shadowUrl: 'assets/map/pin-shadow.png'
+      })
+    });
+
+    // Marker for the parking lot at the base of Mt. Ranier trails
+    this.markerFinish = marker([locationData[locationData.length - 1].latitude, locationData[locationData.length - 1].longitude], {
+      icon: icon({
+        iconSize: [33, 45],
+        iconAnchor: [13, 41],
+        iconUrl: 'assets/map/pin-icon-end.png',
+        shadowUrl: 'assets/map/pin-shadow.png'
+      })
+    });
+
+    const mapPoints = [];
+    for (let i = 0; i < locationData.length; i++) {
+      const mapPoint = [
+        locationData[i].latitude,
+        locationData[i].longitude
+      ];
+      mapPoints.push(mapPoint);
+    }
+
+    // Path from paradise to summit - most points omitted from this example for brevity
+    this.route = polyline(mapPoints);
+
+    // Layers control object with our two base layers and the three overlay layers
+    this.layersControl = {
+      baseLayers: {
+        'Street Maps': this.streetMaps,
+        'Wikimedia Maps': this.wMaps
+      },
+      overlays: {
+        'Start': this.markerStart,
+        'Finish': this.markerFinish,
+        'Route': this.route
+      }
+    };
+
+    // Set the initial set of displayed layers (we could also use the leafletLayers input binding for this)
+    this.mapOptions = {
+      layers: [this.streetMaps, this.route, this.markerStart, this.markerFinish],
+      zoom: 20,
+      center: latLng([locationData[0].latitude, locationData[0].longitude])
+    };
   }
 }
