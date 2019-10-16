@@ -29,6 +29,8 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
   loggedActivityName: string;
   activityLogsNav: ActivityLogNav;
 
+  gridLeft: string = 'col-12';
+  gridRight: string = '';
   gridImpactRow: string = 'col-4';
   gridStatRow: string = 'col-4';
 
@@ -124,6 +126,9 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
     this.loading = 0;
     this.displayMap = false;
 
+    this.gridLeft = 'col-12';
+    this.gridRight = '';
+
     this.resetCharts();
 
     this.apiService.getActivitiesLogDetails(activityId, bustCache).subscribe((data) => {
@@ -162,6 +167,9 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
         }
         this.distanceChartOptions.scales.yAxes[0].ticks.max = data['results']['maxDistance'];
         this.distanceChartOptions.scales.yAxes[0].ticks.min = 0;
+
+        this.gridLeft = 'col-12 col-lg-7';
+        this.gridRight = 'col-12 col-lg-5';
       }
 
       if (typeof data['results']['liveData']['speed'] !== 'undefined' && data['results']['liveData']['speed'].length > 0) {
@@ -171,6 +179,9 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
         }
         this.speedChartOptions.scales.yAxes[0].ticks.max = data['results']['maxSpeed'];
         this.speedChartOptions.scales.yAxes[0].ticks.min = 0;
+
+        this.gridLeft = 'col-12 col-lg-7';
+        this.gridRight = 'col-12 col-lg-5';
       }
 
       if (typeof data['results']['liveData']['heart_rate'] !== 'undefined' && data['results']['liveData']['heart_rate'].length > 0) {
@@ -180,6 +191,9 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
         }
         this.heartChartOptions.scales.yAxes[0].ticks.max = data['results']['maxHeart'];
         this.heartChartOptions.scales.yAxes[0].ticks.min = 0;
+
+        this.gridLeft = 'col-12 col-lg-7';
+        this.gridRight = 'col-12 col-lg-5';
       }
 
       if (typeof data['results']['liveData']['altitude'] !== 'undefined' && data['results']['liveData']['altitude'].length > 0) {
@@ -189,6 +203,9 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
         }
         this.altitudeChartOptions.scales.yAxes[0].ticks.max = data['results']['maxAltitude'];
         this.altitudeChartOptions.scales.yAxes[0].ticks.min = 0;
+
+        this.gridLeft = 'col-12 col-lg-7';
+        this.gridRight = 'col-12 col-lg-5';
       }
 
       if (typeof data['results']['locationData'] !== 'undefined' && data['results']['locationData'].length > 0) {
