@@ -2,15 +2,15 @@ import {APP_INITIALIZER, ErrorHandler, Injectable, NgModule} from '@angular/core
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-import {HttpClient, HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {AppComponent} from './app.component';
 // Import containers
 import {DefaultLayoutComponent} from './containers';
 import {AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule} from '@coreui/angular';
 // Authentication
-import { JwtInterceptor, ErrorInterceptor } from './_helper';
+import {ErrorInterceptor, JwtInterceptor} from './_helper';
 import {LoginComponent, RegisterComponent} from './login';
 // Import routing module
 import {AppRoutingModule} from './app.routing';
@@ -26,6 +26,7 @@ import {environment} from '../environments/environment';
 import {MyMaterialModule} from './material-module';
 import * as Sentry from '@sentry/browser';
 import {MatomoModule} from 'ngx-matomo';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -105,6 +106,7 @@ export class SentryErrorHandler implements ErrorHandler {
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    LeafletModule.forRoot(),
     ChartsModule,
     MatomoModule,
     MarkdownModule.forRoot({
