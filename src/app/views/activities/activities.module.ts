@@ -7,6 +7,7 @@ import {ActivityLogComponent} from './activity_log.component';
 import {CommonModule} from '@angular/common';
 import {AlertModule, ProgressbarModule} from 'ngx-bootstrap';
 import {ActivityLogDetailsComponent} from './activity_log_details.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {ActivityLogDetailsComponent} from './activity_log_details.component';
     ChartsModule,
     ProgressbarModule.forRoot(),
     AlertModule.forRoot(),
-    CommonModule
+    CommonModule,
+    LeafletModule
   ],
   declarations: [ActivityComponent, ActivityLogComponent, ActivityLogDetailsComponent]
 })
