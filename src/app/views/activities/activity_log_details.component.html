@@ -115,6 +115,24 @@
       </div> <!-- Impact Card -->
 
       <div class="row">
+        <div *ngIf="loggedActivity.speedMean>0" [class]="gridStatRow">
+          <div class="brand-card">
+            <div class="brand-card-header bg-success text-white">
+              <i class="fitnessIcons-man"></i>&nbsp;&nbsp;&nbsp;&nbsp;kph
+            </div>
+            <div class="brand-card-body">
+              <div>
+                <div class="text-value">{{loggedActivity.speedMean}}</div>
+                <div class="text-uppercase text-muted small">Mean</div>
+              </div>
+              <div>
+                <div class="text-value">{{loggedActivity.speedMax}}</div>
+                <div class="text-uppercase text-muted small">Max</div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Speed Card -->
+
         <div *ngIf="loggedActivity.heartRateMean>0" [class]="gridStatRow">
           <div class="brand-card">
             <div class="brand-card-header bg-red text-white">
@@ -136,23 +154,7 @@
             </div>
           </div>
         </div> <!-- Heart Card -->
-        <div *ngIf="loggedActivity.speedMean>0" [class]="gridStatRow">
-          <div class="brand-card">
-            <div class="brand-card-header bg-info text-white">
-              <i class="fitnessIcons-man"></i>&nbsp;&nbsp;&nbsp;&nbsp;kph
-            </div>
-            <div class="brand-card-body">
-              <div>
-                <div class="text-value">{{loggedActivity.speedMean}}</div>
-                <div class="text-uppercase text-muted small">Mean</div>
-              </div>
-              <div>
-                <div class="text-value">{{loggedActivity.speedMax}}</div>
-                <div class="text-uppercase text-muted small">Max</div>
-              </div>
-            </div>
-          </div>
-        </div> <!-- Speed Card -->
+
         <div *ngIf="loggedActivity.altitudeMin>0" [class]="gridStatRow">
           <div class="brand-card">
             <div class="brand-card-header bg-primary text-white">
@@ -203,6 +205,102 @@
               <i class="fa fa-life-ring float-right"></i>
               Bellow is a break down of how many minutes you've spent exercising, broken down by time of day.
               Bellow that, is a comparision graph across all recorded activities.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div *ngIf="speedChartData1.length>0" class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="card-title mb-0">Speed</h4>
+                  <div class="small text-muted">{{speedChartOptions.scales.yAxes[0].ticks.max}} MAX</div>
+                </div><!--/.col-->
+                <div class="col-sm-7 d-none d-md-block">
+
+                </div><!--/.col-->
+              </div><!--/.row-->
+              <div class="chart-wrapper" style="height:200px;margin-top:10px;">
+                <canvas [chartType]="speedChartType" [colors]="speedChartColours"
+                        [datasets]="speedChartData"
+                        [labels]="speedChartLabels"
+                        [legend]="speedChartLegend"
+                        [options]="speedChartOptions"
+                        baseChart
+                        class="chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="heartChartData1.length>0" class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="card-title mb-0">Heart Rate</h4>
+                  <div class="small text-muted">{{heartChartOptions.scales.yAxes[0].ticks.max}} MAX</div>
+                </div><!--/.col-->
+                <div class="col-sm-7 d-none d-md-block">
+
+                </div><!--/.col-->
+              </div><!--/.row-->
+              <div class="chart-wrapper" style="height:200px;margin-top:10px;">
+                <canvas [chartType]="heartChartType" [colors]="heartChartColours"
+                        [datasets]="heartChartData"
+                        [labels]="heartChartLabels"
+                        [legend]="heartChartLegend"
+                        [options]="heartChartOptions"
+                        baseChart
+                        class="chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="altitudeChartData1.length>0" class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="card-title mb-0">Altitude</h4>
+                  <div class="small text-muted">{{altitudeChartOptions.scales.yAxes[0].ticks.max}} MAX</div>
+                </div><!--/.col-->
+                <div class="col-sm-7 d-none d-md-block">
+
+                </div><!--/.col-->
+              </div><!--/.row-->
+              <div class="chart-wrapper" style="height:200px;margin-top:10px;">
+                <canvas [chartType]="altitudeChartType" [colors]="altitudeChartColours"
+                        [datasets]="altitudeChartData"
+                        [labels]="altitudeChartLabels"
+                        [legend]="altitudeChartLegend"
+                        [options]="altitudeChartOptions"
+                        baseChart
+                        class="chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="distanceChartData1.length>0" class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="card-title mb-0">Distance</h4>
+                  <div class="small text-muted">{{distanceChartOptions.scales.yAxes[0].ticks.max}} MAX</div>
+                </div><!--/.col-->
+                <div class="col-sm-7 d-none d-md-block">
+
+                </div><!--/.col-->
+              </div><!--/.row-->
+              <div class="chart-wrapper" style="height:200px;margin-top:10px;">
+                <canvas [chartType]="distanceChartType" [colors]="distanceChartColours"
+                        [datasets]="distanceChartData"
+                        [labels]="distanceChartLabels"
+                        [legend]="distanceChartLegend"
+                        [options]="distanceChartOptions"
+                        baseChart
+                        class="chart"></canvas>
+              </div>
             </div>
           </div>
         </div>
