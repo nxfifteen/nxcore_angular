@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -9,12 +9,16 @@ import {ActivityLocationData, ActivityLog, ActivityLogNav} from '../../_models/a
 import {hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {icon, latLng, Map, marker, Marker, point, polyline, Polyline, tileLayer, TileLayer} from 'leaflet';
+import {environment} from '../../../environments/environment';
+
+declare let l;
 
 @Component({
   templateUrl: './activity_log_details.component.html',
   styleUrls: ['activity_log_details.component.scss']
 })
-export class ActivityLogDetailsComponent implements OnInit {
+export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
+
   loading: number;
   loadingExpected: number;
 
@@ -31,297 +35,48 @@ export class ActivityLogDetailsComponent implements OnInit {
   pageTitle: string = 'Core | Activities';
 
   public displayMap: boolean = false;
+  public routeMap: Map;
   public streetMaps: TileLayer;
-  public wMaps: TileLayer;
   public markerStart: Marker;
   public markerFinish: Marker;
-  public layersControl: any;
   public mapOptions: any;
   public route: Polyline;
 
   // distanceChart
-  public distanceChartData1: Array<number> = [];
-  public distanceChartData: Array<any> = [
-    {
-      data: this.distanceChartData1,
-      label: 'Current'
-    }
-  ];
-  /* tslint:disable:max-line-length */
-  public distanceChartLabels: Array<any> = [];
-
-  /* tslint:enable:max-line-length */
-  public distanceChartOptions: any = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips,
-      intersect: true,
-      mode: 'index',
-      position: 'nearest',
-      callbacks: {
-        labelColor: function (tooltipItem, chart) {
-          return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-        }
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          drawOnChartArea: false,
-        },
-        ticks: {
-          beginAtZero: false,
-          maxTicksLimit: 5,
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(120 / 5),
-          max: 120
-        }
-      }]
-    },
-    elements: {
-      line: {
-        borderWidth: 2
-      },
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3,
-      }
-    },
-    legend: {
-      display: false
-    }
-  };
-  public distanceChartColours: Array<any> = [
-    { // brandSuccess
-      backgroundColor: hexToRgba('#20a8d8', 10),
-      borderColor: '#20a8d8',
-      pointHoverBackgroundColor: '#fff'
-    },
-  ];
-  public distanceChartLegend = false;
-  public distanceChartType = 'line';
+  public distanceChartData1: Array<number>;
+  public distanceChartData: Array<any>;
+  public distanceChartLabels: Array<any>;
+  public distanceChartOptions: any;
+  public distanceChartColours: Array<any>;
+  public distanceChartLegend: boolean;
+  public distanceChartType: string;
 
   // speedChart
-  public speedChartData1: Array<number> = [];
-  public speedChartData: Array<any> = [
-    {
-      data: this.speedChartData1,
-      label: 'Current'
-    }
-  ];
-  /* tslint:disable:max-line-length */
-  public speedChartLabels: Array<any> = [];
-
-  /* tslint:enable:max-line-length */
-  public speedChartOptions: any = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips,
-      intersect: true,
-      mode: 'index',
-      position: 'nearest',
-      callbacks: {
-        labelColor: function (tooltipItem, chart) {
-          return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-        }
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          drawOnChartArea: false,
-        },
-        ticks: {
-          beginAtZero: false,
-          maxTicksLimit: 5,
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(120 / 5),
-          max: 120
-        }
-      }]
-    },
-    elements: {
-      line: {
-        borderWidth: 2
-      },
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3,
-      }
-    },
-    legend: {
-      display: false
-    }
-  };
-  public speedChartColours: Array<any> = [
-    { // brandInfo
-      backgroundColor: hexToRgba('#4dbd74', 10),
-      borderColor: '#4dbd74',
-      pointHoverBackgroundColor: '#fff'
-    }
-  ];
-  public speedChartLegend = false;
-  public speedChartType = 'line';
+  public speedChartData1: Array<number>;
+  public speedChartData: Array<any>;
+  public speedChartLabels: Array<any>;
+  public speedChartOptions: any;
+  public speedChartColours: Array<any>;
+  public speedChartLegend: boolean;
+  public speedChartType: string;
 
   // heartChart
-  public heartChartData1: Array<number> = [];
-  public heartChartData: Array<any> = [
-    {
-      data: this.heartChartData1,
-      label: 'Current'
-    }
-  ];
-  /* tslint:disable:max-line-length */
-  public heartChartLabels: Array<any> = [];
-
-  /* tslint:enable:max-line-length */
-  public heartChartOptions: any = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips,
-      intersect: true,
-      mode: 'index',
-      position: 'nearest',
-      callbacks: {
-        labelColor: function (tooltipItem, chart) {
-          return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-        }
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          drawOnChartArea: false,
-        },
-        ticks: {
-          beginAtZero: false,
-          maxTicksLimit: 5,
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(120 / 5),
-          max: 120
-        }
-      }]
-    },
-    elements: {
-      line: {
-        borderWidth: 2
-      },
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3,
-      }
-    },
-    legend: {
-      display: false
-    }
-  };
-  public heartChartColours: Array<any> = [
-    { // brandInfo
-      backgroundColor: hexToRgba('#f86c6b', 10),
-      borderColor: '#f86c6b',
-      pointHoverBackgroundColor: '#fff'
-    }
-  ];
-  public heartChartLegend = false;
-  public heartChartType = 'line';
+  public heartChartData1: Array<number>;
+  public heartChartData: Array<any>;
+  public heartChartLabels: Array<any>;
+  public heartChartOptions: any;
+  public heartChartColours: Array<any>;
+  public heartChartLegend: boolean;
+  public heartChartType: string;
 
   // altitudeChart
-  public altitudeChartData1: Array<number> = [];
-  public altitudeChartData: Array<any> = [
-    {
-      data: this.altitudeChartData1,
-      label: 'Current'
-    }
-  ];
-  /* tslint:disable:max-line-length */
-  public altitudeChartLabels: Array<any> = [];
-
-  /* tslint:enable:max-line-length */
-  public altitudeChartOptions: any = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips,
-      intersect: true,
-      mode: 'index',
-      position: 'nearest',
-      callbacks: {
-        labelColor: function (tooltipItem, chart) {
-          return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
-        }
-      }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          drawOnChartArea: false,
-        },
-        ticks: {
-          beginAtZero: false,
-          maxTicksLimit: 5,
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(120 / 5),
-          max: 120
-        }
-      }]
-    },
-    elements: {
-      line: {
-        borderWidth: 2
-      },
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3,
-      }
-    },
-    legend: {
-      display: false
-    }
-  };
-  public altitudeChartColours: Array<any> = [
-    { // brandInfo
-      backgroundColor: hexToRgba('#f86c6b', 10),
-      borderColor: '#f86c6b',
-      pointHoverBackgroundColor: '#fff'
-    }
-  ];
-  public altitudeChartLegend = false;
-  public altitudeChartType = 'line';
+  public altitudeChartData1: Array<number>;
+  public altitudeChartData: Array<any>;
+  public altitudeChartLabels: Array<any>;
+  public altitudeChartOptions: any;
+  public altitudeChartColours: Array<any>;
+  public altitudeChartLegend: boolean;
+  public altitudeChartType: string;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
@@ -350,6 +105,11 @@ export class ActivityLogDetailsComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    /*this.routeMap.remove();
+    this.routeMap = null;*/
+  }
+
   pullToRefresh(): void {
     this._matomoService.trackEvent('core', 'api', 'cache', 0);
     this.buildViewContent(this.activityId, true);
@@ -363,38 +123,8 @@ export class ActivityLogDetailsComponent implements OnInit {
   buildViewContent(activityId: any, bustCache?: boolean) {
     this.loading = 0;
     this.displayMap = false;
-    this.speedChartLabels = [];
-    this.speedChartData1 = [];
-    this.speedChartData = [
-      {
-        data: this.speedChartData1,
-        label: 'Current'
-      }
-    ];
-    this.altitudeChartLabels = [];
-    this.altitudeChartData1 = [];
-    this.altitudeChartData = [
-      {
-        data: this.altitudeChartData1,
-        label: 'Current'
-      }
-    ];
-    this.distanceChartLabels = [];
-    this.distanceChartData1 = [];
-    this.distanceChartData = [
-      {
-        data: this.distanceChartData1,
-        label: 'Current'
-      }
-    ];
-    this.heartChartLabels = [];
-    this.heartChartData1 = [];
-    this.heartChartData = [
-      {
-        data: this.heartChartData1,
-        label: 'Current'
-      }
-    ];
+
+    this.resetCharts();
 
     this.apiService.getActivitiesLogDetails(activityId, bustCache).subscribe((data) => {
       this.loggedActivity = data['results'];
@@ -463,17 +193,29 @@ export class ActivityLogDetailsComponent implements OnInit {
 
       if (typeof data['results']['locationData'] !== 'undefined' && data['results']['locationData'].length > 0) {
         this.buildMapView(data['results']['locationData']);
+      } else {
+        this.routeMap = null;
       }
 
       this.emitApiLoaded();
-    });
-  }
 
-  private emitApiLoaded() {
-    this.loading++;
-    if (this.loading >= this.loadingExpected) {
-      this._matomoService.doTracking(-1, this.pageTitle + ' | ' + this.loggedActivityName);
-    }
+      if (typeof this.activityLogsNav.nextMonth !== 'undefined' && this.activityLogsNav.nextMonth !== '') {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getActivitiesLogDetails(this.activityLogsNav.nextMonth, false).subscribe((data) => {
+          if (!environment.production) {
+            console.log('Pre-cached ' + this.activityLogsNav.nextMonth);
+          }
+        });
+      }
+      if (typeof this.activityLogsNav.prevMonth !== 'undefined' && this.activityLogsNav.prevMonth !== '') {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getActivitiesLogDetails(this.activityLogsNav.prevMonth, false).subscribe((data) => {
+          if (!environment.production) {
+            console.log('Pre-cached ' + this.activityLogsNav.prevMonth);
+          }
+        });
+      }
+    });
   }
 
   calcGridSize(rowItems: number) {
@@ -490,22 +232,24 @@ export class ActivityLogDetailsComponent implements OnInit {
   }
 
   onMapReady(map: Map) {
-    map.fitBounds(this.route.getBounds(), {
+    this.routeMap = map;
+    this.routeMap.fitBounds(this.route.getBounds(), {
       padding: point(24, 24),
-      maxZoom: 20,
+      maxZoom: 18,
       animate: true
     });
   }
 
   buildMapView(locationData: Array<ActivityLocationData>) {
-    this.displayMap = true;
+    if (this.routeMap) {
+      // this.routeMap.removeLayer(this.streetMaps);
+      this.routeMap.removeLayer(this.route);
+      this.routeMap.removeLayer(this.markerStart);
+      this.routeMap.removeLayer(this.markerFinish);
+    }
 
     // Define our base layers so we can reference them multiple times
     this.streetMaps = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      detectRetina: true,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    this.wMaps = tileLayer('http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
       detectRetina: true,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
@@ -542,24 +286,326 @@ export class ActivityLogDetailsComponent implements OnInit {
     // Path from paradise to summit - most points omitted from this example for brevity
     this.route = polyline(mapPoints);
 
-    // Layers control object with our two base layers and the three overlay layers
-    this.layersControl = {
-      baseLayers: {
-        'Street Maps': this.streetMaps,
-        'Wikimedia Maps': this.wMaps
+    if (this.routeMap) {
+      this.routeMap.addLayer(this.streetMaps);
+      this.routeMap.addLayer(this.route);
+      this.routeMap.addLayer(this.markerStart);
+      this.routeMap.addLayer(this.markerFinish);
+      this.routeMap.whenReady(() => {
+        this.routeMap.fitBounds(this.route.getBounds(), {
+          padding: point(24, 24),
+          maxZoom: 18,
+          animate: true
+        });
+      });
+    } else {
+      // Set the initial set of displayed layers (we could also use the leafletLayers input binding for this)
+      this.mapOptions = {
+        layers: [this.streetMaps, this.route, this.markerStart, this.markerFinish],
+        zoom: 20,
+        center: latLng([locationData[0].latitude, locationData[0].longitude])
+      };
+    }
+
+    this.displayMap = true;
+  }
+
+  activityClicked(id: number | string) {
+    this.router.navigate(['/activities/activity', id]);
+    this.buildViewContent(id);
+  }
+
+  private emitApiLoaded() {
+    this.loading++;
+    if (this.loading >= this.loadingExpected) {
+      this._matomoService.doTracking(-1, this.pageTitle + ' | ' + this.loggedActivityName);
+    }
+  }
+
+  private resetCharts() {
+    // distanceChart
+    this.distanceChartData1 = [];
+    this.distanceChartData = [
+      {
+        data: this.distanceChartData1,
+        label: 'Current'
+      }
+    ];
+    /* tslint:disable:max-line-length */
+    this.distanceChartLabels = [];
+
+    /* tslint:enable:max-line-length */
+    this.distanceChartOptions = {
+      tooltips: {
+        enabled: false,
+        custom: CustomTooltips,
+        intersect: true,
+        mode: 'index',
+        position: 'nearest',
+        callbacks: {
+          labelColor: function (tooltipItem, chart) {
+            return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+          }
+        }
       },
-      overlays: {
-        'Start': this.markerStart,
-        'Finish': this.markerFinish,
-        'Route': this.route
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          gridLines: {
+            drawOnChartArea: false,
+          },
+          ticks: {
+            beginAtZero: false,
+            maxTicksLimit: 5,
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            maxTicksLimit: 5,
+            stepSize: Math.ceil(120 / 5),
+            max: 120
+          }
+        }]
+      },
+      elements: {
+        line: {
+          borderWidth: 2
+        },
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3,
+        }
+      },
+      legend: {
+        display: false
       }
     };
+    this.distanceChartColours = [
+      { // brandSuccess
+        backgroundColor: hexToRgba('#20a8d8', 10),
+        borderColor: '#20a8d8',
+        pointHoverBackgroundColor: '#fff'
+      },
+    ];
+    this.distanceChartLegend = false;
+    this.distanceChartType = 'line';
 
-    // Set the initial set of displayed layers (we could also use the leafletLayers input binding for this)
-    this.mapOptions = {
-      layers: [this.streetMaps, this.route, this.markerStart, this.markerFinish],
-      zoom: 20,
-      center: latLng([locationData[0].latitude, locationData[0].longitude])
+    // speedChart
+    this.speedChartData1 = [];
+    this.speedChartData = [
+      {
+        data: this.speedChartData1,
+        label: 'Current'
+      }
+    ];
+    /* tslint:disable:max-line-length */
+    this.speedChartLabels = [];
+
+    /* tslint:enable:max-line-length */
+    this.speedChartOptions = {
+      tooltips: {
+        enabled: false,
+        custom: CustomTooltips,
+        intersect: true,
+        mode: 'index',
+        position: 'nearest',
+        callbacks: {
+          labelColor: function (tooltipItem, chart) {
+            return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+          }
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          gridLines: {
+            drawOnChartArea: false,
+          },
+          ticks: {
+            beginAtZero: false,
+            maxTicksLimit: 5,
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            maxTicksLimit: 5,
+            stepSize: Math.ceil(120 / 5),
+            max: 120
+          }
+        }]
+      },
+      elements: {
+        line: {
+          borderWidth: 2
+        },
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3,
+        }
+      },
+      legend: {
+        display: false
+      }
     };
+    this.speedChartColours = [
+      { // brandInfo
+        backgroundColor: hexToRgba('#4dbd74', 10),
+        borderColor: '#4dbd74',
+        pointHoverBackgroundColor: '#fff'
+      }
+    ];
+    this.speedChartLegend = false;
+    this.speedChartType = 'line';
+
+    // heartChart
+    this.heartChartData1 = [];
+    this.heartChartData = [
+      {
+        data: this.heartChartData1,
+        label: 'Current'
+      }
+    ];
+    /* tslint:disable:max-line-length */
+    this.heartChartLabels = [];
+
+    /* tslint:enable:max-line-length */
+    this.heartChartOptions = {
+      tooltips: {
+        enabled: false,
+        custom: CustomTooltips,
+        intersect: true,
+        mode: 'index',
+        position: 'nearest',
+        callbacks: {
+          labelColor: function (tooltipItem, chart) {
+            return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+          }
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          gridLines: {
+            drawOnChartArea: false,
+          },
+          ticks: {
+            beginAtZero: false,
+            maxTicksLimit: 5,
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            maxTicksLimit: 5,
+            stepSize: Math.ceil(120 / 5),
+            max: 120
+          }
+        }]
+      },
+      elements: {
+        line: {
+          borderWidth: 2
+        },
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3,
+        }
+      },
+      legend: {
+        display: false
+      }
+    };
+    this.heartChartColours = [
+      { // brandInfo
+        backgroundColor: hexToRgba('#f86c6b', 10),
+        borderColor: '#f86c6b',
+        pointHoverBackgroundColor: '#fff'
+      }
+    ];
+    this.heartChartLegend = false;
+    this.heartChartType = 'line';
+
+    // altitudeChart
+    this.altitudeChartData1 = [];
+    this.altitudeChartData = [
+      {
+        data: this.altitudeChartData1,
+        label: 'Current'
+      }
+    ];
+    /* tslint:disable:max-line-length */
+    this.altitudeChartLabels = [];
+
+    /* tslint:enable:max-line-length */
+    this.altitudeChartOptions = {
+      tooltips: {
+        enabled: false,
+        custom: CustomTooltips,
+        intersect: true,
+        mode: 'index',
+        position: 'nearest',
+        callbacks: {
+          labelColor: function (tooltipItem, chart) {
+            return {backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor};
+          }
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          gridLines: {
+            drawOnChartArea: false,
+          },
+          ticks: {
+            beginAtZero: false,
+            maxTicksLimit: 5,
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            maxTicksLimit: 5,
+            stepSize: Math.ceil(120 / 5),
+            max: 120
+          }
+        }]
+      },
+      elements: {
+        line: {
+          borderWidth: 2
+        },
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3,
+        }
+      },
+      legend: {
+        display: false
+      }
+    };
+    this.altitudeChartColours = [
+      { // brandInfo
+        backgroundColor: hexToRgba('#f86c6b', 10),
+        borderColor: '#f86c6b',
+        pointHoverBackgroundColor: '#fff'
+      }
+    ];
+    this.altitudeChartLegend = false;
+    this.altitudeChartType = 'line';
   }
+
 }
