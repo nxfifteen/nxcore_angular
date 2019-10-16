@@ -32,7 +32,7 @@
         to {{loggedActivity.finished}}</small>
       </div>
       <div class="col-md-6 text-right">
-        <button (click)="buildViewContent(activityLogsNav.nextMonth)" *ngIf="activityLogsNav.nextMonth!=''"
+        <button (click)="activityClicked(activityLogsNav.nextMonth)" *ngIf="activityLogsNav.nextMonth!=''"
                 class="btn btn-brand btn-sm btn-info mr-1"
                 style="margin-bottom: 4px"
                 type="button">
@@ -46,7 +46,7 @@
           <span>Refresh</span>
         </button>
 
-        <button (click)="buildViewContent(activityLogsNav.prevMonth)" *ngIf="activityLogsNav.prevMonth!=''"
+        <button (click)="activityClicked(activityLogsNav.prevMonth)" *ngIf="activityLogsNav.prevMonth!=''"
                 class="btn btn-brand btn-sm btn-info mr-1"
                 style="margin-bottom: 4px"
                 type="button">

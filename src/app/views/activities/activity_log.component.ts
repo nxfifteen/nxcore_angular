@@ -129,7 +129,7 @@ export class ActivityLogComponent implements OnInit {
     }
   }
 
-  activityClicked(id: number) {
-    this.router.navigate(['/activities/log', id]);
+  activityClicked(id: number | string) {
+    this.router.navigate(['/activities/activity', id]);
   }
 }

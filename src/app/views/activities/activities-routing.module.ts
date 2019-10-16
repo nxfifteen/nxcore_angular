@@ -14,10 +14,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'activity'
+        redirectTo: 'tracker'
       },
       {
-        path: 'activity',
+        path: 'tracker',
         component: ActivityComponent,
         data: {
           title: 'Activity Tracker'
@@ -25,25 +25,17 @@ const routes: Routes = [
       },
       {
         path: 'log',
+        component: ActivityLogComponent,
         data: {
           title: 'Activity Log'
-        },
-        children: [
-          {
-            path: '',
-            component: ActivityLogComponent,
-            data: {
-              title: 'Activity Log'
-            },
-          },
-          {
-            path: ':id',
-            component: ActivityLogDetailsComponent,
-            data: {
-              title: 'Activity Details'
-            }
-          }
-        ]
+        }
+      },
+      {
+        path: 'activity/:id',
+        component: ActivityLogDetailsComponent,
+        data: {
+          title: 'Activity Details'
+        }
       }
     ]
   }
