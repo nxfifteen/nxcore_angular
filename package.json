@@ -1,7 +1,7 @@
 {
   "name": "uk.me.nxfifteen.core.cordova",
   "displayName": "Core Cordova",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "CoreUI Free Angular 2+ Admin Template",
   "main": "index.js",
   "keywords": [
