@@ -24,7 +24,7 @@ export class ChallengeActiveUser {
   diff: string;
   diffRaw: number;
   direction: string;
-  completion: string;
+  completion: number;
   outcomeType: string;
   lastPulled: string;
   progress: number;
