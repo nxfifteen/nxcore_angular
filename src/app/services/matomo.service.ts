@@ -39,15 +39,15 @@ export class MatomoService {
   inject() {
     if (!this.injected) {
       if (this._cordovaService.onCordova) {
-        console.log('Running on Cordova');
+        // console.log('Running on Cordova');
         this.siteId = 2;
         // document.addEventListener('deviceready', this.cordovaDeviceUpdate, false);
       } else {
-        console.log('Running in browser');
+        // console.log('Running in browser');
         this.siteId = 1;
       }
       this._matomoInjector.init('https://alpha.core.nxfifteen.me.uk/', this.siteId);
-      console.log('Injected Matomo with ID ' + this.siteId.toString());
+      // console.log('Injected Matomo with ID ' + this.siteId.toString());
       this.injected = true;
     }
   }

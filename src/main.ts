@@ -17,11 +17,11 @@ const bootstrap = () => {
 };
 
 if (typeof window['cordova'] !== 'undefined') {
-  console.log('cordova Defined');
+  // console.log('cordova Defined');
   document.addEventListener('deviceready', () => {
     bootstrap();
   }, false);
 } else {
-  console.log('cordova was not defined');
+  // console.log('cordova was not defined');
   bootstrap();
 }
