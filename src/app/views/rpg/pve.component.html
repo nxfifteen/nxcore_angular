@@ -1,0 +1,49 @@
+<div *ngIf="loading!=loadingExpected">
+  <div class="row">
+    <div class="col-12">
+      LOADING...
+      <div class="progress progress-xs mt-2">
+        <progressbar [max]="loadingExpected" [value]="loading" class="progress progress-success"
+                     type="success"></progressbar>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div id="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="loading"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="loading>=loadingExpected" class="animated fadeIn">
+  <alert type="md-refresh">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{_matomoService.pageTitle}}</h3>
+      </div>
+      <div class="col-md-6 text-right">
+        <button (click)="pullToRefresh()" class="btn btn-brand btn-sm btn-warning mr-1" style="margin-bottom: 4px"
+                type="button">
+          <i class="fa fa-repeat"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+    </div>
+  </alert>
+
+  <div class="row">
+    <div class="col-12 col-lg-2">
+      Hiya
+    </div>
+  </div>
+
+</div>

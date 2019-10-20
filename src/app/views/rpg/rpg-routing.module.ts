@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {PvpComponent} from './pvp.component';
 import {LeaderboardComponent} from './leaderboard.component';
 import {ChallengeDetailComponent} from './challenge_detail.component';
+import {PveComponent} from './pve.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,13 @@ const routes: Routes = [
         component: PvpComponent,
         data: {
           title: '1:1 Challenges'
+        }
+      },
+      {
+        path: 'pve/challenges',
+        component: PveComponent,
+        data: {
+          title: 'Challenges'
         }
       },
       {

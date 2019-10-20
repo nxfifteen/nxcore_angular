@@ -8,9 +8,10 @@ import {RpgRoutingModule} from './rpg-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChallengeDetailComponent} from './challenge_detail.component';
-import {BodyRoutingModule} from '../body/body-routing.module';
 import {ChartsModule} from 'ng2-charts';
 import {AlertModule, TooltipModule} from 'ngx-bootstrap';
+import {PveComponent} from './pve.component';
+
 // import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @NgModule({
@@ -25,7 +26,7 @@ import {AlertModule, TooltipModule} from 'ngx-bootstrap';
     AlertModule.forRoot(),
     TooltipModule.forRoot()
   ],
-  declarations: [PvpComponent, LeaderboardComponent, ChallengeDetailComponent]
+  declarations: [PvpComponent, PveComponent, LeaderboardComponent, ChallengeDetailComponent]
 })
 export class RpgModule {
 }
