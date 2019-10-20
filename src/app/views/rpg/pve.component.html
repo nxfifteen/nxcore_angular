@@ -40,10 +40,133 @@
     </div>
   </alert>
 
-  <div class="row">
-    <div class="col-12 col-lg-2">
-      Hiya
-    </div>
-  </div>
+  <div *ngIf="challenges.length>0" class="row">
 
+    <div *ngFor="let challenge of challenges" class="col-6">
+      <div class="card">
+        <div class="card-header">
+          {{challenge.name}}
+        </div>
+        <div class="card-body">
+          <p>{{challenge.description}}</p>
+
+          <div class="row">
+            <div class="col-6">
+              <h4>Challenge:</h4>
+              <p>Complete {{challenge.targetHuman}} {{challenge.criteria}}</p>
+            </div>
+            <div *ngIf="challenge.reward&&(challenge.reward.xp||challenge.reward.badge)" class="col-6">
+              <h4>Reward:</h4>
+              <ul>
+                <li *ngIf="challenge.reward.xp"><strong>XP:</strong> {{challenge.reward.xp}}</li>
+                <li *ngIf="challenge.reward.badge">
+                  <strong>Badge:</strong> {{challenge.reward.badge}}</li>
+              </ul>
+            </div>
+          </div>
+
+          <h4>Status:</h4>
+          <ul>
+            <li><strong>Started:</strong> {{challenge.participation.startDateTime}}</li>
+            <li *ngIf="challenge.participation.finishDateTime">
+              <strong>Completed:</strong> {{challenge.participation.finishDateTime}}</li>
+          </ul>
+
+          <h4 *ngIf="challenge.depth>0">Stages:</h4>
+          <div *ngIf="challenge.depth>0" class="row">
+            <div *ngIf="challenge.depth==1" class="col-12">
+              <div class="row">
+                <div class="col-4">
+                  <strong>Name</strong>
+                </div>
+                <div class="col-2">
+                  <strong>Criteria</strong>
+                </div>
+                <div class="col-6">
+                  <strong>Stage Progress</strong>
+                </div>
+              </div>
+              <div *ngFor="let child of challenge.children; let i = index; let odd = odd" class="row">
+                <div [class.odd]="odd" class="col-12">
+                  <div class="row">
+                    <div class="col-4">
+                      {{child.name}}
+                    </div>
+                    <div class="col-2">
+                      {{child.targetHuman}} {{child.criteria}}
+                    </div>
+                    <div class="col-6">
+                      <progressbar [max]="100" [value]="child.participation.progress" class="progress progress-success"
+                                   type="success"></progressbar>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <em>{{child.description}}</em>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="challenge.depth==2" class="col-12">
+              <div *ngFor="let stage of challenge.children" class="row">
+                <div class="col-12">
+                  <h5 (click)="stage.isCollapsed = !stage.isCollapsed">{{stage.name}}:</h5>
+
+                  <div [collapse]="stage.isCollapsed"
+                       class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-4">
+                          <strong>Name</strong>
+                        </div>
+                        <div class="col-2">
+                          <strong>Criteria</strong>
+                        </div>
+                        <div class="col-6">
+                          <strong>Leg Progress</strong>
+                        </div>
+                      </div>
+                      <div *ngFor="let stageChild of stage.children; let i = index; let odd = odd" class="row">
+                        <div [class.odd]="odd" class="col-12">
+                          <div class="row">
+                            <div class="col-4">
+                              {{stageChild.name}}
+                            </div>
+                            <div class="col-2">
+                              {{stageChild.targetHuman}} {{stageChild.criteria}}
+                            </div>
+                            <div class="col-6">
+                              <progressbar [max]="100" [value]="stageChild.participation.progress"
+                                           class="progress progress-success"
+                                           type="success"></progressbar>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <em>{{stageChild.description}}</em>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <h6>Challenge Progress</h6>
+          <div class="progress progress-xs mt-2">
+            <progressbar [max]="100" [value]="challenge.participation.progress" class="progress progress-success"
+                         type="success"></progressbar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

@@ -9,7 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChallengeDetailComponent} from './challenge_detail.component';
 import {ChartsModule} from 'ng2-charts';
-import {AlertModule, TooltipModule} from 'ngx-bootstrap';
+import {AlertModule, CollapseModule, TooltipModule} from 'ngx-bootstrap';
 import {PveComponent} from './pve.component';
 
 // import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -23,6 +23,7 @@ import {PveComponent} from './pve.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    CollapseModule.forRoot(),
     AlertModule.forRoot(),
     TooltipModule.forRoot()
   ],

@@ -5,14 +5,17 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {MatomoService} from '../../services/matomo.service';
+import {ChallengePve} from '../../_models/challengePve';
 
 @Component({
-  templateUrl: 'pve.component.html'
+  templateUrl: 'pve.component.html',
+  styleUrls: ['pve.component.scss']
 })
 export class PveComponent implements OnInit {
   loading: number;
   loadingExpected: number;
   currentUser: User;
+  challenges: Array<ChallengePve>;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
@@ -20,7 +23,7 @@ export class PveComponent implements OnInit {
               private apiService: ApiService,
               private _matomoService: MatomoService) {
     this.loading = 0;
-    this.loadingExpected = 3;
+    this.loadingExpected = 1;
 
   }
 
@@ -47,13 +50,20 @@ export class PveComponent implements OnInit {
 
   buildViewContent(bustCache?: boolean): void {
     this.loading = 0;
-    this.loading = this.loadingExpected;
+
+    this.apiService.getRpgPveIn(bustCache).subscribe((data) => {
+      this.challenges = data['challenges'];
+
+      this.emitApiLoaded();
+    });
   }
 
   private emitApiLoaded() {
-    this.loading++;
-    if (this.loading >= this.loadingExpected) {
-      this._matomoService.doTracking();
+    if (this.loading < this.loadingExpected) {
+      this.loading++;
+      if (this.loading >= this.loadingExpected) {
+        this._matomoService.doTracking();
+      }
     }
   }
 }

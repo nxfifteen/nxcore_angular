@@ -46,6 +46,16 @@ export class ApiService {
     }));
   }
 
+  public getRpgPve(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/feed/pve/challenges/all?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
+  public getRpgPveIn(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/feed/pve/challenges?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
 
   public getSiteNews(bustCache?: boolean) {
     const URL = `${environment.apiUrl}/api/site_news?key=${this.currentUser.token}`;
