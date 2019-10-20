@@ -1,15 +1,13 @@
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
-import {navItems} from '../../_nav';
+// import {navItems} from '../../_nav';
 import {ApiService} from '../../services/api.service';
 import {ConfigService} from '../../services/config.service';
 import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {Router} from '@angular/router';
 import {SiteNews} from '../../_models/siteNews';
-import {MatomoInjector} from 'ngx-matomo';
 import {CordovaService} from '../../services/cordova.service';
-import {MatomoService} from '../../services/matomo.service';
 import {AppVersion} from '../../_models/appVersion';
 
 @Component({
@@ -17,7 +15,8 @@ import {AppVersion} from '../../_models/appVersion';
   templateUrl: './default-layout.component.html'
 })
 export class DefaultLayoutComponent implements OnDestroy {
-  public navItems = navItems;
+  // public navItems = navItems;
+  public navItems;
   public sidebarMinimized = false;
   private changes: MutationObserver;
   public element: HTMLElement;
@@ -39,8 +38,9 @@ export class DefaultLayoutComponent implements OnDestroy {
               @Inject(DOCUMENT) _document?: any) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.configService = _configService;
-    this.cordovaService$ = _cordovaService;
+    this.navItems = _configService.navItems;
 
+    this.cordovaService$ = _cordovaService;
     this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);
 
     // noinspection JSUnusedLocalSymbols

@@ -17,9 +17,10 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>Account</strong></div>
-        <a class="dropdown-item" routerLink="/"><i class="fa fa-trophy"></i> XP<span class="badge badge-info">{{profileXp}}</span></a>
+        <a class="dropdown-item" routerLink="/achievements/awards"><i class="fa fa-trophy"></i> XP<span
+          class="badge badge-info">{{profileXp}}</span></a>
         <div class="dropdown-header text-center"><strong>Settings</strong></div>
-        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" routerLink="/setup/profile"><i class="fa fa-user"></i> Profile</a>
         <div class="divider"></div>
         <a class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Logout</a>
       </div>
@@ -27,19 +28,13 @@
   </ul>
 </app-header>
 <div class="app-body">
-  <app-sidebar [fixed]="true" [display]="configService.uiSettings.showNavBar"> <!-- [compact]="true" [minimized]="true" -->
+  <app-sidebar [compact]="false" [fixed]="true">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
     <div class="row" style="margin-left: 0; margin-right: 0">
-      <div class="col-3 bg-success text-center">
+      <div class="col-6 bg-success text-center">
         <a href="https://nxfifteen.me.uk" target="_blank" title="NxFIFTEEN" style="color: #fff"><strong>N</strong></a>
       </div>
-      <div class="col-3 bg-info text-center">
-        <a href="https://core.nxfifteen.me.uk/downloads/android.apk" target="_blank" title="Android Download" style="color: #fff"><i class="fa fa-android"></i></a>
-      </div>
-      <div class="col-3 bg-info text-center">
-        <a href="https://core.nxfifteen.me.uk/downloads/windows.exe" target="_blank" title="Windows Download" style="color: #fff"><i class="fa fa-windows"></i></a>
-      </div>
-      <div class="col-3 bg-danger text-center">
+      <div class="col-6 bg-danger text-center">
         <a href="https://www.patreon.com/nxfifteen" target="_blank" title="Support Core" style="color: #fff"><i class="fa fa-dollar"></i></a>
       </div>
     </div>
@@ -54,7 +49,7 @@
       <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <a class="btn" [routerLink]="['/dashboard']"><i class="fa fa-dashboard"></i> &nbsp;Dashboard</a>
-          <a class="btn" [routerLink]="['/body/weight']"><i class="fa fa-balance-scale"></i> &nbsp;Weight</a>
+          <a [routerLink]="['/rpg/challenges']" class="btn"><i class="fa fa-trophy"></i> &nbsp;Challenges</a>
         </div>
       </li>
     </cui-breadcrumb>
@@ -62,7 +57,7 @@
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->
   </main>
-  <app-aside [fixed]="true" [display]="configService.uiSettings.showAsideBar">
+  <app-aside [display]="false" [fixed]="true">
     <tabset>
       <tab>
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
@@ -79,5 +74,6 @@
 </div>
 <app-footer>
   <span><a href="https://git.nxfifteen.rocks/nx-health">NxFITNESS Core</a> V:{{ cordovaUpdateAvailable.latestVersion }} &copy; 2019 Stuart McCulloch Anderson.</span>
-  <span class="ml-auto hidden-md-down">An <a href="https://nxfifteen.me.uk">NxFIFTEEN</a> project, powered by <a href="http://coreui.io">CoreUI</a></span>
+  <span class="ml-auto d-none d-lg-block d-xl-block">An <a href="https://nxfifteen.me.uk">NxFIFTEEN</a> project, powered by <a
+    href="http://coreui.io">CoreUI</a></span>
 </app-footer>

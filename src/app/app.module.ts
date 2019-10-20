@@ -58,21 +58,26 @@ export function markedOptions(): MarkedOptions {
 export function loadConfigurationData(http: HttpClient, config: ConfigService): (() => Promise<boolean>) {
   return (): Promise<boolean> => {
     return new Promise<boolean>((resolve: (a: boolean) => void): void => {
-      http.get(environment.apiUrl + '/269VLG/ux/config?key=Ze3t6noklu9Vozikrw')
-        .pipe(
-          map((x: ConfigService) => {
-            config.uiSettings = x.uiSettings;
-            resolve(true);
-          }),
-          catchError((x: { status: number }, caught: Observable<void>): ObservableInput<{}> => {
-            if (x.status !== 404) {
-              resolve(false);
-            }
-            config.uiSettings = {'showNavBar': true, 'showAsideBar': true};
-            resolve(true);
-            return of({});
-          })
-        ).subscribe();
+      if (config.currentUser) {
+        http.get(environment.apiUrl + '/ux/config?key=' + config.currentUser.token)
+          .pipe(
+            map((x: ConfigService) => {
+              config.uiSettings = x.uiSettings;
+              config.navItems = x.navItems;
+              resolve(true);
+            }),
+            catchError((x: { status: number }, caught: Observable<void>): ObservableInput<{}> => {
+              if (x.status !== 404) {
+                resolve(false);
+              }
+              config.uiSettings = {'showNavBar': true, 'showAsideBar': true};
+              resolve(true);
+              return of({});
+            })
+          ).subscribe();
+      } else {
+        resolve(true);
+      }
     });
   };
 }
@@ -83,10 +88,12 @@ Sentry.init({
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
-  constructor() {}
+  constructor() {
+  }
+
   handleError(error) {
     const eventId = Sentry.captureException(error.originalError || error);
-    Sentry.showReportDialog({ eventId });
+    Sentry.showReportDialog({eventId});
   }
 }
 
@@ -123,8 +130,8 @@ export class SentryErrorHandler implements ErrorHandler {
     RegisterComponent,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

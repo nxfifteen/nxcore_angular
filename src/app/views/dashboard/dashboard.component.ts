@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {ApiService} from '../../services/api.service';
@@ -12,6 +12,8 @@ import {MatomoService} from '../../services/matomo.service';
 import {CordovaService} from '../../services/cordova.service';
 import {AppVersion} from '../../_models/appVersion';
 import {CordovaDevice} from '../../_models/cordovaDevice';
+import {environment} from '../../../environments/environment';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -95,7 +97,8 @@ export class DashboardComponent implements OnInit {
               private markdownService: MarkdownService,
               private apiService: ApiService,
               private _matomoService: MatomoService,
-              private _cordovaService: CordovaService) {
+              private _cordovaService: CordovaService,
+              @Inject(DOCUMENT) private document: Document) {
     this.cordovaService$ = _cordovaService;
     this.setDefaultChartOptions();
     this.loadingExpected = 9;
@@ -442,6 +445,10 @@ export class DashboardComponent implements OnInit {
     if (this.loading >= this.loadingExpected) {
       this._matomoService.doTracking();
     }
+  }
+
+  downloadUpdate() {
+    this.document.location.href = `${environment.uiUrl}/downloads/android.apk`;
   }
 }
 
