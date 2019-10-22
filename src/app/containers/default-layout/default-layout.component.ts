@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {SiteNews} from '../../_models/siteNews';
 import {CordovaService} from '../../services/cordova.service';
 import {AppVersion} from '../../_models/appVersion';
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,6 +36,7 @@ export class DefaultLayoutComponent implements OnDestroy {
               private _configService: ConfigService,
               private authenticationService: AuthenticationService,
               private _cordovaService: CordovaService,
+              private notifyService: NotificationService,
               @Inject(DOCUMENT) _document?: any) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.configService = _configService;
@@ -59,8 +61,14 @@ export class DefaultLayoutComponent implements OnDestroy {
       this.profileXp = data['xp'];
     });
 
-    this.apiService.getSiteNews().subscribe((data) => {
+    this.apiService.getSiteNews(true).subscribe((data) => {
       this.siteNews = data['items'];
+    });
+
+    this.apiService.getPushNews(true).subscribe((data) => {
+      for (let i = 0; i < data['items'].length; i++) {
+        this.notifyService.showSuccess(data['items'][i]['text'], data['items'][i]['title']);
+      }
     });
 
   }

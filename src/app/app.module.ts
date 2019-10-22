@@ -27,6 +27,7 @@ import {MyMaterialModule} from './material-module';
 import * as Sentry from '@sentry/browser';
 import {MatomoModule} from 'ngx-matomo';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {ToastrModule} from 'ngx-toastr';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -114,6 +115,7 @@ export class SentryErrorHandler implements ErrorHandler {
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     LeafletModule.forRoot(),
+    ToastrModule.forRoot(),
     ChartsModule,
     MatomoModule,
     MarkdownModule.forRoot({
