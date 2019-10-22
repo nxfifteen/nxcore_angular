@@ -14,6 +14,7 @@ import {AppVersion} from '../../_models/appVersion';
 import {CordovaDevice} from '../../_models/cordovaDevice';
 import {environment} from '../../../environments/environment';
 import {DOCUMENT} from '@angular/common';
+import {SiteNews} from '../../_models/siteNews';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -27,6 +28,7 @@ export class DashboardComponent implements OnInit {
   cordovaService$: CordovaService;
   cordovaUpdateAvailable: AppVersion;
   cordovaDevice: CordovaDevice;
+  siteNews: Array<SiteNews>;
 
   intraDayWidgetChartOptions: any;
   intraDayWidgetChartColours: any;
@@ -35,6 +37,8 @@ export class DashboardComponent implements OnInit {
 
   widgetsOnFirstRow: number;
   widgetGridOnFirstRow: string;
+  widgetsOnNewsRow: number;
+  widgetGridOnNewsRow: string;
 
   widgetGridMilestonesRow: string;
   milestonesMoreWidgetEnable: boolean;
@@ -101,7 +105,7 @@ export class DashboardComponent implements OnInit {
               @Inject(DOCUMENT) private document: Document) {
     this.cordovaService$ = _cordovaService;
     this.setDefaultChartOptions();
-    this.loadingExpected = 9;
+    this.loadingExpected = 10;
   }
 
   ngOnInit(): void {
@@ -134,7 +138,9 @@ export class DashboardComponent implements OnInit {
   buildViewContent(bustCache?: boolean): void {
     this.loading = 0;
     this.widgetsOnFirstRow = 0;
+    this.widgetsOnNewsRow = 0;
     this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+    this.widgetGridOnNewsRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
     this.stepWidgetEnable = false;
     this.stepSteakWidgetEnable = false;
     this.stepIntraDayWidgetEnable = false;
@@ -153,6 +159,13 @@ export class DashboardComponent implements OnInit {
 
     this.apiService.getProfile(bustCache).subscribe((data) => {
       this.profileAvatar = data['avatar'];
+      this.emitApiLoaded();
+    });
+
+    this.apiService.getPersonalNews(bustCache).subscribe((data) => {
+      this.siteNews = data['items'];
+      this.widgetsOnNewsRow = this.siteNews.length;
+      this.addWidgetToNewsRow();
       this.emitApiLoaded();
     });
 
@@ -422,6 +435,23 @@ export class DashboardComponent implements OnInit {
         break;
       case 4:
         this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
+    }
+  }
+
+  private addWidgetToNewsRow() {
+    switch (this.widgetsOnNewsRow) {
+      case 1:
+        this.widgetGridOnNewsRow = 'col-12';
+        break;
+      case 2:
+        this.widgetGridOnNewsRow = 'col-12 col-md-6';
+        break;
+      case 3:
+        this.widgetGridOnNewsRow = 'col-12 col-md-4';
+        break;
+      case 4:
+        this.widgetGridOnNewsRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
         break;
     }
   }

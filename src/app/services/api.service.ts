@@ -58,7 +58,17 @@ export class ApiService {
 
 
   public getSiteNews(bustCache?: boolean) {
-    const URL = `${environment.apiUrl}/api/site_news?key=${this.currentUser.token}`;
+    const URL = `${environment.apiUrl}/news/site?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
+  public getPersonalNews(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/news/personal?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
+  public getPushNews(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/news/push?key=${this.currentUser.token}`;
     return this.makeHttpGetRequest(URL, bustCache);
   }
 

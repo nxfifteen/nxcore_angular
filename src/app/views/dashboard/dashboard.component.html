@@ -40,6 +40,22 @@
     </div>
   </alert>
 
+  <div *ngIf="siteNews.length>0" class="row">
+
+    <div *ngFor="let newsItem of siteNews" [class]="widgetGridOnNewsRow">
+      <div class="card card-accent-{{newsItem.accent}}">
+        <div class="card-header">{{newsItem.title}}</div>
+        <div class="card-body">
+          {{newsItem.text}}
+        </div>
+        <div *ngIf="newsItem.link!=''" class="card-footer">
+          <a [href]="newsItem.link" target="_blank">{{newsItem.link}}</a>
+        </div>
+      </div>
+    </div><!-- /distanceSummary -->
+
+  </div>
+
   <div class="row">
     <div [class]="widgetGridOnFirstRow" *ngIf="stepWidgetEnable">
       <div class="card text-white bg-primary">
@@ -168,6 +184,7 @@
         </div>
       </div>
     </div><!-- /distanceSummary -->
+
   </div>
 
   <div class="row" *ngIf="stepSteakWidgetEnable">

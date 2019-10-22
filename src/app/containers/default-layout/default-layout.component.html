@@ -63,7 +63,8 @@
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
         <div class="list-group list-group-accent">
           <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">NEWS</div>
-          <div class="list-group-item {{siteItem.accent}} list-group-item-divider" *ngFor="let siteItem of siteNews">
+          <div *ngFor="let siteItem of siteNews"
+               class="list-group-item list-group-item-accent-{{siteItem.accent}} list-group-item-divider">
             <div>{{siteItem.title}}</div>
             <small class="text-muted">{{siteItem.text}}</small>
           </div>
