@@ -1,7 +1,7 @@
 {
   "name": "uk.me.nxfifteen.core.cordova",
   "displayName": "Core Cordova",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CoreUI Free Angular 2+ Admin Template",
   "main": "index.js",
   "keywords": [
@@ -70,6 +70,7 @@
     "ngx-markdown": "^8.1.0",
     "ngx-matomo": "^0.1.4",
     "ngx-perfect-scrollbar": "^8.0.0",
+    "ngx-toastr": "^11.1.2",
     "rxjs": "^6.5.3",
     "simple-line-icons": "^2.4.1",
     "ts-helpers": "^1.1.2",
