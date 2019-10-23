@@ -302,9 +302,9 @@ export class DashboardComponent implements OnInit {
         }
 
         if (this.milestonesMoreWidgetEnable && this.milestonesLessWidgetEnable) {
-          this.widgetGridMilestonesRow = 'col-12 col-md-6 d-none d-lg-block';
+          this.widgetGridMilestonesRow = 'col-12 col-md-6';
         } else if (this.milestonesMoreWidgetEnable || this.milestonesLessWidgetEnable) {
-          this.widgetGridMilestonesRow = 'col-12 d-none d-lg-block';
+          this.widgetGridMilestonesRow = 'col-12';
         }
       }
       this.emitApiLoaded();
