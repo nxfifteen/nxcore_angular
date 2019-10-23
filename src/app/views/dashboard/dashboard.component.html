@@ -40,24 +40,8 @@
     </div>
   </alert>
 
-  <div *ngIf="siteNews.length>0" class="row">
-
-    <div *ngFor="let newsItem of siteNews" [class]="widgetGridOnNewsRow">
-      <div class="card card-accent-{{newsItem.accent}}">
-        <div class="card-header">{{newsItem.title}}</div>
-        <div class="card-body">
-          {{newsItem.text}}
-        </div>
-        <div *ngIf="newsItem.link!=''" class="card-footer">
-          <a [href]="newsItem.link" target="_blank">{{newsItem.link}}</a>
-        </div>
-      </div>
-    </div><!-- /distanceSummary -->
-
-  </div>
-
   <div class="row">
-    <div [class]="widgetGridOnFirstRow" *ngIf="stepWidgetEnable">
+    <div (click)="widgetClickSteps()" *ngIf="stepWidgetEnable" [class]="widgetGridOnFirstRow">
       <div class="card text-white bg-primary">
         <div class="card-body pb-0">
           <div class="btn-group float-right" dropdown>
@@ -89,7 +73,7 @@
       </div>
     </div><!-- /stepSummary -->
 
-    <div [class]="widgetGridOnFirstRow" *ngIf="floorWidgetEnable">
+    <div (click)="widgetClickFloors()" *ngIf="floorWidgetEnable" [class]="widgetGridOnFirstRow">
       <div class="card text-white bg-info">
         <div class="card-body pb-0">
           <div class="btn-group float-right" dropdown>
@@ -121,7 +105,7 @@
       </div>
     </div><!-- /floorSummary -->
 
-    <div [class]="widgetGridOnFirstRow" *ngIf="distanceWidgetEnable">
+    <div (click)="widgetClickDistance()" *ngIf="distanceWidgetEnable" [class]="widgetGridOnFirstRow">
       <div class="card text-white bg-warning">
         <div class="card-body pb-0">
           <div class="btn-group float-right" dropdown>
@@ -153,7 +137,7 @@
       </div>
     </div><!-- /distanceSummary -->
 
-    <div [class]="widgetGridOnFirstRow" *ngIf="weightWidgetEnable">
+    <div (click)="widgetClickWeight()" *ngIf="weightWidgetEnable" [class]="widgetGridOnFirstRow">
       <div class="card text-white bg-danger">
         <div class="card-body pb-0">
           <div class="btn-group float-right" dropdown>
@@ -184,6 +168,54 @@
         </div>
       </div>
     </div><!-- /distanceSummary -->
+
+    <div (click)="widgetClickChallenge()" *ngIf="rpgChallengeSummary" [class]="widgetGridOnFirstRow">
+      <div class="brand-card">
+        <div class="brand-card-header bg-gold">
+          <i class="fa fa-trophy"></i>
+        </div>
+        <div class="brand-card-body">
+          <div>
+            <div class="text-value">{{rpgChallengeSummary.win}}</div>
+            <div class="text-uppercase text-muted small">Wins</div>
+          </div>
+          <div>
+            <div class="text-value">{{rpgChallengeSummary.lose}}</div>
+            <div class="text-uppercase text-muted small">Loses</div>
+          </div>
+          <div>
+            <div class="text-value">{{rpgChallengeSummary.draw}}</div>
+            <div class="text-uppercase text-muted small">Draws</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="milestonesMoreWidgetEnable" [class]="widgetGridOnFirstRow">
+      <div class="card text-white bg-success">
+        <div class="card-header">
+          Your Best Day
+        </div>
+        <div class="card-body">
+          <ul>
+            <li *ngFor="let point of theMilestonesMore" [innerHTML]="point"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="milestonesLessWidgetEnable" [class]="widgetGridOnFirstRow">
+      <div class="card text-white bg-danger">
+        <div class="card-header">
+          Your Best Day
+        </div>
+        <div class="card-body">
+          <ul>
+            <li *ngFor="let point of theMilestonesLess" [innerHTML]="point"></li>
+          </ul>
+        </div>
+      </div>
+    </div><!--/.col-->
 
   </div>
 
@@ -219,94 +251,109 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="milestonesMoreWidgetEnable||milestonesLessWidgetEnable">
-    <div [class]="widgetGridMilestonesRow" *ngIf="milestonesMoreWidgetEnable">
-      <div class="card text-white bg-success">
-        <div class="card-header">
-          Your Best Day
-        </div>
-        <div class="card-body">
-          <ul>
-            <li *ngFor="let point of theMilestonesMore" [innerHTML]="point"></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div [class]="widgetGridMilestonesRow" *ngIf="milestonesLessWidgetEnable">
-      <div class="card text-white bg-danger">
-        <div class="card-header">
-          Your Best Day
-        </div>
-        <div class="card-body">
-          <ul>
-            <li *ngFor="let point of theMilestonesLess" [innerHTML]="point"></li>
-          </ul>
-        </div>
-      </div>
-    </div><!--/.col-->
-
-  </div>
-
-  <div *ngIf="rpgChallengeEnable">
+  <div *ngIf="siteNews.length>0">
     <div class="row">
       <div class="col-12">
-        <h3>Running 1:1 Challenges</h3>
+        <h3>Feed</h3>
       </div>
     </div><!-- /Running 1:1 Challenges -->
 
     <div class="row">
-      <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-        <div class="row">
-          <div class="col-12">
-            <div class="brand-card" *ngIf="rpgChallengeSummary">
-              <div class="brand-card-header bg-gold">
-                <i class="fa fa-trophy"></i>
+
+      <div (click)="widgetClickNews(newsItem.link)" *ngFor="let newsItem of siteNews" [class]="widgetGridOnNewsRow">
+        <div class="card card-accent-{{newsItem.accent}}">
+          <div class="card-header">{{newsItem.title}}</div>
+          <div *ngIf="newsItem.imageHref" class="card-body">
+            <div class="row">
+              <div class="col-4 text-center">
+                <img alt="news-icon" class="img-avatar"
+                     height="70px" src="{{newsItem.imageHref}}" width="70px"/>
               </div>
-              <div class="brand-card-body">
-                <div>
-                  <div class="text-value">{{rpgChallengeSummary.win}}</div>
-                  <div class="text-uppercase text-muted small">Wins</div>
+              <div class="col-8">
+                {{newsItem.text}}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="newsItem.imageName" class="card-body">
+            <div class="row">
+              <div class="col-4 text-center">
+                <img alt="news-icon" class="img-avatar"
+                     height="70px" src="/assets/badges/{{newsItem.imageName}}.png" width="70px"/>
+              </div>
+              <div class="col-8">
+                {{newsItem.text}}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!newsItem.imageName&&!newsItem.imageHref" class="card-body">
+            {{newsItem.text}}
+          </div>
+        </div>
+      </div><!-- /distanceSummary -->
+
+    </div>
+  </div>
+
+  <!--  <div *ngIf="rpgChallengeEnable">
+      <div class="row">
+        <div class="col-12">
+          <h3>Running 1:1 Challenges</h3>
+        </div>
+      </div>&lt;!&ndash; /Running 1:1 Challenges &ndash;&gt;
+
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+          <div class="row">
+            <div class="col-12">
+              <div class="brand-card" *ngIf="rpgChallengeSummary">
+                <div class="brand-card-header bg-gold">
+                  <i class="fa fa-trophy"></i>
                 </div>
-                <div>
-                  <div class="text-value">{{rpgChallengeSummary.lose}}</div>
-                  <div class="text-uppercase text-muted small">Loses</div>
-                </div>
-                <div>
-                  <div class="text-value">{{rpgChallengeSummary.draw}}</div>
-                  <div class="text-uppercase text-muted small">Draws</div>
+                <div class="brand-card-body">
+                  <div>
+                    <div class="text-value">{{rpgChallengeSummary.win}}</div>
+                    <div class="text-uppercase text-muted small">Wins</div>
+                  </div>
+                  <div>
+                    <div class="text-value">{{rpgChallengeSummary.lose}}</div>
+                    <div class="text-uppercase text-muted small">Loses</div>
+                  </div>
+                  <div>
+                    <div class="text-value">{{rpgChallengeSummary.draw}}</div>
+                    <div class="text-uppercase text-muted small">Draws</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div *ngIf="awardsWidgetEnable">
-          <div class="row">
-            <div class="col-12">
-              <h3>Badges</h3>
-            </div>
-          </div><!-- /Running 1:1 Challenges -->
+          <div *ngIf="awardsWidgetEnable">
+            <div class="row">
+              <div class="col-12">
+                <h3>Badges</h3>
+              </div>
+            </div>&lt;!&ndash; /Running 1:1 Challenges &ndash;&gt;
 
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  Awards
-                </div>
-                <div class="card-body">
-                  <div class="row" *ngFor="let awardsSummary of awardsSummaries"
-                       (click)="awardClicked(awardsSummary.id)">
-                    <div class="text-center col-2">
-                      <div class="avatar">
-                        <img [alt]="awardsSummary.name" class="img-avatar"
-                             src="/assets/badges/{{awardsSummary.image}}.png">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    Awards
+                  </div>
+                  <div class="card-body">
+                    <div class="row" *ngFor="let awardsSummary of awardsSummaries"
+                         (click)="awardClicked(awardsSummary.id)">
+                      <div class="text-center col-2">
+                        <div class="avatar">
+                          <img [alt]="awardsSummary.name" class="img-avatar"
+                               src="/assets/badges/{{awardsSummary.image}}.png">
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-10">
-                      <div>{{ awardsSummary.name }}</div>
-                      <div class="small text-muted d-none d-md-block">
-                        {{ awardsSummary.longtext }}
+                      <div class="col-10">
+                        <div>{{ awardsSummary.name }}</div>
+                        <div class="small text-muted d-none d-md-block">
+                          {{ awardsSummary.longtext }}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -314,134 +361,133 @@
               </div>
             </div>
           </div>
-        </div>
 
-      </div><!-- /rpgChallengeTrophy -->
+        </div>&lt;!&ndash; /rpgChallengeTrophy &ndash;&gt;
 
-      <div class="col-12 col-md-8 col-lg-8 col-xl-9" *ngIf="rpgChallengeRunning.length>0">
-        <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}"
-             *ngFor="let runningChallenge of rpgChallengeRunning" (click)="viewChallenge(runningChallenge.id)">
-          <div class="card-header">
-            <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
-            {{runningChallenge.duration}} Days, ends: {{runningChallenge.endDate}}
-            <div class="progress progress-xs mt-2">
-              <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}"
-                           [value]="runningChallenge.progressDate" [max]="100"
-                           type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-5">
-                <div class="progress">
-                  <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}"
-                               [value]="runningChallenge.userDetail.completion"
-                               [max]="100"
-                               type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
-                </div>
-                <div style="text-align: right;">
-                  {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
-                </div>
-              </div>
-              <div class="col-2 d-none d-lg-block d-xl-block"
-                   style="text-align: center; font-size: 2rem;vertical-align: middle;">
-                <i class="fa fa-flag-checkered"></i>
-              </div>
-              <div class="col-12 col-md-6 col-lg-5">
-                <div class="progress">
-                  <progressbar class="progress progress-{{runningChallenge.opponentDetail.outcomeType}}"
-                               style="direction: rtl;"
-                               [value]="runningChallenge.opponentDetail.completion" [max]="100"
-                               type="{{runningChallenge.opponentDetail.outcomeType}}"></progressbar>
-                </div>
-                <div>
-                  {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far
-                </div>
+        <div class="col-12 col-md-8 col-lg-8 col-xl-9" *ngIf="rpgChallengeRunning.length>0">
+          <div class="card card-accent-{{runningChallenge.userDetail.outcomeType}}"
+               *ngFor="let runningChallenge of rpgChallengeRunning" (click)="viewChallenge(runningChallenge.id)">
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i> {{runningChallenge.target}}-{{runningChallenge.criteria}} in
+              {{runningChallenge.duration}} Days, ends: {{runningChallenge.endDate}}
+              <div class="progress progress-xs mt-2">
+                <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}"
+                             [value]="runningChallenge.progressDate" [max]="100"
+                             type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
               </div>
             </div>
-          </div>
-          <div class="card-footer">
-            <div class="row">
-              <div class="col-5 col-md-5 col-lg-3 col-xl-3" style="text-align: center">
-                <div class="text-value">
-                  <img src="{{profileAvatar}}" class="img-avatar" alt="You" width="55px" height="55px"/>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-5">
+                  <div class="progress">
+                    <progressbar class="progress progress-{{runningChallenge.userDetail.outcomeType}}"
+                                 [value]="runningChallenge.userDetail.completion"
+                                 [max]="100"
+                                 type="{{runningChallenge.userDetail.outcomeType}}"></progressbar>
+                  </div>
+                  <div style="text-align: right;">
+                    {{runningChallenge.userDetail.sum}} {{runningChallenge.criteria}} so far
+                  </div>
                 </div>
-                <div class="text-uppercase text-muted small">You</div>
-                <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
-              </div>
-
-              <div class="col-1 col-lg-2 col-xl-2 d-none d-lg-block" style="text-align: center">
-                <div class="text-value">{{runningChallenge.target}}</div>
-                <div class="text-uppercase text-muted small">{{runningChallenge.criteria}}</div>
-              </div>
-
-              <div class="col-2 col-md-2 d-lg-none d-xl-none" style="text-align: center">
-                <div class="text-value">Vs</div>
-              </div>
-
-              <div class="col-12 col-lg-2 col-xl-2 d-none d-lg-block d-xl-block" style="text-align: center">
-                <div class="text-value">IN</div>
-              </div>
-              <div class="col-12 col-lg-2 col-xl-2 d-none d-lg-block d-xl-block" style="text-align: center">
-                <div class="text-value">{{runningChallenge.duration}}</div>
-                <div class="text-uppercase text-muted small">Days</div>
-              </div>
-
-              <div class="col-5 col-md-5 col-lg-3 col-xl-3" style="text-align: center">
-                <div class="text-value">
-                  <img src="{{runningChallenge.opponentAvatar}}" class="img-avatar" alt="{{runningChallenge.opponent}}"
-                       width="55px" height="55px"/>
+                <div class="col-2 d-none d-lg-block d-xl-block"
+                     style="text-align: center; font-size: 2rem;vertical-align: middle;">
+                  <i class="fa fa-flag-checkered"></i>
                 </div>
-                <div class="text-uppercase text-muted small">{{runningChallenge.opponent}}</div>
-                <div class="text-uppercase text-muted small">{{runningChallenge.opponentDetail.lastPulled}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><!-- /rpgChallengeSummary -->
-    </div><!-- /rpgChallengeRunning -->
-  </div>
-
-  <div *ngIf="awardsWidgetEnable&&!rpgChallengeEnable">
-    <div class="row">
-      <div class="col-12">
-        <h3>Badges</h3>
-      </div>
-    </div><!-- /Running 1:1 Challenges -->
-
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            Awards
-          </div>
-          <div class="card-body">
-
-            <div class="row" *ngFor="let awardsSummary of awardsSummaries" (click)="awardClicked(awardsSummary.id)">
-              <div class="text-center col-2 col-md-1">
-                <div class="avatar">
-                  <img [alt]="awardsSummary.name" class="img-avatar"
-                       src="/assets/badges/{{awardsSummary.image}}.png">
-                </div>
-              </div>
-              <div class="col-5 col-md-6">
-                <div>{{ awardsSummary.name }}</div>
-                <div class="small text-muted d-none d-md-block">
-                  {{ awardsSummary.longtext }}
-                </div>
-              </div>
-              <div class="col-5 col-md-5 text-right">
-                <div>Awarded {{ awardsSummary.count }} time(s)</div>
-                <div class="small text-muted d-none d-md-block">
-                  Last Awarded: {{ awardsSummary.awarded }}
+                <div class="col-12 col-md-6 col-lg-5">
+                  <div class="progress">
+                    <progressbar class="progress progress-{{runningChallenge.opponentDetail.outcomeType}}"
+                                 style="direction: rtl;"
+                                 [value]="runningChallenge.opponentDetail.completion" [max]="100"
+                                 type="{{runningChallenge.opponentDetail.outcomeType}}"></progressbar>
+                  </div>
+                  <div>
+                    {{runningChallenge.opponentDetail.sum}} {{runningChallenge.criteria}} so far
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-5 col-md-5 col-lg-3 col-xl-3" style="text-align: center">
+                  <div class="text-value">
+                    <img src="{{profileAvatar}}" class="img-avatar" alt="You" width="55px" height="55px"/>
+                  </div>
+                  <div class="text-uppercase text-muted small">You</div>
+                  <div class="text-uppercase text-muted small">{{runningChallenge.userDetail.lastPulled}}</div>
+                </div>
 
+                <div class="col-1 col-lg-2 col-xl-2 d-none d-lg-block" style="text-align: center">
+                  <div class="text-value">{{runningChallenge.target}}</div>
+                  <div class="text-uppercase text-muted small">{{runningChallenge.criteria}}</div>
+                </div>
+
+                <div class="col-2 col-md-2 d-lg-none d-xl-none" style="text-align: center">
+                  <div class="text-value">Vs</div>
+                </div>
+
+                <div class="col-12 col-lg-2 col-xl-2 d-none d-lg-block d-xl-block" style="text-align: center">
+                  <div class="text-value">IN</div>
+                </div>
+                <div class="col-12 col-lg-2 col-xl-2 d-none d-lg-block d-xl-block" style="text-align: center">
+                  <div class="text-value">{{runningChallenge.duration}}</div>
+                  <div class="text-uppercase text-muted small">Days</div>
+                </div>
+
+                <div class="col-5 col-md-5 col-lg-3 col-xl-3" style="text-align: center">
+                  <div class="text-value">
+                    <img src="{{runningChallenge.opponentAvatar}}" class="img-avatar" alt="{{runningChallenge.opponent}}"
+                         width="55px" height="55px"/>
+                  </div>
+                  <div class="text-uppercase text-muted small">{{runningChallenge.opponent}}</div>
+                  <div class="text-uppercase text-muted small">{{runningChallenge.opponentDetail.lastPulled}}</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </div>&lt;!&ndash; /rpgChallengeSummary &ndash;&gt;
+      </div>&lt;!&ndash; /rpgChallengeRunning &ndash;&gt;
     </div>
-  </div>
+
+    <div *ngIf="awardsWidgetEnable&&!rpgChallengeEnable">
+      <div class="row">
+        <div class="col-12">
+          <h3>Badges</h3>
+        </div>
+      </div>&lt;!&ndash; /Running 1:1 Challenges &ndash;&gt;
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              Awards
+            </div>
+            <div class="card-body">
+
+              <div class="row" *ngFor="let awardsSummary of awardsSummaries" (click)="awardClicked(awardsSummary.id)">
+                <div class="text-center col-2 col-md-1">
+                  <div class="avatar">
+                    <img [alt]="awardsSummary.name" class="img-avatar"
+                         src="/assets/badges/{{awardsSummary.image}}.png">
+                  </div>
+                </div>
+                <div class="col-5 col-md-6">
+                  <div>{{ awardsSummary.name }}</div>
+                  <div class="small text-muted d-none d-md-block">
+                    {{ awardsSummary.longtext }}
+                  </div>
+                </div>
+                <div class="col-5 col-md-5 text-right">
+                  <div>Awarded {{ awardsSummary.count }} time(s)</div>
+                  <div class="small text-muted d-none d-md-block">
+                    Last Awarded: {{ awardsSummary.awarded }}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>-->
 
 </div>

@@ -8,4 +8,6 @@ export class SiteNews {
   displayed: boolean;
   published: string;
   expires:	string;
+  imageName: string;
+  imageHref: string;
 }

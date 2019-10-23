@@ -263,6 +263,7 @@ export class DashboardComponent implements OnInit {
         lose: data['rpg_challenge_friends']['score']['lose'],
         draw: data['rpg_challenge_friends']['score']['draw'],
       };
+      this.addWidgetToFirstRow();
       this.emitApiLoaded();
 
       this.rpgChallengeRunning = [];
@@ -286,6 +287,7 @@ export class DashboardComponent implements OnInit {
             this.theMilestonesMore.push(this.markdownString(data['milestones']['distance']['more'][i]));
           }
           if (this.theMilestonesMore.length > 0) {
+            this.addWidgetToFirstRow();
             this.milestonesMoreWidgetEnable = true;
           }
         }
@@ -297,6 +299,7 @@ export class DashboardComponent implements OnInit {
             this.theMilestonesLess.push(this.markdownString(data['milestones']['distance']['less'][i]));
           }
           if (this.theMilestonesLess.length > 0) {
+            this.addWidgetToFirstRow();
             this.milestonesLessWidgetEnable = true;
           }
         }
@@ -421,39 +424,14 @@ export class DashboardComponent implements OnInit {
     this.weightWidgetChartType = 'line';
   }
 
-  private addWidgetToFirstRow() {
-    this.widgetsOnFirstRow++;
-    switch (this.widgetsOnFirstRow) {
-      case 1:
-        this.widgetGridOnFirstRow = 'col-12';
-        break;
-      case 2:
-        this.widgetGridOnFirstRow = 'col-12 col-md-6';
-        break;
-      case 3:
-        this.widgetGridOnFirstRow = 'col-12 col-md-4';
-        break;
-      case 4:
-        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
-        break;
-    }
+  widgetClickChallenge() {
+    this._matomoService.trackEvent('widget', 'click', 'challenges');
+    this.router.navigate(['/rpg/challenges']);
   }
 
-  private addWidgetToNewsRow() {
-    switch (this.widgetsOnNewsRow) {
-      case 1:
-        this.widgetGridOnNewsRow = 'col-12';
-        break;
-      case 2:
-        this.widgetGridOnNewsRow = 'col-12 col-md-6';
-        break;
-      case 3:
-        this.widgetGridOnNewsRow = 'col-12 col-md-4';
-        break;
-      case 4:
-        this.widgetGridOnNewsRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
-        break;
-    }
+  widgetClickWeight() {
+    this._matomoService.trackEvent('widget', 'click', 'weight');
+    this.router.navigate(['/body/weight']);
   }
 
   private markdownString(datumElementElement: string) {
@@ -479,6 +457,82 @@ export class DashboardComponent implements OnInit {
 
   downloadUpdate() {
     this.document.location.href = `${environment.uiUrl}/downloads/android.apk`;
+  }
+
+  widgetClickFloors() {
+    this._matomoService.trackEvent('widget', 'click', 'floors');
+    this.router.navigate(['/activities/log']);
+  }
+
+  widgetClickSteps() {
+    this._matomoService.trackEvent('widget', 'click', 'steps');
+    this.router.navigate(['/activities/log']);
+  }
+
+  widgetClickDistance() {
+    this._matomoService.trackEvent('widget', 'click', 'distance');
+    this.router.navigate(['/activities/log']);
+  }
+
+  widgetClickNews(link: string) {
+    if (typeof link !== 'undefined' && link !== null) {
+      if (link.startsWith('/')) {
+        this._matomoService.trackEvent('widget', 'click', 'news');
+        this.router.navigate([link]);
+      } else {
+        this.document.location.href = link;
+      }
+    }
+  }
+
+  private addWidgetToFirstRow() {
+    this.widgetsOnFirstRow++;
+    switch (this.widgetsOnFirstRow) {
+      case 1:
+        this.widgetGridOnFirstRow = 'col-12';
+        break;
+      case 2:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6';
+        break;
+      case 3:
+        this.widgetGridOnFirstRow = 'col-12 col-md-4';
+        break;
+      case 4:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
+      case 5:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
+      case 6:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
+      case 7:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
+      case 8:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
+      case 9:
+        this.widgetGridOnFirstRow = 'col-12 col-md-6 col-lg-4 col-xl-3';
+        break;
+    }
+  }
+
+  private addWidgetToNewsRow() {
+    switch (this.widgetsOnNewsRow) {
+      case 1:
+        this.widgetGridOnNewsRow = 'col-12';
+        break;
+      case 2:
+        this.widgetGridOnNewsRow = 'col-12 col-md-6';
+        break;
+      case 3:
+        this.widgetGridOnNewsRow = 'col-12 col-md-4';
+        break;
+      case 4:
+        this.widgetGridOnNewsRow = 'col-12 col-md-6 col-lg-4';
+        break;
+    }
   }
 }
 
