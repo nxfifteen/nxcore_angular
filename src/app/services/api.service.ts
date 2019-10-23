@@ -152,4 +152,10 @@ export class ApiService {
 
     return response;
   }
+
+  public siteNewsDisplayed(toastId: number, message: string) {
+    return this.httpClient.post<any>(
+      `${environment.apiUrl}/news/push/seen?key=${this.currentUser.token}`, {toastId, message}
+    );
+  }
 }

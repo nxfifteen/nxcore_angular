@@ -115,7 +115,16 @@ export class SentryErrorHandler implements ErrorHandler {
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     LeafletModule.forRoot(),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      closeButton: true,
+      timeOut: 10000,
+      extendedTimeOut: 30000,
+      easing: 'ease-in',
+      progressBar: true,
+      tapToDismiss: true,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     ChartsModule,
     MatomoModule,
     MarkdownModule.forRoot({

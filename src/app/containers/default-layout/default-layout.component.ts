@@ -67,7 +67,7 @@ export class DefaultLayoutComponent implements OnDestroy {
 
     this.apiService.getPushNews(true).subscribe((data) => {
       for (let i = 0; i < data['items'].length; i++) {
-        this.notifyService.showSuccess(data['items'][i]['text'], data['items'][i]['title']);
+        this.notifyService.showInfo(data['items'][i]['text'], data['items'][i]['title']);
       }
     });
 
