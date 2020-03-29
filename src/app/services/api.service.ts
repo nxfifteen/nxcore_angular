@@ -72,6 +72,26 @@ export class ApiService {
     return this.makeHttpGetRequest(URL, bustCache);
   }
 
+  public getExercisesOverview(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/json/exercises/overview?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
+  public getExercisesCategoryOverview(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/json/exercises/category/overview?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
+  public getExercisesEquipmentOverview(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/json/exercises/equipment/overview?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
+  public getExercisesMuscleOverview(bustCache?: boolean) {
+    const URL = `${environment.apiUrl}/json/exercises/muscle/overview?key=${this.currentUser.token}`;
+    return this.makeHttpGetRequest(URL, bustCache);
+  }
+
   public getAchievementsAwards(bustCache?: boolean) {
     const URL = `${environment.apiUrl}/feed/achievements/awards?key=${this.currentUser.token}`;
     return this.makeHttpGetRequest(URL, bustCache);

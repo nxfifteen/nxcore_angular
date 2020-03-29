@@ -76,6 +76,11 @@ export const routes: Routes = [
           path: 'help',
           loadChildren: () => import('./views/docs/docs.module').then(m => m.DocsModule)
         },
+        {
+          path: 'exercises',
+          canActivate: [AuthGuard],
+          loadChildren: () => import('./views/exercises/exercises.module').then(m => m.ExercisesModule)
+        },
       ]
     }
   ]

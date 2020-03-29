@@ -1,0 +1,141 @@
+<div *ngIf="loading!=loadingExpected">
+  <div class="row">
+    <div class="col-12">
+      LOADING...
+      <div class="progress progress-xs mt-2">
+        <progressbar class="progress progress-success" [value]="loading" [max]="loadingExpected"
+                     type="success"></progressbar>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div id="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="loading"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn" *ngIf="loading>=loadingExpected">
+  <alert type="md-refresh">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{_matomoService.pageTitle}}</h3>
+      </div>
+      <div class="col-md-6 text-right">
+        <button type="button" class="btn btn-brand btn-sm btn-warning mr-1" style="margin-bottom: 4px"
+                (click)="pullToRefresh()">
+          <i class="fa fa-repeat"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+    </div>
+  </alert>
+
+  <div class="row" *ngFor="let exercise of exerciseMetaData">
+    <div class="col-8">
+      <div class="card">
+        <div class="card-header">
+          {{exercise.name}}
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-8">
+              {{exercise.description}}
+            </div>
+            <div class="col-4">
+              Equipment: {{exercise.equipment}} <br/>
+              Categories: <span *ngFor="let category of exercise.category">{{category}}, </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <hr/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-3" *ngFor="let resources of exercise.resources">
+                  <img class="mw-100" *ngIf="resources.type=='url_image'" src="{{resources.path}}"
+                       title="{{resources.name}}" alt="{{resources.name}}">
+                  <a *ngIf="resources.type=='youtube'" href="{{resources.path}}"
+                     title="{{resources.name}}">{{resources.name}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <hr/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  Front
+                </div>
+                <div class="col-6">
+                  Back
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <div id="muscle-front" class="muscle-background center-block"
+                       [ngStyle]="{'background-image': exercise.muscles.front_svg}"></div>
+                </div>
+                <div class="col-6">
+                  <div id="muscle-back" class="muscle-background center-block"
+                       [ngStyle]="{'background-image': exercise.muscles.back_svg}"></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <span *ngFor="let muscles of exercise.muscles.front">
+                    {{muscles.name}} - {{muscles.id}}<br />
+                  </span>
+                </div>
+                <div class="col-6">
+                  <span *ngFor="let muscles of exercise.muscles.back">
+                    {{muscles.name}} - {{muscles.id}}<br />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          License
+        </div>
+        <div class="card-body">
+          {{exercise.license.name}} <br/>
+          {{exercise.license.description}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
