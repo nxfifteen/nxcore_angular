@@ -1,0 +1,21 @@
+image: trion/ng-cli-karma
+
+cache:
+  paths:
+    - node_modules/
+
+deploy_stage:
+  stage: deploy
+  environment: Stage
+  only:
+    - master
+    - releases
+  script:
+    - npm install
+    - npm run build -- --output-path=./dist/out --configuration production
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist/out
+  tags:
+    - docker
