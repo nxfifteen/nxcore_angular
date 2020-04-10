@@ -17,7 +17,7 @@ src/assets/badges/*.png
 src/assets/xplevels/*.png
 src/assets/xplevels/*.psd
 src/assets/fonts/*
-src/scss/fonts/*
+src/scss/fonts/*.scss
 
 # dependencies
 /node_modules
