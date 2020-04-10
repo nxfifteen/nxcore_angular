@@ -3,6 +3,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
+import {TransferHttpCacheModule} from '@nguniversal/common';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {AppComponent} from './app.component';
@@ -104,6 +105,7 @@ export class SentryErrorHandler implements ErrorHandler {
     BrowserAnimationsModule,
     MyMaterialModule,
     ReactiveFormsModule,
+    TransferHttpCacheModule,
     HttpClientModule,
     AppRoutingModule,
     AppAsideModule,
