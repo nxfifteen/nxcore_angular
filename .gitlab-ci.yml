@@ -6,6 +6,9 @@ cache:
 
 build_stage:
   stage: build
+  only:
+    - master
+    - releases
   script:
     - touch ./src/scss/fonts/fonts.scss
     - npm install
