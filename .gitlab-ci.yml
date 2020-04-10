@@ -4,8 +4,10 @@ cache:
   paths:
     - node_modules/
 
-deploy_stage:
-  stage: deploy
+build_stage:
+  stage: build
+  only:
+    - master
   script:
     - npm install
     - npm run build -- --output-path=./dist/out --configuration production
