@@ -4,13 +4,13 @@ cache:
   paths:
     - node_modules/
 
-deploy_stage:
-  stage: deploy
-  environment: Stage
+build_stage:
+  stage: build
   only:
     - master
     - releases
   script:
+    - touch ./src/scss/fonts/fonts.scss
     - npm install
     - npm run build -- --output-path=./dist/out --configuration production
   artifacts:
