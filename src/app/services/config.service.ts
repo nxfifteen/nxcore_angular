@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import {NavData, navItems} from '../_nav';
 import {AuthenticationService} from '../_services';
 import {User} from '../_models';
@@ -12,7 +13,7 @@ export class ConfigService {
   userConfig: User;
   private appConfig;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private injector: Injector, private authenticationService: AuthenticationService) {
     this.loadUserConfig();
   }
 
@@ -20,5 +21,19 @@ export class ConfigService {
     this.authenticationService.currentUser.subscribe((data) => {
       this.userConfig = data;
     });
+  }
+
+  loadAppConfig() {
+    const http = this.injector.get(HttpClient);
+
+    return http.get('/assets/app-config.json')
+      .toPromise()
+      .then(data => {
+        this.appConfig = data;
+      });
+  }
+
+  get config() {
+    return this.appConfig;
   }
 }
