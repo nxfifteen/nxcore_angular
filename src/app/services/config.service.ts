@@ -9,7 +9,8 @@ import {User} from '../_models';
 export class ConfigService {
   uiSettings: { showNavBar: string | boolean, showAsideBar: string | boolean } = {'showNavBar': true, 'showAsideBar': true};
   navItems: NavData[] = navItems;
-  currentUser: User;
+  userConfig: User;
+  private appConfig;
 
   constructor(private authenticationService: AuthenticationService) {
     this.loadUserConfig();
@@ -17,7 +18,7 @@ export class ConfigService {
 
   loadUserConfig() {
     this.authenticationService.currentUser.subscribe((data) => {
-      this.currentUser = data;
+      this.userConfig = data;
     });
   }
 }
