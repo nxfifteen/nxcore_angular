@@ -73,7 +73,6 @@ export class MatomoService {
   }
 
   setupTracking(_coreDashboard: string) {
-    if (this.matomo) {
       this.inject();
 
       this.loadStartedTime = new Date().getTime();
@@ -100,11 +99,9 @@ export class MatomoService {
       this.saveVariablesVisit = [];
 
       this.setGenerationTimeMs(0);
-    }
   }
 
   doTracking(generationTimeMs?: number, _coreDashboard?: string) {
-    if (this.matomo) {
       if (generationTimeMs && generationTimeMs > 0) {
         this.setGenerationTimeMs(generationTimeMs);
       }
@@ -116,7 +113,6 @@ export class MatomoService {
       this.setDocumentTitle(this.coreDashboard);
       this.setUserId(this.currentUser.username);
       this.trackPageView();
-    }
   }
 
   deleteCustomVariable(index: number, scope: string) {
@@ -186,10 +182,10 @@ export class MatomoService {
   }
 
   trackPageView(customTitle?: string) {
-    if (this.matomo) {
-      const loadTime: number = (new Date().getTime()) - this.loadStartedTime;
+    const loadTime: number = (new Date().getTime()) - this.loadStartedTime;
 
-      this.setGenerationTimeMs(loadTime);
+    this.setGenerationTimeMs(loadTime);
+    if (this.matomo) {
       this._matomoTracker.trackPageView(customTitle);
     }
   }
