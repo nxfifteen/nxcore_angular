@@ -1,7 +1,6 @@
 /*
  * This file is part of NxFIFTEEN Fitness Core.
  *
- * @link      https://nxfifteen.me.uk/projects/nxcore/angular
  * @link      https://nxfifteen.me.uk/projects/nxcore/
  * @link      https://gitlab.com/nx-core/frontend/angular
  * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
@@ -20,9 +19,8 @@ import {ActivityLocationData, ActivityLog, ActivityLogNav} from '../../_models/a
 import {hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {icon, latLng, Map, marker, Marker, point, polyline, Polyline, tileLayer, TileLayer} from 'leaflet';
-import {ConfigService} from '../../services/config.service';
+import {environment} from '../../../environments/environment';
 
-// noinspection JSUnusedLocalSymbols
 declare let l;
 
 @Component({
@@ -91,26 +89,22 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
   public altitudeChartColours: Array<any>;
   public altitudeChartLegend: boolean;
   public altitudeChartType: string;
-  private readonly isProduction: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService,
               private _ActivatedRoute: ActivatedRoute,
-              private _matomoService: MatomoService,
-              environment: ConfigService
+              private _matomoService: MatomoService
   ) {
     this.loading = 0;
     this.loadingExpected = 1;
     this.loggedActivityName = 'Details';
-    this.isProduction = environment.app.production;
   }
 
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     if (this.currentUser.firstrun) {
-      // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(['/onboarding']);
     } else {
       this._matomoService.setupTracking(this.pageTitle);
@@ -233,15 +227,17 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
       this.emitApiLoaded();
 
       if (typeof this.activityLogsNav.nextMonth !== 'undefined' && this.activityLogsNav.nextMonth !== '') {
-        this.apiService.getActivitiesLogDetails(this.activityLogsNav.nextMonth, false).subscribe(() => {
-          if (!this.isProduction) {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getActivitiesLogDetails(this.activityLogsNav.nextMonth, false).subscribe((data) => {
+          if (!environment.production) {
             console.log('Pre-cached ' + this.activityLogsNav.nextMonth);
           }
         });
       }
       if (typeof this.activityLogsNav.prevMonth !== 'undefined' && this.activityLogsNav.prevMonth !== '') {
-        this.apiService.getActivitiesLogDetails(this.activityLogsNav.prevMonth, false).subscribe(() => {
-          if (!this.isProduction) {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getActivitiesLogDetails(this.activityLogsNav.prevMonth, false).subscribe((data) => {
+          if (!environment.production) {
             console.log('Pre-cached ' + this.activityLogsNav.prevMonth);
           }
         });
@@ -342,7 +338,6 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
   }
 
   activityClicked(id: number | string) {
-    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(['/activities/activity', id]);
     this.buildViewContent(id);
   }
@@ -367,7 +362,6 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
     this.distanceChartLabels = [];
 
     /* tslint:enable:max-line-length */
-    // noinspection JSUnusedGlobalSymbols
     this.distanceChartOptions = {
       tooltips: {
         enabled: false,
@@ -439,7 +433,6 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
     this.speedChartLabels = [];
 
     /* tslint:enable:max-line-length */
-    // noinspection JSUnusedGlobalSymbols
     this.speedChartOptions = {
       tooltips: {
         enabled: false,
@@ -511,7 +504,6 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
     this.heartChartLabels = [];
 
     /* tslint:enable:max-line-length */
-    // noinspection JSUnusedGlobalSymbols
     this.heartChartOptions = {
       tooltips: {
         enabled: false,
@@ -583,7 +575,6 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
     this.altitudeChartLabels = [];
 
     /* tslint:enable:max-line-length */
-    // noinspection JSUnusedGlobalSymbols
     this.altitudeChartOptions = {
       tooltips: {
         enabled: false,

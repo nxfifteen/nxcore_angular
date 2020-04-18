@@ -1,7 +1,6 @@
 /*
  * This file is part of NxFIFTEEN Fitness Core.
  *
- * @link      https://nxfifteen.me.uk/projects/nxcore/angular
  * @link      https://nxfifteen.me.uk/projects/nxcore/
  * @link      https://gitlab.com/nx-core/frontend/angular
  * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
@@ -23,6 +22,7 @@ import {MatomoService} from '../../services/matomo.service';
 import {CordovaService} from '../../services/cordova.service';
 import {AppVersion} from '../../_models/appVersion';
 import {CordovaDevice} from '../../_models/cordovaDevice';
+import {environment} from '../../../environments/environment';
 import {DOCUMENT} from '@angular/common';
 import {SiteNews} from '../../_models/siteNews';
 
@@ -463,6 +463,10 @@ export class DashboardComponent implements OnInit {
     if (this.loading >= this.loadingExpected) {
       this._matomoService.doTracking();
     }
+  }
+
+  downloadUpdate() {
+    this.document.location.href = `${environment.uiUrl}/downloads/android.apk`;
   }
 
   widgetClickFloors() {

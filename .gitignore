@@ -55,5 +55,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-/.gtm/
-/src/assets/app-config.json

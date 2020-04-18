@@ -1,7 +1,6 @@
 /*
  * This file is part of NxFIFTEEN Fitness Core.
  *
- * @link      https://nxfifteen.me.uk/projects/nxcore/angular
  * @link      https://nxfifteen.me.uk/projects/nxcore/
  * @link      https://gitlab.com/nx-core/frontend/angular
  * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
@@ -12,7 +11,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {ConfigService} from './config.service';
+import {environment} from '../../environments/environment';
 import {AppVersion} from '../_models/appVersion';
 
 function _window(): any {
@@ -27,18 +26,14 @@ export class CordovaService {
 
   private updateAvailableSubject: BehaviorSubject<AppVersion>;
   public updateAvailable: Observable<AppVersion>;
-  private readonly apiUrl: string;
-  private readonly version: number | string;
 
-  constructor(private http: HttpClient, environment: ConfigService) {
+  constructor(private http: HttpClient) {
     this.updateAvailableSubject = new BehaviorSubject<AppVersion>({
-      yourVersion: environment.app.version,
-      latestVersion: environment.app.version,
+      yourVersion: environment.version,
+      latestVersion: environment.version,
       updateAvailable: false,
     });
     this.updateAvailable = this.updateAvailableSubject.asObservable();
-    this.apiUrl = environment.app.apiUrl;
-    this.version = environment.app.version;
 
     if (this.onCordova) {
       this.cordovaUpdateAvailable();
@@ -55,8 +50,8 @@ export class CordovaService {
 
   cordovaUpdateAvailable() {
     if (this.onCordova) {
-      console.log(`${this.apiUrl}/cmd/update/cordova/${this.version}`);
-      return this.http.get<any>(`${this.apiUrl}/cmd/update/cordova/${this.version}`)
+      console.log(`${environment.apiUrl}/cmd/update/cordova/${environment.version}`);
+      return this.http.get<any>(`${environment.apiUrl}/cmd/update/cordova/${environment.version}`)
         .subscribe((data) => {
           if (data['updateAvailable']) {
             console.log('A New Update is available');

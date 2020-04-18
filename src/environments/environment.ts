@@ -1,7 +1,6 @@
 /*
  * This file is part of NxFIFTEEN Fitness Core.
  *
- * @link      https://nxfifteen.me.uk/projects/nxcore/angular
  * @link      https://nxfifteen.me.uk/projects/nxcore/
  * @link      https://gitlab.com/nx-core/frontend/angular
  * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
@@ -16,8 +15,8 @@
 
 export const environment = {
   apiUrl: '/store',
+  uiUrl: 'http://localhost:4200',
   production: false,
-  debugInstance: false,
-  sentryDns: '',
+  sentryDns: 'https://0535e5fa521e4246808526cd419c7856@sentry.io/1757010',
   version: '0.0.6',
 };

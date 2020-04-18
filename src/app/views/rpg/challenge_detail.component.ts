@@ -1,7 +1,6 @@
 /*
  * This file is part of NxFIFTEEN Fitness Core.
  *
- * @link      https://nxfifteen.me.uk/projects/nxcore/angular
  * @link      https://nxfifteen.me.uk/projects/nxcore/
  * @link      https://gitlab.com/nx-core/frontend/angular
  * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
@@ -21,7 +20,7 @@ import {ChallengeActive} from '../../_models/challengeActive';
 import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 import {ActivityLogNav} from '../../_models/activityLog';
-import {ConfigService} from '../../services/config.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   templateUrl: 'challenge_detail.component.html'
@@ -58,7 +57,6 @@ export class ChallengeDetailComponent implements OnInit {
   challengeOutcomeFriendlyText: string;
   challengeOutcomeRibbonWinner: string;
   challengeOutcomeRibbonLoser: string;
-  private readonly isProduction: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
@@ -66,10 +64,7 @@ export class ChallengeDetailComponent implements OnInit {
               private apiService: ApiService,
               private _ActivatedRoute: ActivatedRoute,
               private _matomoService: MatomoService,
-              private titleService: Title,
-              environment: ConfigService) {
-    this.isProduction = environment.app.production;
-
+              private titleService: Title) {
     this.loadingExpected = 1;
 
     this.challengeWidgetChartData = [
@@ -386,15 +381,17 @@ export class ChallengeDetailComponent implements OnInit {
       this.emitApiLoaded();
 
       if (typeof this.challengeNav.nextMonth !== 'undefined' && this.challengeNav.nextMonth !== '') {
-        this.apiService.getRpgPvpDetails(this.challengeNav.nextMonth, false).subscribe(() => {
-          if (!this.isProduction) {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getRpgPvpDetails(this.challengeNav.nextMonth, false).subscribe((data) => {
+          if (!environment.production) {
             console.log('Pre-cached ' + this.challengeNav.nextMonth);
           }
         });
       }
       if (typeof this.challengeNav.prevMonth !== 'undefined' && this.challengeNav.prevMonth !== '') {
-        this.apiService.getRpgPvpDetails(this.challengeNav.prevMonth, false).subscribe(() => {
-          if (!this.isProduction) {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.apiService.getRpgPvpDetails(this.challengeNav.prevMonth, false).subscribe((data) => {
+          if (!environment.production) {
             console.log('Pre-cached ' + this.challengeNav.prevMonth);
           }
         });
