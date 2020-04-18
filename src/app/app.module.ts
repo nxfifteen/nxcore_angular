@@ -1,10 +1,21 @@
-import {APP_INITIALIZER, ErrorHandler, Injectable, NgModule} from '@angular/core';
+/*
+ * This file is part of NxFIFTEEN Fitness Core.
+ *
+ * @link      https://nxfifteen.me.uk/projects/nxcore/angular
+ * @link      https://nxfifteen.me.uk/projects/nxcore/
+ * @link      https://gitlab.com/nx-core/frontend/angular
+ * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+ */
+
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TransferHttpCacheModule} from '@nguniversal/common';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {AppComponent} from './app.component';
 // Import containers
@@ -20,16 +31,13 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ChartsModule} from 'ng2-charts';
 import {ConfigService} from './services/config.service';
-import {Observable, ObservableInput, of} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
 import {MarkdownModule, MarkedOptions, MarkedRenderer} from 'ngx-markdown';
-import {environment} from '../environments/environment';
 import {MyMaterialModule} from './material-module';
-import * as Sentry from '@sentry/browser';
 import {MatomoModule} from 'ngx-matomo';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {ToastrModule} from 'ngx-toastr';
 
+// noinspection JSUnusedLocalSymbols
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -57,51 +65,11 @@ export function markedOptions(): MarkedOptions {
   };
 }
 
-export function loadConfigurationData(http: HttpClient, config: ConfigService): (() => Promise<boolean>) {
-  return (): Promise<boolean> => {
-    return new Promise<boolean>((resolve: (a: boolean) => void): void => {
-      if (config.user) {
-        http.get(environment.apiUrl + '/ux/config?key=' + config.user.token)
-          .pipe(
-            map((x: ConfigService) => {
-              config.uiSettings = x.uiSettings;
-              config.navItems = x.navItems;
-              resolve(true);
-            }),
-            catchError((x: { status: number }, caught: Observable<void>): ObservableInput<{}> => {
-              if (x.status !== 404) {
-                resolve(false);
-              }
-              config.uiSettings = {'showNavBar': true, 'showAsideBar': true};
-              resolve(true);
-              return of({});
-            })
-          ).subscribe();
-      } else {
-        resolve(true);
-      }
-    });
+const appInitializerFn = (appConfig: ConfigService) => {
+  return () => {
+    return appConfig.loadAppConfig();
   };
-}
-
-if ((!environment.production || environment.debugInstance) && environment.sentryDns !== '') {
-  Sentry.init({
-    dsn: `${environment.sentryDns}`
-  });
-}
-
-@Injectable()
-export class SentryErrorHandler implements ErrorHandler {
-  constructor() {
-  }
-
-  handleError(error) {
-    if ((!environment.production || environment.debugInstance) && environment.sentryDns !== '') {
-      const eventId = Sentry.captureException(error.originalError || error);
-      Sentry.showReportDialog({eventId});
-    }
-  }
-}
+};
 
 @NgModule({
   imports: [
@@ -147,21 +115,11 @@ export class SentryErrorHandler implements ErrorHandler {
     RegisterComponent,
   ],
   providers: [
+    ConfigService,
+    {provide: APP_INITIALIZER, useFactory: appInitializerFn, multi: true, deps: [ConfigService]},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: loadConfigurationData,
-      deps: [
-        HttpClient,
-        ConfigService
-      ],
-      multi: true
-    }],
+    {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

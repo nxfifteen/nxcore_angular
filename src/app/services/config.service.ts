@@ -1,3 +1,14 @@
+/*
+ * This file is part of NxFIFTEEN Fitness Core.
+ *
+ * @link      https://nxfifteen.me.uk/projects/nxcore/angular
+ * @link      https://nxfifteen.me.uk/projects/nxcore/
+ * @link      https://gitlab.com/nx-core/frontend/angular
+ * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+ */
+
 import {Injectable, Injector} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {NavData, navItems} from '../_nav';
@@ -15,19 +26,12 @@ export class ConfigService {
   private appConfig;
 
   constructor(private injector: Injector, private authenticationService: AuthenticationService) {
-    this.loadUserConfig();
-  }
-
-  loadUserConfig() {
-    this.authenticationService.currentUser.subscribe((data) => {
-      this.userConfig = data;
-    });
   }
 
   loadAppConfig() {
     const http = this.injector.get(HttpClient);
-
-    return http.get('/assets/app-config.json')
+    // noinspection JSUnusedLocalSymbols
+    const localConfig = http.get('/assets/app-config.json')
       .toPromise()
       .then(data => {
         this.appConfig = data;
@@ -35,6 +39,12 @@ export class ConfigService {
         console.warn('Error loading app-config.json, using environment file instead');
         this.appConfig = environment;
       });
+
+    this.authenticationService.currentUser.subscribe((data) => {
+      this.userConfig = data;
+    });
+
+    return localConfig;
   }
 
   get app() {

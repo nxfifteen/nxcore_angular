@@ -1,3 +1,14 @@
+/*
+ * This file is part of NxFIFTEEN Fitness Core.
+ *
+ * @link      https://nxfifteen.me.uk/projects/nxcore/angular
+ * @link      https://nxfifteen.me.uk/projects/nxcore/
+ * @link      https://gitlab.com/nx-core/frontend/angular
+ * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+ */
+
 import {Component, Inject, OnInit} from '@angular/core';
 import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
@@ -12,7 +23,6 @@ import {MatomoService} from '../../services/matomo.service';
 import {CordovaService} from '../../services/cordova.service';
 import {AppVersion} from '../../_models/appVersion';
 import {CordovaDevice} from '../../_models/cordovaDevice';
-import {environment} from '../../../environments/environment';
 import {DOCUMENT} from '@angular/common';
 import {SiteNews} from '../../_models/siteNews';
 
