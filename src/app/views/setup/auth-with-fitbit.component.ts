@@ -31,7 +31,8 @@ export class AuthWithFitbitComponent implements OnInit {
         this.completed = true;
         this.currentUser.firstrun = false;
       } else {
-        this.authUrl = `${environment.apiUrl}/auth/with/fitbit/${this.currentUser.username}?key=${this.currentUser.token}&return=${environment.uiUrl}&returnPath=oauth/setup/fitbit`;
+        this.authUrl = `${environment.apiUrl}/auth/with/fitbit/${this.currentUser.username}?key=${this.currentUser.token}&return=` +
+          this.document.location.protocol + `//` + this.document.location.host + `&returnPath=oauth/setup/fitbit`;
         this.document.location.href = this.authUrl;
       }
     });

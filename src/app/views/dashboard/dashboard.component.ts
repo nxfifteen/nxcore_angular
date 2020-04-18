@@ -455,10 +455,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  downloadUpdate() {
-    this.document.location.href = `${environment.uiUrl}/downloads/android.apk`;
-  }
-
   widgetClickFloors() {
     this._matomoService.trackEvent('widget', 'click', 'floors');
     this.router.navigate(['/activities/log']);
