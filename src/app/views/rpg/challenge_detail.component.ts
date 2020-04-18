@@ -21,6 +21,7 @@ import {Title} from '@angular/platform-browser';
 import {MatomoService} from '../../services/matomo.service';
 import {ActivityLogNav} from '../../_models/activityLog';
 import {environment} from '../../../environments/environment';
+import {AppConfigService} from "../../services/app-config.service";
 
 @Component({
   templateUrl: 'challenge_detail.component.html'
@@ -57,6 +58,7 @@ export class ChallengeDetailComponent implements OnInit {
   challengeOutcomeFriendlyText: string;
   challengeOutcomeRibbonWinner: string;
   challengeOutcomeRibbonLoser: string;
+  private readonly isProduction: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
@@ -64,7 +66,9 @@ export class ChallengeDetailComponent implements OnInit {
               private apiService: ApiService,
               private _ActivatedRoute: ActivatedRoute,
               private _matomoService: MatomoService,
-              private titleService: Title) {
+              private titleService: Title,
+              private appConfig: AppConfigService) {
+    this.isProduction = appConfig.config.production;
     this.loadingExpected = 1;
 
     this.challengeWidgetChartData = [
@@ -383,7 +387,7 @@ export class ChallengeDetailComponent implements OnInit {
       if (typeof this.challengeNav.nextMonth !== 'undefined' && this.challengeNav.nextMonth !== '') {
         // tslint:disable-next-line:no-shadowed-variable
         this.apiService.getRpgPvpDetails(this.challengeNav.nextMonth, false).subscribe((data) => {
-          if (!environment.production) {
+          if (!this.isProduction) {
             console.log('Pre-cached ' + this.challengeNav.nextMonth);
           }
         });
@@ -391,7 +395,7 @@ export class ChallengeDetailComponent implements OnInit {
       if (typeof this.challengeNav.prevMonth !== 'undefined' && this.challengeNav.prevMonth !== '') {
         // tslint:disable-next-line:no-shadowed-variable
         this.apiService.getRpgPvpDetails(this.challengeNav.prevMonth, false).subscribe((data) => {
-          if (!environment.production) {
+          if (!this.isProduction) {
             console.log('Pre-cached ' + this.challengeNav.prevMonth);
           }
         });

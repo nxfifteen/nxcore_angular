@@ -19,7 +19,7 @@ import {ActivityLocationData, ActivityLog, ActivityLogNav} from '../../_models/a
 import {hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {icon, latLng, Map, marker, Marker, point, polyline, Polyline, tileLayer, TileLayer} from 'leaflet';
-import {environment} from '../../../environments/environment';
+import {AppConfigService} from '../../services/app-config.service';
 
 declare let l;
 
@@ -89,14 +89,17 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
   public altitudeChartColours: Array<any>;
   public altitudeChartLegend: boolean;
   public altitudeChartType: string;
+  private readonly isProduction: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService,
               private _ActivatedRoute: ActivatedRoute,
-              private _matomoService: MatomoService
+              private _matomoService: MatomoService,
+              private appConfig: AppConfigService
   ) {
+    this.isProduction = appConfig.config.production;
     this.loading = 0;
     this.loadingExpected = 1;
     this.loggedActivityName = 'Details';
@@ -229,7 +232,7 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
       if (typeof this.activityLogsNav.nextMonth !== 'undefined' && this.activityLogsNav.nextMonth !== '') {
         // tslint:disable-next-line:no-shadowed-variable
         this.apiService.getActivitiesLogDetails(this.activityLogsNav.nextMonth, false).subscribe((data) => {
-          if (!environment.production) {
+          if (!this.isProduction) {
             console.log('Pre-cached ' + this.activityLogsNav.nextMonth);
           }
         });
@@ -237,7 +240,7 @@ export class ActivityLogDetailsComponent implements OnInit, OnDestroy {
       if (typeof this.activityLogsNav.prevMonth !== 'undefined' && this.activityLogsNav.prevMonth !== '') {
         // tslint:disable-next-line:no-shadowed-variable
         this.apiService.getActivitiesLogDetails(this.activityLogsNav.prevMonth, false).subscribe((data) => {
-          if (!environment.production) {
+          if (!this.isProduction) {
             console.log('Pre-cached ' + this.activityLogsNav.prevMonth);
           }
         });

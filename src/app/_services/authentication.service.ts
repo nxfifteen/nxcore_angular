@@ -14,14 +14,16 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {User} from '../_models';
-import {environment} from '../../environments/environment';
+import {AppConfigService} from '../services/app-config.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  private _appConfig: AppConfigService;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, appConfig: AppConfigService) {
+    this._appConfig = appConfig;
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -31,7 +33,7 @@ export class AuthenticationService {
   }
 
   login(username, password) {
-    return this.http.post<any>(environment.apiUrl + `/users/authenticate`, {username, password})
+    return this.http.post<any>(this._appConfig.config.apiUrl + `/users/authenticate`, {username, password})
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
@@ -41,7 +43,13 @@ export class AuthenticationService {
   }
 
   register(username, password, passwordConfirm, email, invite) {
-    return this.http.post<any>(environment.apiUrl + `/users/register`, {username, password, passwordConfirm, email, invite})
+    return this.http.post<any>(this._appConfig.config.apiUrl + `/users/register`, {
+      username,
+      password,
+      passwordConfirm,
+      email,
+      invite
+    })
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
