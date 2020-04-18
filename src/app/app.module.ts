@@ -84,9 +84,11 @@ export function loadConfigurationData(http: HttpClient, config: ConfigService): 
   };
 }
 
-Sentry.init({
-  dsn: `${environment.sentryDns}`
-});
+if ((!environment.production || environment.debugInstance) && environment.sentryDns !== '') {
+  Sentry.init({
+    dsn: `${environment.sentryDns}`
+  });
+}
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -94,8 +96,10 @@ export class SentryErrorHandler implements ErrorHandler {
   }
 
   handleError(error) {
-    const eventId = Sentry.captureException(error.originalError || error);
-    Sentry.showReportDialog({eventId});
+    if ((!environment.production || environment.debugInstance) && environment.sentryDns !== '') {
+      const eventId = Sentry.captureException(error.originalError || error);
+      Sentry.showReportDialog({eventId});
+    }
   }
 }
 

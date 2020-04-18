@@ -6,6 +6,7 @@
 export const environment = {
   apiUrl: 'https://alpha.nxcore.fitness/store',
   production: false,
-  sentryDns: 'https://0535e5fa521e4246808526cd419c7856@sentry.io/1757010',
+  debugInstance: true,
+  sentryDns: '',
   version: '0.0.6',
 };
