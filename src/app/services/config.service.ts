@@ -10,7 +10,7 @@ import {User} from '../_models';
 export class ConfigService {
   uiSettings: { showNavBar: string | boolean, showAsideBar: string | boolean } = {'showNavBar': true, 'showAsideBar': true};
   navItems: NavData[] = navItems;
-  userConfig: User;
+  private userConfig: User;
   private appConfig;
 
   constructor(private injector: Injector, private authenticationService: AuthenticationService) {
@@ -35,5 +35,9 @@ export class ConfigService {
 
   get config() {
     return this.appConfig;
+  }
+
+  get user() {
+    return this.userConfig;
   }
 }

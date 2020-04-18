@@ -60,8 +60,8 @@ export function markedOptions(): MarkedOptions {
 export function loadConfigurationData(http: HttpClient, config: ConfigService): (() => Promise<boolean>) {
   return (): Promise<boolean> => {
     return new Promise<boolean>((resolve: (a: boolean) => void): void => {
-      if (config.userConfig) {
-        http.get(environment.apiUrl + '/ux/config?key=' + config.userConfig.token)
+      if (config.user) {
+        http.get(environment.apiUrl + '/ux/config?key=' + config.user.token)
           .pipe(
             map((x: ConfigService) => {
               config.uiSettings = x.uiSettings;
