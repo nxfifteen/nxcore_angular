@@ -2,5 +2,8 @@
   "apiUrl": "/store",
   "production": true,
   "debugInstance": false,
-  "sentryDns": ""
+  "sentryDns": "",
+  "matomoUrl": "",
+  "matomoSiteId": -1,
+  "matomoSiteIdCordova": -1
 }

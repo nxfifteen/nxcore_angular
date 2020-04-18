@@ -19,4 +19,7 @@ export const environment = {
   production: false,
   sentryDns: 'https://0535e5fa521e4246808526cd419c7856@sentry.io/1757010',
   version: '0.0.6',
+  matomoUrl: '',
+  matomoSiteId: -1,
+  matomoSiteIdCordova: -1
 };
