@@ -25,15 +25,18 @@ export class AppConfigService {
 
   loadAppConfig() {
     const http = this.injector.get(HttpClient);
-
     return http.get('/assets/app-config.json')
       .toPromise()
       .then(data => {
-        console.log('+++ Okay loaded app-config.json');
         this.appConfig = data;
+        if (!this.appConfig.production) {
+          console.log('+++ Okay loaded app-config.json');
+        }
       }).catch(error => {
-        console.log('*** Error loading app-config.json, using environment file instead');
         this.appConfig = environment;
+        if (!this.appConfig.production) {
+          console.log('*** Error loading app-config.json, using environment file instead');
+        }
       });
   }
 }
