@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  apiUrl: 'https://connect.core.nxfifteen.me.uk',
+  apiUrl: '/store',
   uiUrl: 'http://localhost:4200',
   production: false,
   sentryDns: 'https://0535e5fa521e4246808526cd419c7856@sentry.io/1757010',
