@@ -1,0 +1,6 @@
+{
+  "apiUrl": "/store",
+  "production": true,
+  "debugInstance": false,
+  "sentryDns": ""
+}
