@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {NavData, navItems} from '../_nav';
 import {AuthenticationService} from '../_services';
 import {User} from '../_models';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,9 @@ export class ConfigService {
       .toPromise()
       .then(data => {
         this.appConfig = data;
+      }).catch(error => {
+        console.warn('Error loading app-config.json, using environment file instead');
+        this.appConfig = environment;
       });
   }
 

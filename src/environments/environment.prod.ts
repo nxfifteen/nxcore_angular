@@ -4,5 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
+  apiUrl: '/store',
+  production: true,
+  debugInstance: false,
+  sentryDns: '',
   version: '0.0.6',
 };
