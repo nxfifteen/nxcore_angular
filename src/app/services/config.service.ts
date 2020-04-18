@@ -33,7 +33,7 @@ export class ConfigService {
       });
   }
 
-  get config() {
+  get app() {
     return this.appConfig;
   }
 
