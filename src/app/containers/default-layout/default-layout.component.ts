@@ -1,6 +1,15 @@
+/*
+ * This file is part of NxFIFTEEN Fitness Core.
+ *
+ * @link      https://nxfifteen.me.uk/projects/nxcore/
+ * @link      https://gitlab.com/nx-core/frontend/angular
+ * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+ */
+
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
-// import {navItems} from '../../_nav';
 import {ApiService} from '../../services/api.service';
 import {ConfigService} from '../../services/config.service';
 import {AuthenticationService} from '../../_services';
@@ -16,14 +25,12 @@ import {NotificationService} from '../../services/notification.service';
   templateUrl: './default-layout.component.html'
 })
 export class DefaultLayoutComponent implements OnDestroy {
-  // public navItems = navItems;
   public navItems;
   public sidebarMinimized = false;
   private changes: MutationObserver;
   public element: HTMLElement;
   public profileName: string;
   public profileAvatar: string;
-  public configService: ConfigService;
   // public cordovaService$: CordovaService;
   public profileXp: number;
   cordovaService$: CordovaService;
@@ -39,8 +46,9 @@ export class DefaultLayoutComponent implements OnDestroy {
               private notifyService: NotificationService,
               @Inject(DOCUMENT) _document?: any) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.configService = _configService;
-    this.navItems = _configService.navItems;
+    _configService.getNavItems().subscribe((data) => {
+      this.navItems = data.navItems;
+    });
 
     this.cordovaService$ = _cordovaService;
     this.cordovaService$.updateAvailable.subscribe(x => this.cordovaUpdateAvailable = x);

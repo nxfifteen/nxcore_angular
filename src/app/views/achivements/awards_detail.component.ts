@@ -1,3 +1,13 @@
+/*
+ * This file is part of NxFIFTEEN Fitness Core.
+ *
+ * @link      https://nxfifteen.me.uk/projects/nxcore/
+ * @link      https://gitlab.com/nx-core/frontend/angular
+ * @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+ * @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+ */
+
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {MarkdownService} from 'ngx-markdown';
@@ -6,6 +16,7 @@ import {AuthenticationService} from '../../_services';
 import {User} from '../../_models';
 import {AwardBadge} from '../../_models/awardBadge';
 import {MatomoService} from '../../services/matomo.service';
+import {AppConfigService} from '../../services/app-config.service';
 
 @Component({
   templateUrl: 'awards_detail.component.html',
@@ -22,15 +33,18 @@ export class AwardsDetailComponent implements OnInit {
   xpLog = [];
   awardId: number;
   awardBadge: AwardBadge;
+  private assets_badges: string;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private markdownService: MarkdownService,
               private apiService: ApiService,
               private _ActivatedRoute: ActivatedRoute,
+              private appConfig: AppConfigService,
               private _matomoService: MatomoService) {
     this.loading = 0;
     this.loadingExpected = 1;
+    this.assets_badges = appConfig.config.assets_badges;
   }
 
   ngOnInit(): void {

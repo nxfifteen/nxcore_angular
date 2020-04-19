@@ -13,12 +13,6 @@
 /vendor
 /.vs
 
-src/assets/badges/*.png
-src/assets/xplevels/*.png
-src/assets/xplevels/*.psd
-src/assets/fonts/*
-src/scss/fonts/*.scss
-
 # dependencies
 /node_modules
 
@@ -55,3 +49,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/src/assets/app-config.json
+/src/assets/custom/**
