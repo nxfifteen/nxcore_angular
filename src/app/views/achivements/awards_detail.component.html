@@ -1,3 +1,13 @@
+<!--
+  ~ This file is part of NxFIFTEEN Fitness Core.
+  ~
+  ~ @link      https://nxfifteen.me.uk/projects/nxcore/
+  ~ @link      https://gitlab.com/nx-core/frontend/angular
+  ~ @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+  ~ @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+  ~ @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+  -->
+
 <div *ngIf="loading!=loadingExpected">
   <div class="row">
     <div class="col-12">
@@ -49,7 +59,7 @@
               <div class="row">
                 <div class="col-12">
                   <img [alt]="awardBadge.name" class="img-avatar"
-                       src="/assets/badges/{{awardBadge.image}}.png">
+                       src="{{assets_badges}}/{{awardBadge.image}}.png">
                 </div>
               </div>
             </div>

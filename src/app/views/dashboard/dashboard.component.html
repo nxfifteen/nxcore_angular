@@ -1,3 +1,13 @@
+<!--
+  ~ This file is part of NxFIFTEEN Fitness Core.
+  ~
+  ~ @link      https://nxfifteen.me.uk/projects/nxcore/
+  ~ @link      https://gitlab.com/nx-core/frontend/angular
+  ~ @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+  ~ @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+  ~ @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+  -->
+
 <div *ngIf="loading!=loadingExpected">
   <div class="row">
     <div class="col-12">
@@ -278,7 +288,7 @@
             <div class="row">
               <div class="col-4 text-center">
                 <img alt="news-icon" class="img-avatar"
-                     height="70px" src="/assets/badges/{{newsItem.imageName}}.png" width="70px"/>
+                     height="70px" src="{{assets_badges}}/{{newsItem.imageName}}.png" width="70px"/>
               </div>
               <div class="col-8">
                 {{newsItem.text}}
@@ -349,7 +359,7 @@
                       <div class="text-center col-2">
                         <div class="avatar">
                           <img [alt]="awardsSummary.name" class="img-avatar"
-                               src="/assets/badges/{{awardsSummary.image}}.png">
+                               src="{{assets_badges}}/{{awardsSummary.image}}.png">
                         </div>
                       </div>
                       <div class="col-10">
@@ -470,7 +480,7 @@
                 <div class="text-center col-2 col-md-1">
                   <div class="avatar">
                     <img [alt]="awardsSummary.name" class="img-avatar"
-                         src="/assets/badges/{{awardsSummary.image}}.png">
+                         src="{{assets_badges}}/{{awardsSummary.image}}.png">
                   </div>
                 </div>
                 <div class="col-5 col-md-6">

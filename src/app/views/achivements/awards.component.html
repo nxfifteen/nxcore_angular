@@ -1,3 +1,13 @@
+<!--
+  ~ This file is part of NxFIFTEEN Fitness Core.
+  ~
+  ~ @link      https://nxfifteen.me.uk/projects/nxcore/
+  ~ @link      https://gitlab.com/nx-core/frontend/angular
+  ~ @author    Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+  ~ @copyright Copyright (c) 2020. Stuart McCulloch Anderson <stuart@nxfifteen.me.uk>
+  ~ @license   https://nxfifteen.me.uk/api/license/mit/license.html MIT
+  -->
+
 <div *ngIf="loading!=loadingExpected">
   <div class="row">
     <div class="col-12">
@@ -74,7 +84,7 @@
                   </div>
                 </div>
                 <div class="col-5 d-none d-lg-block d-xl-block text-right">
-                  <img height="81px" src="/assets/xplevels/{{level}}.png" width="220px"/>
+                  <img height="81px" src="{{assets_xp_levels}}/{{level}}.png" width="220px"/>
                 </div>
               </div>
             </div>
@@ -110,7 +120,7 @@
             <div class="card-body">
               <div class="h1 text-muted text-right mb-4" style="font-size: 100%;">
                 {{awardsSummary.count}} WINS
-                <img class="img-avatar" src="/assets/badges/{{awardsSummary.image}}.png"
+                <img class="img-avatar" src="{{assets_badges}}/{{awardsSummary.image}}.png"
                      alt="{{awardsSummary.name}}"
                      width="35px" height="35px"/>
               </div>

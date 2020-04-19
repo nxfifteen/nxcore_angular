@@ -25,6 +25,7 @@ import {CordovaDevice} from '../../_models/cordovaDevice';
 import {environment} from '../../../environments/environment';
 import {DOCUMENT} from '@angular/common';
 import {SiteNews} from '../../_models/siteNews';
+import {AppConfigService} from '../../services/app-config.service';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -104,6 +105,7 @@ export class DashboardComponent implements OnInit {
   rpgChallengeEnable: boolean;
   rpgChallengeSummary: { win: number; lose: number; draw: number };
   rpgChallengeRunning: Array<ChallengeActive>;
+  private assets_badges: string;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
@@ -112,10 +114,12 @@ export class DashboardComponent implements OnInit {
               private apiService: ApiService,
               private _matomoService: MatomoService,
               private _cordovaService: CordovaService,
+              private appConfig: AppConfigService,
               @Inject(DOCUMENT) private document: Document) {
     this.cordovaService$ = _cordovaService;
     this.setDefaultChartOptions();
     this.loadingExpected = 10;
+    this.assets_badges = appConfig.config.assets_badges;
   }
 
   ngOnInit(): void {
