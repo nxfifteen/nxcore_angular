@@ -21,5 +21,7 @@ export const environment = {
   version: '0.0.6',
   matomoUrl: '',
   matomoSiteId: -1,
-  matomoSiteIdCordova: -1
+  matomoSiteIdCordova: -1,
+  assets_badges: '/assets/badges',
+  assets_xp_levels: '/assets/xplevels'
 };

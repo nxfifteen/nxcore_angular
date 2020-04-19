@@ -5,5 +5,7 @@
   "sentryDns": "",
   "matomoUrl": "",
   "matomoSiteId": -1,
-  "matomoSiteIdCordova": -1
+  "matomoSiteIdCordova": -1,
+  "assets_badges": "/assets/badges",
+  "assets_xp_levels": "/assets/xplevels"
 }
