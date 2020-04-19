@@ -1,19 +1,53 @@
 image: trion/ng-cli-karma
 
+stages:
+  - build
+
 cache:
   paths:
     - node_modules/
 
-build_stage:
+after_script:
+  - curl --header "Content-Type: application/json" --request POST --data '{"type":"new","CI_API_V4_URL":"${CI_API_V4_URL}","CI_COMMIT_TITLE":"${CI_COMMIT_TITLE}","CI_COMMIT_MESSAGE":"${CI_COMMIT_MESSAGE}","CI_COMMIT_REF_NAME":"${CI_COMMIT_REF_NAME}","CI_COMMIT_REF_SLUG":"${CI_COMMIT_REF_SLUG}","CI_COMMIT_SHA":"${CI_COMMIT_SHA}","CI_COMMIT_SHORT_SHA":"${CI_COMMIT_SHORT_SHA}","CI_COMMIT_BRANCH":"${CI_COMMIT_BRANCH}","CI_COMMIT_TAG":"${CI_COMMIT_TAG}","CI_CONCURRENT_ID":"${CI_CONCURRENT_ID}","CI_CONCURRENT_PROJECT_ID":"${CI_CONCURRENT_PROJECT_ID}","CI_PROJECT_ID":"${CI_PROJECT_ID}","CI_PROJECT_TITLE":"${CI_PROJECT_TITLE}","CI_PROJECT_URL":"${CI_PROJECT_URL}","CI_PROJECT_VISIBILITY":"${CI_PROJECT_VISIBILITY}","CI_SERVER_URL":"${CI_SERVER_URL}"}' https://nxfifteen.me.uk/downloads/alert.php
+
+build_other:
+  stage: build
+  only:
+    - triggers
+    - schedules
+  script:
+    - npm install
+    - npm run build -- --output-path=./dist/out
+  artifacts:
+    expire_in: 5 days
+    paths:
+      - dist/out
+  tags:
+    - docker
+
+build_master:
   stage: build
   only:
     - master
+  script:
+    - npm install
+    - npm run build -- --output-path=./dist/out
+  artifacts:
+    expire_in: 90 days
+    paths:
+      - dist/out
+  tags:
+    - docker
+
+build_release:
+  stage: build
+  only:
     - release
   script:
-    - touch ./src/scss/fonts/fonts.scss
     - npm install
     - npm run build -- --prod --aot --output-path=./dist/out --configuration production
   artifacts:
+    expire_in: 30 days
     paths:
       - dist/out
   tags:
